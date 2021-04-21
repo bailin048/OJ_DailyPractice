@@ -2977,3 +2977,26 @@ int** flipAndInvertImage(int** image, int imageSize, int* imageColSize, int* ret
     }
     return image;
 }
+
+LeetCode【257】【二叉树的所有路径】：https://leetcode-cn.com/problems/binary-tree-paths/
+class Solution {
+public:
+    vector<string> res;
+    vector<string> binaryTreePaths(TreeNode* root) {
+       string tmp;
+       DFS(root,tmp);
+       return res;
+    }
+    void DFS(TreeNode* root,string tmp){
+        if(!root)
+            return;
+        tmp += to_string(root->val);
+        if(!root->left && !root->right)
+            res.push_back(tmp);
+        else{
+            tmp += "->";
+            DFS(root->left,tmp);
+            DFS(root->right,tmp);
+        }
+    }
+};
