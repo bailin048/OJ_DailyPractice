@@ -3001,3 +3001,166 @@ public:
     }
 };
 
+牛客【矩形覆盖】：https://www.nowcoder.com/practice/72a5a919508a4251859fb2cfb987a0e6?tpId=13&tqId=11163&tab=answerKey
+class Solution {
+public:
+    int rectCover(int number) {
+        vector<int> dp(3);
+        dp[0] = 1,dp[1]=1;
+        for(int i = 2;i<=number;++i){
+            dp[2]=dp[0]+dp[1];
+            dp[0] = dp[1];
+            dp[1] = dp[2];
+        }
+        return number>1?dp[2]:number>=0?number:0;
+    }
+};
+
+LeetCode【139】【单词拆分】：https://leetcode-cn.com/problems/word-break/
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        if(s.empty())
+            return false;
+        if(wordDict.empty())
+            return false;
+        auto wordDictSet = unordered_set <string> ();
+        for (auto word: wordDict) {
+            wordDictSet.insert(word);
+        }
+        int sz = s.size();
+        vector<bool> dp(sz+1,false);
+        dp[0] = true;
+        for(int i = 1;i<=sz;++i){
+            for(int j = 0;j<i;++j){
+                if(dp[j]&&wordDictSet.find(s.substr(j,i-j))!=wordDictSet.end()){
+                    dp[i] = true;
+                    break;
+                }
+            }
+        }
+        return dp[sz];
+    }
+};
+
+牛客【三角形】：https://www.nowcoder.com/practice/2b7995aa4f7949d99674d975489cb7da?tpId=46&tqId=29060&tPage=2&rp=2&ru=%2Fta%2Fleetcode&qru=%2Fta%2Fleetcode%2Fquestion-rankin&tab=answerKey
+【自底向上】
+class Solution {
+public:
+    int minimumTotal(vector<vector<int> > &triangle) {
+        if(triangle.empty())
+            return 0;
+        int sz = triangle.size();
+        vector<vector<int>> dp(triangle);
+        for(int i = 1;i<sz;++i){
+            for(int j = 0;j<=i;++j){
+                if(j==0)
+                    dp[i][j] = dp[i-1][j];
+                else if(j==i)
+                    dp[i][j] = dp[i-1][j-1];
+                else 
+                    dp[i][j] = min(dp[i-1][j],dp[i-1][j-1]);
+                dp[i][j]+=triangle[i][j];
+            }
+        }
+        int res = dp[sz-1][0];
+        for(int i = 1;i<sz;++i)
+            res = res<dp[sz-1][i]?res:dp[sz-1][i];
+        return res;
+    }
+};
+【自顶向下】：
+class Solution {
+public:
+    int minimumTotal(vector<vector<int> > &triangle) {
+        if(triangle.empty())
+            return 0;
+        int sz = triangle.size();
+        vector<vector<int>> dp(triangle);
+        for(int i = sz-2;i>=0;--i){
+            for(int j = 0;j<=i;++j)
+                dp[i][j] = min(dp[i+1][j],dp[i+1][j+1]) + triangle[i][j];
+        }
+        return dp[0][0];
+    }
+};
+
+牛客【求路径】：https://www.nowcoder.com/practice/166eaff8439d4cd898e3ba933fbc6358?tpId=46&tqId=29117&tPage=1&rp=1&ru=%2Fta%2Fleetcode&qru=%2Fta%2Fleetcode%2Fquestion-ranking&tab=answerKey
+class Solution {
+public:
+    /**
+     * 
+     * @param m int整型 
+     * @param n int整型 
+     * @return int整型
+     */
+    int uniquePaths(int m, int n) {
+        if(n<0||m<0)
+            return 0;
+        vector<vector<int>> path(m,vector<int> (n,1));
+        for(int i = 1;i<m;++i)
+            for(int j = 1;j<n;++j)
+                path[i][j] = path[i-1][j]+path[i][j-1];
+        return path[m-1][n-1];
+    }
+};
+
+牛客【求路径2】：https://www.nowcoder.com/practice/3cdf08dd4e974260921b712f0a5c8752?tpId=46&tqId=29116&tPage=1&rp=1&ru=%2Fta%2Fleetcode&qru=%2Fta%2Fleetcode%2Fquestion-ranking&tab=answerKey
+class Solution {
+public:
+    /**
+     * 
+     * @param obstacleGrid int整型vector<vector<>> 
+     * @return int整型
+     */
+    int uniquePathsWithObstacles(vector<vector<int> >& obstacleGrid) {
+        int m = obstacleGrid.size();
+        int n = obstacleGrid[0].size();
+        if(n<0||m<0)
+            return 0;
+        vector<vector<int>> path(m,vector<int> (n,0));
+        for(int i = 0;i<m;++i){
+            if(obstacleGrid[i][0])
+                break;
+            else
+                path[i][0]=1;
+        }
+        for(int i = 0;i<n;++i){
+            if(obstacleGrid[0][i])
+                break;
+            else
+                path[0][i]=1;
+        }
+        for(int i = 1;i<m;++i)
+            for(int j = 1;j<n;++j)
+                path[i][j] = obstacleGrid[i][j]?0:path[i-1][j]+path[i][j-1];
+        return path[m-1][n-1];
+    }
+};
+
+LeetCode【带权值的最小路径和】：https://www.nowcoder.com/practice/23462ed010024fcabb7dbd3df57c715e?tpId=46&tqId=29115&tPage=1&rp=1&ru=%2Fta%2Fleetcode&qru=%2Fta%2Fleetcode%2Fquestion-ranking&tab=answerKey
+class Solution {
+public:
+    /**
+     * 
+     * @param grid int整型vector<vector<>> 
+     * @return int整型
+     */
+    int minPathSum(vector<vector<int> >& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+        if(!m || !n)
+            return 0;
+        vector<vector<int>> dp(m,vector<int>(n,0));
+        dp[0][0] = grid[0][0];
+        for(int i = 1;i<m;++i)
+            dp[i][0] = grid[i][0]+dp[i-1][0];
+        for(int i = 1;i<n;++i)
+            dp[0][i] = grid[0][i]+dp[0][i-1];
+        for(int i = 1;i<m;++i){
+            for(int j = 1;j<n;++j)
+                dp[i][j] = min(dp[i][j-1],dp[i-1][j])+grid[i][j];
+        }
+        return dp[m-1][n-1];
+    }
+};
