@@ -3138,7 +3138,7 @@ public:
     }
 };
 
-LeetCode【带权值的最小路径和】：https://www.nowcoder.com/practice/23462ed010024fcabb7dbd3df57c715e?tpId=46&tqId=29115&tPage=1&rp=1&ru=%2Fta%2Fleetcode&qru=%2Fta%2Fleetcode%2Fquestion-ranking&tab=answerKey
+牛客【带权值的最小路径和】：https://www.nowcoder.com/practice/23462ed010024fcabb7dbd3df57c715e?tpId=46&tqId=29115&tPage=1&rp=1&ru=%2Fta%2Fleetcode&qru=%2Fta%2Fleetcode%2Fquestion-ranking&tab=answerKey
 class Solution {
 public:
     /**
@@ -3162,5 +3162,73 @@ public:
                 dp[i][j] = min(dp[i][j-1],dp[i-1][j])+grid[i][j];
         }
         return dp[m-1][n-1];
+    }
+};
+
+LeetCode【209】【长度最小的子数组】：https://leetcode-cn.com/problems/minimum-size-subarray-sum/
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
+        int res = INT_MAX;
+        int sz = nums.size();
+        int left = 0,right = 0;
+        int sum = 0;
+        while(right<sz){
+            sum+=nums[right];
+            while(sum>=target){
+                res = min(res,right-left+1);
+                sum-=nums[left++];
+            }
+            ++right;
+        }
+        return res==INT_MAX?0:res;
+    }
+};
+
+【746】【使用最小花费爬楼梯】：https://leetcode-cn.com/problems/min-cost-climbing-stairs/
+class Solution {
+public:
+    int minCostClimbingStairs(vector<int>& cost) {
+        int sz = cost.size();
+        vector<int> dp(sz+1,0);
+        dp[0] = 0,dp[1] = 0;
+        for(int i = 2;i<=sz;++i)
+            dp[i] = min(dp[i-1]+cost[i-1],dp[i-2]+cost[i-2]);
+        return dp[sz];
+    }
+};
+
+LeetCode【908】【最小差值】：https://leetcode-cn.com/problems/smallest-range-i/
+class Solution {
+public:
+    int smallestRangeI(vector<int>& A, int K) {
+        int n = A.size();
+        int max_A = A[0];
+        int min_A = A[0];
+        for(int i = 1;i<n;++i){
+            if(A[i]>max_A)
+                max_A = A[i];
+            else if(A[i]<min_A)
+                min_A = A[i];
+        }
+        int tmp = max_A-min_A - 2*K;
+        return tmp>0?tmp:0;
+    }
+};
+
+LeetCode【910】【最小差值II】：https://leetcode-cn.com/problems/smallest-range-ii/
+class Solution {
+public:
+    int smallestRangeII(vector<int>& A, int K) {
+        int n = A.size();
+        sort(A.begin(),A.end());
+        int res = A[n-1]-A[0];
+        for(int i = 0;i<n-1;++i){
+            int tmp1 = max(A[n-1]-K,A[i]+K);
+            int tmp2 = min(A[i+1]-K,A[0]+K);
+            int tmp3 = tmp1-tmp2;
+            res = min(res,tmp3);
+        }
+        return res;
     }
 };
