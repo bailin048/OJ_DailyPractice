@@ -3344,4 +3344,113 @@ public:
         t->right = Creat(2*(index-cnt)+2,sz);
         return t;
     }
+
+剑指offer【12】【矩阵中的路径】：https://leetcode-cn.com/problems/ju-zhen-zhong-de-lu-jing-lcof/
+class Solution {
+public:
+    bool exist(vector<vector<char>>& board, string word) {
+        _rows = board.size();
+        _cols = board[0].size();
+        for(int i = 0;i<_rows;++i)
+            for(int j = 0;j<_cols;++j)
+                if(dfs(i,j,0,word,board))
+                    return true;
+        return false;
+    }
+    private:
+    int _rows,_cols;
+    bool dfs(int row,int col,int index,const string& word,vector<vector<char>>& board){
+        char c = word[index];
+        if(row>=_rows || row<0 || col<0 || col>=_cols || board[row][col]!=c)
+            return false;
+        if(index == word.size()-1)
+            return true;
+        board[row][col] = '\0';
+        bool res = dfs(row,col+1,index+1,word,board)||dfs(row,col-1,index+1,word,board)||
+            dfs(row+1,col,index+1,word,board)||dfs(row-1,col,index+1,word,board);
+        board[row][col] = word[index];
+        return res;
+    }
+};
+
+剑指offer【13】【机器人的运行范围】：https://leetcode-cn.com/problems/ji-qi-ren-de-yun-dong-fan-wei-lcof/
+class Solution {
+public:
+    int movingCount(int m, int n, int k) {
+        if(k<0 || m<=0 || n<= 0)
+            return 0;
+        vector<vector<bool>> visited(m,vector<bool> (n,false));
+        int cnt = CheckCore(0,0,k,visited,m,n);
+        return cnt; 
+    }
+    private:
+    int CheckCore(const int& row,const int& col,const int& k,vector<vector<bool>>& visited,const int& m,const int& n){
+        int cnt = 0;
+        if(Check(row,col,k,visited,m,n)){
+            visited[row][col] = true;
+            cnt = 1+CheckCore(row-1,col,k,visited,m,n)+CheckCore(row+1,col,k,visited,m,n)+
+                CheckCore(row,col-1,k,visited,m,n)+CheckCore(row,col+1,k,visited,m,n);
+        }
+        return cnt;
+    }
+    bool Check(const int& row,const int& col,const int& k,vector<vector<bool>>& visited,const int& m,const int& n){
+        if(row>=0&&row<m&&col>=0&&col<n&&GetAdd(row,col,k)&&!visited[row][col])
+            return true;
+        return false;
+    }
+    bool GetAdd(int row,int col,const int& k){
+        int res = 0;
+        while(row){
+            res+=row%10;
+            row/=10;
+        }
+        while(col){
+            res+=col%10;
+            col/=10;
+        }
+        return res<=k;
+    }
+};
+
+LeetCode【657】【机器人能否返回原点】：https://leetcode-cn.com/problems/robot-return-to-origin/
+class Solution {
+public:
+    bool judgeCircle(string moves) {
+        int sz = moves.size();
+        int x = 0,y = 0;
+        for(int i = 0;i<sz;i++){
+            if(moves[i] == 'U')
+                ++y;
+            else if(moves[i] == 'D')
+                --y;
+            else if(moves[i] == 'L')
+                --x;
+            else
+                ++x;
+        }
+        return !x && !y;
+    }
+};
+
+LeetCode【1041】【困于环中的机器人】：https://leetcode-cn.com/problems/robot-bounded-in-circle/
+class Solution {
+public:
+    bool isRobotBounded(string instructions) {
+        int x = 0,y = 0;
+        int dir[4][2] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};//上右下左
+        int sz = instructions.size();
+        int d = 0;
+        for(int i = 0;i < sz; ++i){
+            if(instructions[i] == 'L')
+                d += 1;
+            else if(instructions[i] == 'R')
+                d += 3;
+            else{
+                d %= 4;
+                x += dir[d][0];
+                y += dir[d][1];
+            }
+        }
+        return d%4 || !x && !y;
+    }
 };
