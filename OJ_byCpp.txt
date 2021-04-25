@@ -3437,7 +3437,7 @@ class Solution {
 public:
     bool isRobotBounded(string instructions) {
         int x = 0,y = 0;
-        int dir[4][2] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};//上右下左
+        int dir[4][2] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};//右上左下
         int sz = instructions.size();
         int d = 0;
         for(int i = 0;i < sz; ++i){
@@ -3452,5 +3452,34 @@ public:
             }
         }
         return d%4 || !x && !y;
+    }
+};
+
+面试题【08.02】【迷路的机器人】：https://leetcode-cn.com/problems/robot-in-a-grid-lcci/
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> pathWithObstacles(vector<vector<int>>& obstacleGrid) {
+        r = obstacleGrid.size(),c = obstacleGrid[0].size();
+        if(!r || !c || obstacleGrid[r-1][c-1])
+            return res;
+        vector<vector<bool>> vis(r,vector<bool>(c,true));
+        BackTrack(0,0,obstacleGrid,vis);
+        return res;
+    }
+    private:
+    int r,c;
+    bool BackTrack(int row,int col,const vector<vector<int>>& ob,vector<vector<bool>>& vis){
+        int sz = res.size();
+        if(sz>0 && res[sz-1][0]==r-1 && res[sz-1][1]==c-1)//已到终点
+            return true; 
+        if(row>=r || col>=c || ob[row][col] || !vis[row][col])//剪枝
+            return false;
+        res.push_back(vector<int> ({row,col}));
+        if(BackTrack(row+1,col,ob,vis) || BackTrack(row,col+1,ob,vis))//一个方向即可
+            return true;
+        vis[row][col] = false;//此路不通
+        res.pop_back();
+        return false;
     }
 };
