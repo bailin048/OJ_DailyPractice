@@ -3545,3 +3545,18 @@ public:
         return dp[n];
     }
 };
+
+LeetCode【1832】【判断句子是否为全字母句】：https://leetcode-cn.com/problems/check-if-the-sentence-is-pangram/
+class Solution {
+public:
+    bool checkIfPangram(string sentence) {
+        int cnt[26] = {0};
+        int sz = sentence.size();
+        for(int i = 0;i<sz;++i)
+            cnt[sentence[i]-'a']=1;
+        for(int i = 0; i < 26;++i)
+            if(!cnt[i])
+                return false;
+        return true;
+    }
+};
