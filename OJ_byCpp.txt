@@ -3651,3 +3651,35 @@ public:
         return true;
     }
 };
+
+牛客【编辑距离】：https://www.nowcoder.com/practice/81d7738f954242e5ade5e65ec40e5027?tpId=46&tqId=29106&tPage=1&rp=1&ru=%2Fta%2Fleetcode&qru=%2Fta%2Fleetcode%2Fquestion-ranking&tab=answerKey
+class Solution {
+public:
+    /**
+     * 
+     * @param word1 string字符串 
+     * @param word2 string字符串 
+     * @return int整型
+     */
+    int minDistance(string word1, string word2) {
+        int sz1 = word1.size();
+        int sz2 = word2.size();
+        vector<vector<int>> minD(sz1+1,vector<int>(sz2+1,0));
+        for(int i = 0;i<=sz1;++i)
+            minD[i][0] = i;
+        for(int i = 0;i<=sz2;++i)
+            minD[0][i] = i;
+        for(int i = 1;i<=sz1;++i){
+            for(int j = 1;j<=sz2;++j){
+                //插入，删除
+                minD[i][j] = min(minD[i][j-1],minD[i-1][j])+1;
+                //替换
+                if(word1[i-1] == word2[j-1])
+                    minD[i][j] = min(minD[i][j],minD[i-1][j-1]);
+                else
+                    minD[i][j] = min(minD[i][j],minD[i-1][j-1]+1);
+            }
+        }
+        return minD[sz1][sz2];
+    }
+};
