@@ -3683,3 +3683,106 @@ public:
         return minD[sz1][sz2];
     }
 };
+
+LeetCode【690】【员工的重要性】：https://leetcode-cn.com/problems/employee-importance/
+class Solution {
+public:
+    map<int, Employee *> m;
+    int getImportance(vector <Employee*> es, int id) {
+        int n = es.size();
+        for (int i = 0; i < n; i++) 
+            m.insert({es[i]->id, es[i]});
+        return getVal(id);
+    }
+    int getVal(int id){
+        Employee* master = m[id];
+        int imp =master->importance;
+        for(auto& p:master->subordinates)
+            imp+=getVal(p);
+        return imp;
+    }
+};
+
+LeetCode【733】【图像渲染】：https://leetcode-cn.com/problems/flood-fill/
+class Solution {
+public:
+    int change[4][2] = {{0,1},{0,-1},{1,0},{-1,0}};
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+        int oldcolor = image[sr][sc];
+        if(oldcolor!=newColor)
+            DFS(image,sr,sc,oldcolor,newColor);
+        return image;
+    }
+    void DFS(vector<vector<int>>& image, int x, int y,const int& oldcolor,const int& newColor){
+        if(x>=image.size() || x<0 || y>=image[0].size() || y<0 || image[x][y]!=oldcolor)
+            return;
+        image[x][y] = newColor;
+        for(int i = 0;i<4;++i)
+            DFS(image,x+change[i][0],y+change[i][1],oldcolor,newColor);
+    }
+};
+
+LeetCode【130】【被围绕的区域】：https://leetcode-cn.com/problems/surrounded-regions/
+class Solution {
+public:
+    int dir[4][2] ={{1,0},{0,1},{-1,0},{0,-1}};
+    void solve(vector<vector<char>>& board) {
+        int m = board.size();
+        int n = board[0].size();
+        for(int i = 0;i<m;++i){
+            if(board[i][0] == 'O')//第0列
+                DFS(board,i,0,m,n);
+            if(board[i][n-1] == 'O')//第n-1列
+                DFS(board,i,n-1,m,n);
+        }
+        for(int i = 0;i<n;++i){
+            if(board[0][i] == 'O')//第0行
+                DFS(board,0,i,m,n);
+            if(board[m-1][i] == 'O')//第m-1行
+                DFS(board,m-1,i,m,n);
+        }
+        for(int i = 0;i<m;++i)
+            for(int j=0;j<n;++j){
+                if(board[i][j]=='O')
+                    board[i][j] = 'X';
+                else if(board[i][j] == 'A')
+                    board[i][j] = 'O';
+            }
+    }
+    void DFS(vector<vector<char>>& board,int x,int y,const int& m,const int& n){
+        if(x<0||y<0||x>=m||y>=n||board[x][y]!='O')
+            return;
+        board[x][y] = 'A';
+        for(int i = 0;i<4;++i)
+            DFS(board,x + dir[i][0],y + dir[i][1],m,n);
+    }
+};
+
+LeetCode【200】【岛屿数量】：https://leetcode-cn.com/problems/number-of-islands/
+class Solution {
+public:
+    int dir[4][2] = {{1,0},{0,1},{-1,0},{0,-1}};
+    int numIslands(vector<vector<char>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<vector<bool>> visited(m,vector<bool>(n,false));
+        int res = 0;
+        for(int i = 0;i<m;++i){
+            for(int j = 0;j<n;++j)
+                if(grid[i][j]=='1' && !visited[i][j]){
+                    ++res;
+                    DFS(grid,i,j,m,n,visited);
+                }
+        }
+        return res;
+    }
+    void DFS(vector<vector<char>>& grid,int x,int y,const int& m,const int&n,vector<vector<bool>>& visited){
+        visited[x][y] = true;
+        for(int i = 0;i<4;++i){
+            int nx = x + dir[i][0];
+            int ny = y + dir[i][1];
+            if(nx<m && nx>=0 && ny>=0 && ny<n && !visited[nx][ny] && grid[x][y] == '1')
+                DFS(grid,nx,ny,m,n,visited);
+        }
+    }
+};
