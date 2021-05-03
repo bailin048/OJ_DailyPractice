@@ -3851,3 +3851,250 @@ public:
         return minTime;
     }
 };
+
+LeetCode【695】【岛屿的最大面积】：https://leetcode-cn.com/problems/max-area-of-island/
+class Solution {
+public:
+    int dir[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        int area = 0;
+        int m = grid.size();
+        int n = grid[0].size();
+        vector<vector<bool>> visited(m,vector<bool>(n,false));
+        for(int i = 0;i<m;++i)
+            for(int j = 0;j<n;++j){
+                if(grid[i][j] && !visited[i][j]){
+                    int cur = 1;
+                    DFS(grid,i,j,m,n,visited,area,cur);
+                }
+            }
+        return area;
+    }
+    void DFS(vector<vector<int>>& grid,int x,int y,const int& m,const int& n,vector<vector<bool>>& visited,int& res,int& cur){
+        if(cur>res)
+            res = cur;
+        visited[x][y] = true;
+        for(int i = 0;i<4;++i){
+            int nx = x + dir[i][0];
+            int ny = y + dir[i][1];
+            if(nx<0 || ny<0 || nx>=m || ny>=n)
+                continue;
+            if(grid[nx][ny] && !visited[nx][ny]){
+                ++cur;
+                DFS(grid,nx,ny,m,n,visited,res,cur);
+            }
+        }
+    }
+};
+
+LeetCode【463】【岛屿的周长】：https://leetcode-cn.com/problems/island-perimeter/
+class Solution {
+public:
+    int dir[4][2] = {{1,0},{-1,0},{0,1},{0,-1}}; 
+    int islandPerimeter(vector<vector<int>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+        int res = 0;
+        for(int i = 0;i<m;++i){
+            for(int j = 0;j<n;++j){
+                if(grid[i][j]){
+                    int cnt = 0;
+                    for(int k = 0;k<4;++k){
+                        int nx = i + dir[k][0];
+                        int ny = j + dir[k][1];
+                        if(nx<0||ny<0||nx>=m||ny>=n||!grid[nx][ny])
+                            ++cnt;
+                    }
+                    res+=cnt;
+                }
+            }
+        }
+        return res;
+    }
+};
+【DFS】：
+class Solution {
+public:
+    int dir[4][2] = {{0,1},{0,-1},{1,0},{-1,0}}; 
+    int DFS(int x, int y, vector<vector<int>> &grid, int n, int m) {
+        if (x < 0 || x >= n || y < 0 || y >= m || grid[x][y] == 0) {
+            return 1;
+        }
+        if (grid[x][y] == 2) {
+            return 0;
+        }
+        grid[x][y] = 2;
+        int res = 0;
+        for (int i = 0; i < 4; ++i) {
+            int tx = x + dir[i][0];
+            int ty = y + dir[i][1];
+            res += DFS(tx, ty, grid, n, m);
+        }
+        return res;
+    }
+    int islandPerimeter(vector<vector<int>> &grid) {
+        int n = grid.size(), m = grid[0].size();
+        int ans = 0;
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < m; ++j) {
+                if (grid[i][j] == 1) {
+                    ans += DFS(i, j, grid, n, m);
+                }
+                if(ans)
+                    break;
+            }
+        }
+        return ans;
+    }
+};
+
+LeetCode【1254】【统计封闭岛屿的数目】：https://leetcode-cn.com/problems/number-of-closed-islands/
+class Solution {
+public: 
+    int dir[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
+    int closedIsland(vector<vector<int>>& grid) {
+       int m = grid.size();
+       int n = grid[0].size();
+       int res = 0;
+       vector<vector<bool>> visited(m,vector<bool>(n,false));
+       for(int i = 0;i<m;++i){
+            if(!grid[i][0])//第0列
+                DFS(grid,i,0,m,n,visited);
+            if(!grid[i][n-1])//最后一列
+                DFS(grid,i,n-1,m,n,visited);
+        }
+        for(int i = 0;i<n;++i){
+            if(!grid[0][i])//第0行
+                DFS(grid,0,i,m,n,visited);
+            if(!grid[m-1][i])//最后一行
+                DFS(grid,m-1,i,m,n,visited);
+        }
+       for(int i = 0;i<m;++i) {
+           for(int j = 0;j<n;++j){
+               if(!grid[i][j] && !visited[i][j]){
+                   ++res;
+                   DFS(grid,i,j,m,n,visited);
+               }
+           }
+       }
+       return res;
+    }
+    void DFS(vector<vector<int>>& grid,int x,int y,const int& m,const int&n,vector<vector<bool>>& visited){
+        visited[x][y] = true;
+        for(int i = 0;i<4;++i){
+            int nx = x + dir[i][0];
+            int ny = y + dir[i][1];
+            if(nx<0 || ny<0 || nx>=m || ny>=n || grid[nx][ny] || visited[nx][ny])
+                continue;
+            DFS(grid,nx,ny,m,n,visited);
+        }
+    }
+};
+
+LeetCode【329】【矩阵中的最长递增路径】：https://leetcode-cn.com/problems/longest-increasing-path-in-a-matrix/
+class Solution {
+public:
+    int dir[4][2] = {{0,1},{0,-1},{1,0},{-1,0}};
+    int longestIncreasingPath(vector<vector<int>>& matrix) {
+        m = matrix.size();
+        n = matrix[0].size();
+        int res = 0;
+        vector<vector<int>> memo(m,vector<int>(n,0));
+        for(int i = 0;i<m;++i){
+            for(int j = 0;j<n;++j)
+                res = max(res,DFS(matrix,i,j,memo));
+        }
+        for(int i = 0;i<m;++i){
+            for(int j = 0;j<n;++j)
+                cout<<memo[i][j]<<" ";
+            cout<<endl;
+        }
+        return res;
+    }
+    int DFS(vector<vector<int>>& matrix,int x,int y,vector<vector<int>>& memo){
+        if(memo[x][y])
+            return memo[x][y];
+        ++memo[x][y];
+        for(int i = 0;i<4;++i){
+            int nx = x + dir[i][0];
+            int ny = y + dir[i][1];
+            if(nx<0||ny<0||nx>=m||ny>=n||matrix[nx][ny]<=matrix[x][y])
+                continue;
+            memo[x][y] = max(memo[x][y],DFS(matrix,nx,ny,memo)+1);
+        }
+        return memo[x][y];
+    }
+    private:
+        int n;
+        int m;
+};
+
+LeetCode【874】【模拟行走机器人】：https://leetcode-cn.com/submissions/detail/174103319/testcase/
+class Solution {
+public:
+    int dir[4][2] = {{0,1},{1,0},{0,-1},{-1,0}};//上右下左--顺时针方向转 
+    int robotSim(vector<int>& commands, vector<vector<int>>& obstacles) {
+        int distance = 0;
+        int x = 0,y = 0;
+        int sz = commands.size();
+        int pt = 0;
+        set<pair<int, int>> obstacleSet;
+        for(int i=0;i<obstacles.size();i++)
+            obstacleSet.insert(make_pair(obstacles[i][0], obstacles[i][1]));
+        for(int i = 0;i<sz;++i){
+            if(commands[i] == -1)
+                pt = pt == 3?0:pt+1;
+            else if(commands[i] == -2)
+                pt = (!pt)?3:pt-1;
+            else{
+                for(int k = 0;k<commands[i];k++){
+                    int nx = x + dir[pt][0];
+                    int ny = y + dir[pt][1];
+                    if (obstacleSet.find(make_pair(nx, ny)) == obstacleSet.end()) {
+                        x = nx;
+                        y = ny;
+                        distance = max(distance, x*x + y*y);
+                    }
+                    else
+                        break;
+                }  
+            }
+        }
+        return distance;
+    }
+};
+
+LeetCode【LCP03】【机器人大冒险】：https://leetcode-cn.com/problems/programmable-robot/
+class Solution {
+public:
+    bool robot(string command, vector<vector<int>>& obstacles, int x, int y) {
+        int n = command.size(), m = obstacles.size(), cX = 0, cY = 0;
+        for(int i = 0; i < n; ++i){ // O(n)，统计一个循环需要x和y能走多远
+            if(command[i] == 'U') cY++;
+            else cX++;
+        }
+        for(int i = 0; i < m; ++i){ // O(m)，计算每一个障碍物会不会碰到
+            int oX = obstacles[i][0], oY = obstacles[i][1];
+            if(oX > x || oY > y) continue; // 障碍物在终点之外
+            int cnt = min(oX / cX, oY / cY); // 到障碍物至少需要多少个完整循环
+            oX -= cnt * cX, oY -= cnt * cY;
+            if(oX == 0 && oY == 0) return false; // 刚好cnt个完整循环到障碍物
+            for(int j = 0; j < n; ++j){ // O(n)
+                if(command[j] == 'U') oY--;
+                else oX--;
+                if(oX == 0 && oY == 0) return false; // 碰到障碍物
+                if(oX < 0 || oY < 0) break; // 碰不到障碍物的情况
+            }
+        }
+        int cycle = min(x/ cX, y / cY); // 到终点至少需要多少个循环
+        x -= cycle * cX, y -= cycle * cY;
+        if(x == 0 && y == 0) return true; // 刚好cycle个完整循环可以到终点
+        for(int i = 0; i < n; ++i){ // O(n)
+            if(command[i] == 'U') y--;
+            else x--;
+            if(x==0 && y == 0) return true; // 能到终点
+            if(x < 0 || y < 0) return false; // 不能到终点
+        }
+        return true;
+    }
+};
