@@ -4098,3 +4098,34 @@ public:
         return true;
     }
 };
+
+LeetCode【445】【两数相加】：https://leetcode-cn.com/problems/add-two-numbers-ii/
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        stack<int> s1,s2;
+        while(l1){
+            s1.push(l1->val);
+            l1 = l1->next;
+        }
+        while(l2){
+            s2.push(l2->val);
+            l2 = l2->next; 
+        }
+        ListNode* h = nullptr;
+        int flag = 0;
+        while(!s1.empty() || !s2.empty() || flag){
+            int n1 = s1.empty()?0:s1.top();
+            int n2 = s2.empty()?0:s2.top();
+            if(!s1.empty()) s1.pop();
+            if(!s2.empty()) s2.pop();
+            int tmp = n1 + n2 + flag;
+            flag = tmp/10;
+            tmp%=10;
+            ListNode* p = new ListNode(tmp);
+            p->next = h;
+            h = p;
+        }
+        return h;
+    }
+};
