@@ -4129,3 +4129,19 @@ public:
         return h;
     }
 };
+
+LeetCode【447】【汉明距离总和】：https://leetcode-cn.com/problems/total-hamming-distance/
+class Solution {
+public:
+    int totalHammingDistance(vector<int>& nums) {
+        int res = 0;
+        int sz = nums.size();
+        for(int i = 0;i<32;i++){
+            int cnt = 0;
+            for(int j = 0;j<sz;++j)
+                cnt += (nums[j]>>i&1);
+            res += cnt*(sz - cnt);
+        }
+        return res;
+    }
+};
