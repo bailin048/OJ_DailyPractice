@@ -4145,3 +4145,47 @@ public:
         return res;
     }
 };
+
+LeetCode【39】【组合总和】：https://leetcode-cn.com/problems/combination-sum/
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<int> tmp;
+        int sz = candidates.size();
+        sort(candidates.begin(),candidates.end());
+        BackTrack(candidates,tmp,0,0,target,sz);
+        return res;
+    }
+    void BackTrack(vector<int>& candidates,vector<int> tmp,int index,int cursum,const int& target,const int& sz){
+        if(cursum>target)
+            return;
+        if(cursum==target){
+            res.push_back(tmp);
+            return;
+        }
+        for(int i = index;i<sz;++i){
+            if(cursum+candidates[i]>target)
+                return;
+            cursum += candidates[i];
+            tmp.push_back(candidates[i]);
+            BackTrack(candidates,tmp,i,cursum,target,sz);
+            cursum -= candidates[i];
+            tmp.pop_back();
+        }    
+    }
+};
+
+面试题【16.17】【连续数列】：https://leetcode-cn.com/problems/contiguous-sequence-lcci/
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        int n = nums.size();
+        int pre = 0,maxres = nums[0];
+        for(int i = 0;i < n; ++i){
+            pre = max(nums[i],pre+nums[i]);
+            maxres = max(maxres,pre);
+        }
+        return maxres;
+    }
+};
