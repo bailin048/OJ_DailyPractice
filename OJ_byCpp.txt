@@ -4223,3 +4223,1455 @@ public:
         int n;
         int dir[2][2] = {{1,0},{0,1}};
 };
+——————————————————为参加比赛练习基本知识—————————————————
+——————————————————不注意编程风格，只重结果————————————————
+【CSP-J入门组】【21984】：https://ac.nowcoder.com/acm/problem/21984
+#include <iostream>
+using namespace std;
+
+int main(){
+    cout<<"hello nowcoder"<<endl;
+    return 0;
+}
+
+【CSP-J入门组】【21985】：https://ac.nowcoder.com/acm/problem/21985
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    cout<<n<<endl;
+    return 0;
+}
+【CSP-J入门组】【21986】：https://ac.nowcoder.com/acm/problem/21986
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main(){
+    double n;
+    cin>>n;
+    cout<<fixed<<setprecision(3)<<n<<endl;
+    return 0;
+}
+【CSP-J入门组】【21987】：https://ac.nowcoder.com/acm/problem/21987
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a,b;
+    cin>>a>>b;
+    cout<<a+b<<endl;
+    return 0;
+}
+【CSP-J入门组】【21988】：https://ac.nowcoder.com/acm/problem/21988
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a,b;
+    cin>>a>>b;
+    cout<<a/b<<endl;
+    return 0;
+}
+【CSP-J入门组】【21989】：https://ac.nowcoder.com/acm/problem/21989
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a,b;
+    cin>>a>>b;
+    cout<<a%b<<endl;
+    return 0;
+}
+【CSP-J入门组】【21990】：https://ac.nowcoder.com/acm/problem/21990
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a;
+    cin>>a;
+    cout<<a%10<<endl;
+    return 0;
+}
+【CSP-J入门组】【21991】：https://ac.nowcoder.com/acm/problem/21991
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a;
+    cin>>a;
+    cout<<a/10%10<<endl;
+    return 0;
+}
+【CSP-J入门组】【21992】：https://ac.nowcoder.com/acm/problem/21992
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main(){
+    int a,b;
+    cin>>a>>b;
+    cout<<fixed<<setprecision(3)<<(double)a/(double)b<<endl;
+    return 0;
+}
+【CSP-J入门组】【21993】：https://ac.nowcoder.com/acm/problem/21993
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a,b,c;
+    cin>>a>>b>>c;
+    cout<<c<<" "<<b<<" "<<a<<endl;
+    return 0;
+}
+【CSP-J入门组】【21994】：https://ac.nowcoder.com/acm/problem/21994
+#include <iostream>
+using namespace std;
+
+int main(){
+    int h1,h2,m1,m2;
+    cin>>h1>>m1>>h2>>m2;
+    cout<<(h2-h1)*60+m2-m1<<endl;
+    return 0;
+}
+【CSP-J入门组】【21995】：https://ac.nowcoder.com/acm/problem/21995
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main(){
+    int a,b,h;
+    cin>>a>>b>>h;
+    cout<<fixed<<setprecision(3)<<(a+b)*h/2.0<<endl;
+    return 0;
+}
+【CSP-J入门组】【21997】：https://ac.nowcoder.com/acm/problem/21997
+#include <iostream>
+#include <iomanip>
+#define pi 3.14159
+using namespace std;
+
+
+int main(){
+    double a;
+    cin>>a;
+    cout<<2*pi*a<<endl;
+    cout<<pi*a*a<<endl;
+    return 0;
+}
+【CSP-J入门组】【21998】：https://ac.nowcoder.com/acm/problem/21998
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+
+int main(){
+    int a,b;
+    cin>>a>>b;
+    cout<<2*(a+b)<<endl;
+    cout<<a*b<<endl;
+    return 0;
+}
+【CSP-J入门组】【21999】：https://ac.nowcoder.com/acm/problem/21999
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+
+int main(){
+    int a,b,h;
+    cin>>a>>b>>h;
+    cout<<2*(a*b+b*h+a*h)<<endl;
+    cout<<a*b*h<<endl;
+    return 0;
+}
+【CSP-J入门组】【22000】：https://ac.nowcoder.com/acm/problem/22000
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    while(n){
+        cout<<n%10;
+        n/=10;
+    }
+    return 0;
+}
+【CSP-J入门组】【22001】：https://ac.nowcoder.com/acm/problem/22001
+#include <iostream>
+#include <cmath>
+using namespace std;
+int main(){
+    double a;
+    cin>>a;
+    cout<<floor(a)<<endl;
+    cout<<ceil(a)<<endl;
+    return 0;
+}
+【CSP-J入门组】【22002】：https://ac.nowcoder.com/acm/problem/22002
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main(){
+    int a,b,c;
+    cin>>a>>b>>c;
+    double ave = (a+b+c)/3.0;
+    cout<<fixed<<setprecision(6)<<ave<<endl;
+    return 0;
+}
+【CSP-J入门组】【22003】：https://ac.nowcoder.com/acm/problem/22003
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    cout<<floor(sqrt(n))<<endl;
+    return 0;
+}
+【CSP-J入门组】【22004】：https://ac.nowcoder.com/acm/problem/22004
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main(){
+    double f;
+    cin>>f;
+    cout<<fixed<<setprecision(3)<<5.0/9.0*(f-32)<<endl;
+    return 0;
+}
+【CSP-J入门组】【22005】：https://ac.nowcoder.com/acm/problem/22005
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    cout<<n*1024*256<<endl;
+    return 0;
+}
+【CSP-J入门组】【22006】：https://ac.nowcoder.com/acm/problem/22006
+#include <iostream>
+using namespace std;
+int main(){
+    int n;
+    cin>>n;
+    if(n%10<5)
+       n-=(n%10);
+    else
+       n+=(10-n%10);
+    cout<<n<<endl;
+    return 0;
+}
+【CSP-J入门组】【22007】：https://ac.nowcoder.com/acm/problem/22007
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a,b;
+    cin>>a>>b;
+    printf("%d+%d=%d\n",a,b,a+b);
+    printf("%7d\n",a);
+    printf("+%6d\n",b);
+    printf("-------\n");
+    printf("%7d\n",a+b);
+    return 0;
+}
+【CSP-J入门组】【22008】：https://ac.nowcoder.com/acm/problem/22008
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    if(n&1)
+        cout<<"odd"<<endl;
+    else
+        cout<<"even"<<endl;
+    return 0;
+}
+【CSP-J入门组】【22009】：https://ac.nowcoder.com/acm/problem/22009
+#include <iostream>
+using namespace std;
+
+int main(){
+    int x,y;
+    cin>>x>>y;
+    int tmp;
+    if(x>y){
+       cout<<x<<endl;
+       cout<<y<<endl;
+    }
+    else{
+        tmp = y;
+        y = x;
+        x = tmp;
+        cout<<x<<endl;
+        cout<<y<<endl;
+    }
+    return 0;
+}
+【CSP-J入门组】【22010】：https://ac.nowcoder.com/acm/problem/22010
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    if(!(n&1)&& n>50)
+        cout<<"yes"<<endl;
+    else
+        cout<<"no"<<endl;
+    return 0;
+}
+【CSP-J入门组】【22011】：https://ac.nowcoder.com/acm/problem/22011
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    if(!(n&1) || n>50)
+        cout<<"yes"<<endl;
+    else
+        cout<<"no"<<endl;
+    return 0;
+}
+【CSP-J入门组】【22012】：https://ac.nowcoder.com/acm/problem/22012
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    if(!(n%400))
+        cout<<"yes"<<endl;
+    else if(!(n%4) && n%100)
+        cout<<"yes"<<endl;
+    else
+        cout<<"no"<<endl;
+    return 0;
+}
+【CSP-J入门组】【22014】：https://ac.nowcoder.com/acm/problem/22014
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    if(n>2 && !(n&1))
+        cout<<"YES, you can divide the watermelon into two even parts."<<endl;
+    else
+        cout<<"NO, you can't divide the watermelon into two even parts."<<endl;
+    return 0;
+}
+【CSP-J入门组】【22015】：https://ac.nowcoder.com/acm/problem/22015
+#include <iostream>
+#include <cmath>
+using namespace std;
+int main(){
+    int a,b,c;
+    cin>>a>>b>>c;
+    cout<<"The maximum number is : "<<max(a,max(b,c))<<endl;
+    cout<<"The minimum number is : "<<min(a,min(b,c))<<endl;
+    return 0;
+}
+【CSP-J入门组】【22156】：https://ac.nowcoder.com/acm/problem/22156
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    int res = 0;
+    for(int i = 1;i<=n;++i)
+       if(i&1)
+           res+=i;
+       else
+           res-=i;
+    cout<<res<<endl;
+}    
+【CSP-J入门组】【22157】：https://ac.nowcoder.com/acm/problem/22157
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    double res;
+    for(int i = 1;i<=n;++i)
+        res+=1.0/i;
+    cout<<fixed<<setprecision(6)<<res<<endl;
+    return 0;
+}
+【CSP-J入门组】【22158】：https://ac.nowcoder.com/acm/problem/22158
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    double res=0.0;
+    int tmp = 0;
+    int flag = 1;
+    for(int i = 1;i<=n;++i){
+        if(i&1)
+            flag = 1;
+        else
+            flag = -1;
+        tmp += flag*(2*i-1);
+        res+=1.0/tmp;
+    }
+    cout<<fixed<<setprecision(3)<<res<<endl;
+    return 0;
+}
+【CSP-J入门组】【22159】：https://ac.nowcoder.com/acm/problem/22159
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    int cur = 0;
+    int res = 0;
+    for(int i = 1;i<=n;++i){
+        cur+=i;
+        res+=cur;
+    }
+    cout<<res<<endl;
+    return 0;
+}
+【CSP-J入门组】【22160】：https://ac.nowcoder.com/acm/problem/22160
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    if(n == 1 || n == 2){
+        cout<<1<<endl;
+        return 0;
+    }
+    vector<int> dp(3,1);
+    n-=2;
+    while(n--){
+        dp[2] = dp[1] + dp[0];
+        dp[0] = dp[1];
+        dp[1] = dp[2];
+    }
+    cout<<dp[2]<<endl;
+    return 0;
+}
+【CSP-J入门组】【220161】：https://ac.nowcoder.com/acm/problem/22161
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    vector<int> dp(4,1);
+    dp[0] = 0;
+    if(n<4){
+        cout<<dp[n-1]<<endl;
+        return 0;
+    }
+    for(int i = 4;i<=n;++i){
+        dp[3] = dp[0]+2*dp[1]+dp[2];
+        dp[0] = dp[1];
+        dp[1] = dp[2];
+        dp[2] = dp[3];
+    }
+    cout<<dp[3]<<endl;
+    return 0;
+}
+【CSP-J入门组】【22162】：https://ac.nowcoder.com/acm/problem/22162
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    int res = 0;
+    for(int i = 0;i<=n;i+=7)
+        res+=i;
+    cout<<res<<endl;
+    return 0;
+}
+【CSP-J入门组】【22163】：https://ac.nowcoder.com/acm/problem/22163
+#include <iostream>
+using namespace std;
+int main(){
+    int n;
+    cin>>n;
+    int step = 0;
+    while(n!=1){
+        if(n&1)
+            n=n*3+1;
+        else
+            n/=2;
+        ++step;
+    }
+    cout<<step<<endl;
+    return 0;
+}
+【CSP-J入门组】【22164】：https://ac.nowcoder.com/acm/problem/22164
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a,b;
+    cin>>a>>b;
+    while(a!=b){
+        if(a>b)
+            a = a - b;
+        else
+            b = b - a;
+    }    
+    cout<<a<<endl;
+    return 0;
+}
+【CSP-J入门组】【22165】：https://ac.nowcoder.com/acm/problem/22165
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a,b;
+    while(cin>>a>>b)
+        cout<<a+b<<endl;
+    return 0;
+}
+【CSP-J入门组】【22166】：https://ac.nowcoder.com/acm/problem/22166
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n,a,b;
+    cin>>n;
+    while(n--){
+        cin>>a>>b;
+        cout<<a+b<<endl;
+    }
+    return 0;
+}
+【CSP-J入门组】【22167】：https://ac.nowcoder.com/acm/problem/22167
+#include <iostream>
+using namespace std;
+
+int main(){
+    int a,b;
+    while(cin>>a>>b,a!=0&&b!=0)
+        cout<<a+b<<endl;
+    return 0;
+}
+【CSP-J入门组】【22168】：https://ac.nowcoder.com/acm/problem/22168
+#include <iostream>
+using namespace std;
+
+int main(){
+    int cnt = 0;
+    int x,y;
+    cin>>x>>y;
+    for(int i = x;i<=y;++i){
+        int tmp = i;
+        int sum = 0;
+        while(tmp){
+            sum += tmp%10;
+            tmp/=10;
+        }
+        cnt += !(sum%5)?1:0;
+    }
+    cout<<cnt<<endl;
+    return 0;
+}
+【CSP-J入门组】【22169】：https://ac.nowcoder.com/acm/problem/22169
+#include <iostream>
+#include <vector>
+using namespace std;
+bool IsP(int n){
+    int tmp = n;
+    int cnt = 1;
+    while(tmp/=10)
+        ++cnt;
+    vector<int> bit(cnt,0);
+    for(int i = cnt-1;i>=0;--i){
+        bit[i] = n%10;
+        n/=10;
+    }
+    for(int i = 0;i<cnt/2;++i){
+        if(bit[i] != bit[cnt-i-1]){
+            return false;
+        }
+    }
+    return true;
+}
+int main(){
+    int n;
+    cin>>n;
+    for(int i = 1;i<n;++i){
+        if(IsP(i))
+            cout<<i<<endl;
+    }
+    return 0;
+}
+【CSP-J入门组】【22189】：https://ac.nowcoder.com/acm/problem/22189
+#include  <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    for(int i = 15;i<=n;i+=3){
+        int tmp = i;
+        while(tmp){
+            int bit = tmp%10;
+            if(bit==5){
+                cout<<i<<endl;
+                break;
+            }
+            tmp/=10;
+        }
+    }
+    return 0;
+}
+【CSP-J入门组】【22192】：https://ac.nowcoder.com/acm/problem/22192
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    for(int i = 23;i<=n;++i){
+        if(i%3==2 && i%5==3 && i%7==2)
+            cout<<i<<endl;
+    }
+    return 0;
+}
+【CSP-J入门组】【22194】：https://ac.nowcoder.com/acm/problem/22194
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    for(int i = 1000;i<=n;++i){
+        int AB = i/100;
+        int CD = i%100;
+        if((AB+CD)*(AB+CD)==i)
+            cout<<i<<endl;
+    }
+    return 0;
+}
+【CSP-J入门组】【22196】：https://ac.nowcoder.com/acm/problem/22196
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    int sum = 1 + n;
+    for(int i = sqrt(n);i>=2;--i){
+        if(n%i==0)
+            sum +=(n/i + i); 
+    }
+    cout<<sum<<endl;
+    return 0;
+}
+【CSP-J入门组】【22197】：https://ac.nowcoder.com/acm/problem/22197
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    vector<int> dp(n+1,0);
+    vector<int> coins({1,2,5});
+    dp[0] = 1;
+    for(int i = 0;i < 3;++i){
+       for(int j = coins[i];j<=n;++j){
+           dp[j] += dp[j-coins[i]];
+       }
+    }
+    cout<<dp[n]<<endl;
+    return 0;
+}
+【CSP-J入门组】【22198】：https://ac.nowcoder.com/acm/problem/22198
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(){
+    vector<int> vote(3,0);
+    int n;
+    int cnt = 0;
+    int tot = 0;
+    while(cin>>n,n!=-1){
+        ++tot;
+        if(n>=1 &&n<=3){
+            ++cnt;
+            ++vote[n-1];
+        }
+    }
+    cout<<"A="<<vote[0]<<endl;
+    cout<<"B="<<vote[1]<<endl;
+    cout<<"C="<<vote[2]<<endl;
+    cout<<"Tot="<<cnt<<endl;
+    if(vote[0]>tot/2)
+        cout<<"A-yes"<<endl;
+    else if(vote[1]>tot/2)
+        cout<<"B-yes"<<endl;
+    else if(vote[2]>tot/2)
+        cout<<"C-yes"<<endl;
+    else
+        cout<<"all-NO"<<endl;    
+    return 0;
+}
+【CSP-J入门组】【22199】：https://ac.nowcoder.com/acm/problem/22199
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    int res = 0;
+    while(n){
+        res+=n%10;
+        n/=10;
+    }
+    cout<<res<<endl;
+    return 0;
+}
+【CSP-J入门组】【22200】：https://ac.nowcoder.com/acm/problem/22200
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+void Judge(int n){
+    if(n==2){
+        cout<<"Yes"<<endl;
+        return;
+    }
+    if(n==1 || !(n%2) || (!(n%5))&& n>10){
+       cout<<"No"<<endl;
+       return;
+    }
+    for(int i = 3;i<=sqrt(n);i+=2){
+        if(!(n%i)){
+            cout<<"No"<<endl;
+            return;
+        }
+    }
+    cout<<"Yes"<<endl;
+}
+int main(){
+    int n;
+    int num;
+    cin>>n;
+    while(n--){
+        cin>>num;
+        Judge(num);
+    }
+    return 0;
+}
+【CSP-J入门组】【22202】：https://ac.nowcoder.com/acm/problem/22202
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main(){
+    char c;
+    int num=0,alpha=0,other=0;
+    while(c = getchar(),c != '?'){
+        if(isdigit(c))
+            ++num;
+        else if(isalpha(c))
+            ++alpha;
+        else
+            ++other;
+    }
+    cout<<"Letters="<<alpha<<endl;
+    cout<<"Digits="<<num<<endl;
+    cout<<"Others="<<other<<endl;
+    return 0;
+}
+【CSP-J入门组】【22203】：https://ac.nowcoder.com/acm/problem/22203
+#include <iostream>
+#include <string>
+using namespace std;
+void Print(int n){
+    int sz = 2*n - 1;
+    string s(sz+1,' ');
+    for(int i = 0;i<n;i++){
+        s[sz/2+i] = '*';
+        s[sz/2-i] = '*';
+        cout<<s<<endl;
+    }
+}
+int main(){
+    int n;
+    while(cin>>n)
+        Print(n);
+    return 0;
+}
+【CSP-J入门组】【22204】：https://ac.nowcoder.com/acm/problem/22204
+#include <iostream>
+#include <string>
+using namespace std;
+void Print(int n){
+    int sz = 2*n - 1;
+    string s(sz+1,' ');
+    for(int i = 0;i<n;i++){
+        s[sz/2+i] = '*';
+        s[sz/2-i] = '*';
+        cout<<s<<endl;
+    }
+    for(int i = n - 1;i>0;--i){
+        s[sz/2+i] = ' ';
+        s[sz/2-i] = ' ';
+        cout<<s<<endl;
+    }
+}
+int main(){
+    int n;
+    while(cin>>n)
+        Print(n);
+    return 0;
+}
+【CSP-J入门组】【22205】：https://ac.nowcoder.com/acm/problem/22205
+#include <iostream>
+using namespace std;
+
+int main(){
+    int n;
+    cin>>n;
+    int res = 1;
+    int tmp = 1;
+    for(int i = 2;i<=n;++i){
+        tmp*=i;
+        res += tmp;
+    }
+    cout<<res<<endl;
+    return 0;
+}
+【CSP-J入门组】【22206】：https://ac.nowcoder.com/acm/problem/22206
+#include <iostream>
+using namespace std;
+
+int main(){
+    for(int i = 1;i<10;++i){
+        for(int j = 1;j<=i;++j)
+           printf("%d*%d=%2d ",j,i,i*j);
+        printf("\n");
+    }
+    return 0;
+}
+【CSP-J入门组】【22208】：https://ac.nowcoder.com/acm/problem/22208
+#include <iostream>
+using namespace std;
+int main(){
+    int n;
+    cin>>n;
+    int tmp = 0;
+    for(int i = 1;i<=n;++i){
+        int m = tmp + i;
+        for(int j=tmp;j<m;++j){
+            printf("%4d",++tmp);
+        }
+        printf("\n");
+    }
+    return 0;
+}
+【CSP-J入门组】【22209】：https://ac.nowcoder.com/acm/problem/22209
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main(){
+    char c;
+    cin>>c;
+    int n = c - 'A' + 1;
+    int sz = 2*n - 1;
+    string s(sz,' ');
+    char tmp = 'A';
+    for(int i = 0;i<n;++i){
+        for(int j = 0;j<=i;++j){
+            s[sz/2-j] = tmp+i-j;
+            s[sz/2+j] = tmp+i-j;
+        }
+        cout<<s<<endl;
+    }
+    return 0;
+}
+【CSP-J入门组】【22210】：https://ac.nowcoder.com/acm/problem/22210
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+bool helper(int& n){
+    if(n>10 && !(n%5))
+        return false;
+    for(int i = 3;i<=sqrt(n);i+=2)
+        if(!(n%i))
+            return false;
+    return true;
+}
+int main(){
+    int n;
+    cin>>n;
+    if(n>=2)
+        cout<<2<<" ";
+    else
+        return 0;
+    for(int i = 3;i<=n;i+=2){
+        if(helper(i))
+            cout<<i<<" ";
+    }
+    return 0;
+}
+【CSP-J入门组】【22211】：https://ac.nowcoder.com/acm/problem/22211
+#include <iostream>
+using namespace std;
+int main(){
+    long* dp = new long[3];
+    dp[0] = 0,dp[1] = 1;
+    int n;
+    cin>>n;
+    if(n<=2){
+        cout<<dp[n-1]<<endl;
+        return 0;
+    }
+    n -= 2;
+    while(n--){
+        dp[2] = dp[0]+dp[1];
+        dp[0] = dp[1];
+        dp[1] = dp[2];
+    }
+    cout<<dp[2]<<endl;
+    return 0;
+}
+【CSP-J入门组】【22212】：https://ac.nowcoder.com/acm/problem/22212
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main(){
+    int row ,col;
+    int tmp;
+    for(int i=0;i<5;++i){
+        for(int j = 0;j<5;++j){
+            cin>>tmp;
+            if(tmp){
+                row = i;
+                col = j;
+             }
+        }
+    }
+    cout<<abs(2-row)+abs(2-col)<<endl;
+    return 0;
+}
+【CSP-J入门组】【22213】：https://ac.nowcoder.com/acm/problem/22213
+#include <iostream>
+#include <cmath>
+using namespace std;
+int main(){
+    int a,b,n;
+    cin>>n;
+    for(int i = sqrt(n);i>0;--i){
+        if(i*(n/i)==n){
+            a = i;
+            b = n/i;
+            break;
+        }
+    }
+    cout<<a<<" "<<b<<endl;
+    return 0;
+}
+【CSP-J入门组】【22214】：https://ac.nowcoder.com/acm/problem/22214
+#include <iostream>
+using namespace std;
+int main(){
+    int total,a,b;
+    cin>>a>>b>>total;
+    int m1 = total/a;
+    for(int i = m1;i>=0;--i)
+        if(!((total-i*a)%b)){
+            cout<<"Yes"<<endl;
+            return 0;
+        }
+    cout<<"No"<<endl;
+    return 0;
+}
+【CSP-J入门组】【22215】：https://ac.nowcoder.com/acm/problem/22215
+#include <iostream>
+using namespace std;
+int main(){
+    int A,B;
+    cin>>A>>B;
+    while(A!=B){
+        if(A>B)
+            A-=B;
+        else
+            B-=A;
+    }
+    cout<<A<<endl;
+    return 0;
+}
+【CSP-J入门组】【22216】：https://ac.nowcoder.com/acm/problem/22216
+#include <iostream>
+#include <stack>
+using namespace std;
+int main(){
+    int cnt;
+    int sz;
+    int tmp;
+    cin>>cnt;
+    stack<int> st;
+    while(cnt--){
+        cin>>sz;
+        while(sz--){
+            cin>>tmp;
+            st.push(tmp);
+        }
+        while(!st.empty()){
+            tmp = st.top();
+            cout<<tmp<<" ";
+            st.pop();
+        }
+        cout<<endl;
+    }
+    return 0;
+}
+【CSP-J入门组】【22218】：https://ac.nowcoder.com/acm/problem/22218
+#include <iostream>
+using namespace std;
+int main(){
+    int male=0,female=0;
+    int input;
+    int* sz = new int[2];
+    cin>>sz[0]>>sz[1];
+    while(sz[0]--){
+        cin>>input;
+        male = input>male?input:male;
+    }
+    while(sz[1]--){
+        cin>>input;
+        female = input>female?input:female;
+    }
+    cout<<male+female<<endl;
+    return 0;
+}
+【CSP-J入门组】【22219】：https://ac.nowcoder.com/acm/problem/22219
+#include <iostream>
+#include <vector>
+using namespace std;
+int main(){
+    int n,target;
+    int flag = 0;
+    while(cin>>n){
+        vector<int> v(n);
+        int inx = 0;
+        int tmp = n;
+        while(tmp--){
+            cin>>v[inx++];
+        }
+        cin>>target;
+        for(int i = 0;i<n;++i)
+            if(target==v[i]){
+                flag = 1;
+                cout<<i<<endl;
+                break;
+            }
+        if(!flag)
+            cout<<"No"<<endl;
+        flag = 0;
+    }
+    return 0;
+}
+【CSP-J入门组】【22220】：https://ac.nowcoder.com/acm/problem/22220
+#include <iostream>
+#include <vector>
+using namespace std;
+int main(){
+    int n;
+    int sum = 0;
+    int flag = 0;
+    double ave = 0.0;
+    while(cin>>n){
+        vector<int> v(n);
+        for(int i = 0;i<n;++i){
+            cin>>v[i];
+            sum+=v[i];
+        }
+        ave=sum*1.0/n;
+        for(int i = 0;i<n;++i)
+            if(v[i]<ave){
+                flag = 1;
+                cout<<v[i]<<" ";
+            }
+        cout<<endl;
+        sum=0;
+    }
+    return 0;
+}
+【CSP-J入门组】【22221】：https://ac.nowcoder.com/acm/problem/22221
+#include <vector>
+#include <iostream>
+using namespace std;
+int main(){
+    int sz;
+    cin>>sz;
+    vector<int> tower(sz);
+    for(int i = 0;i<sz;++i)
+        cin>>tower[i];
+    int m;
+    cin>>m;
+    int mp = m;
+    while(mp--){
+        vector<int> hadd(3);
+        for(int i = 0;i<3;++i)
+            cin>>hadd[i];
+        for(int i = hadd[0];i<=hadd[1];++i)
+            tower[i-1] += hadd[2];
+    }
+    for(int i = 0;i<sz;++i)
+        cout<<tower[i]<<" ";
+    return 0;
+}
+【CSP-J入门组】【22222】：https://ac.nowcoder.com/acm/problem/22222
+#include <iostream>
+#include <vector>
+using namespace std;
+int main(){
+    int n;
+    cin>>n;
+    vector<int> v(n);
+    for(int i = 0;i<n;++i)
+        cin>>v[i];
+    int x,sum=0;
+    for(int i = 1;i<n;++i){
+        if(!sum)
+            x = v[i];
+        sum+=x==v[i]?1:-1;
+    }
+    cout<<x<<endl;
+    return 0;
+}
+【CSP-J入门组】【22224】：https://ac.nowcoder.com/acm/problem/22224
+#include <iostream>
+using namespace std;
+int main(){
+    char* str = new char[1024];
+    cin.getline(str,1024);
+    cout<<str;
+    return 0;
+}
+【CSP-J入门组】【22225】：https://ac.nowcoder.com/acm/problem/22225
+#include <iostream>
+#include <vector>
+using namespace std;
+int main(){
+    char* str = new char[512];
+    vector<int> cnt(26,0);
+    while(cin.getline(str,512)){
+        char* pr = str;
+        while(*pr){
+            if(*pr<='z'&& *pr >= 'a')
+                ++cnt[*pr-'a'];
+            pr++;
+        }
+    }
+    for(char i = 'a';i<='z';++i){
+        if(cnt[i-'a'])
+            cout<<i<<":"<<cnt[i-'a']<<endl;
+    }
+    return 0;
+}
+【CSP-J入门组】【22226】：https://ac.nowcoder.com/acm/problem/22226
+#include <iostream>
+#include <cmath>
+#include <vector>
+using namespace std;
+bool helper(int& n){
+    for(int i = 3;i<=sqrt(n);i+=2)
+        if(!(n%i)) 
+            return false;
+    return true;
+}
+int main(){
+    int n;
+    vector<int> prime(78498,1000001);
+    prime[0] = 2;
+    int indx = 1;
+    for(int i = 3;i<1000000;i+=2){
+        if(n>10 && !(n%5))
+            continue;
+        if(helper(i))
+            prime[indx++] = i;
+    }
+    cin>>n;
+    int top;
+    for(int i = 0;i<n;++i){
+        cin>>top;
+        int index = 0;
+        while(index<78498 && prime[index]<=top)
+            ++index;
+        cout<<index<<endl;
+    }
+    return 0;
+}
+【CSP-J入门组】【22221】：https://ac.nowcoder.com/acm/problem/22227
+#include <iostream>
+using namespace std;
+class Solution{
+    public:
+    int loop(int n,int m){
+        ++count;
+        int x = 0;
+        if(n==1)
+            return 0;
+        else{
+            x = loop(n-1,m);
+        }
+        return (m+x)%n;
+    }
+    private:
+    int count = 0;
+};
+int main(){
+    int n,k,m;
+    cin>>n>>k>>m;
+    Solution s;
+    cout<<(s.loop(n,m)+k)%n<<endl;
+    return 0;
+}
+【CSP-J入门组】【22227】：https://ac.nowcoder.com/acm/problem/22228
+#include <vector>
+#include <algorithm>
+#include <iostream>
+using namespace std;
+int main(){
+    int n;
+    while(cin>>n){
+        vector<int> v(n);
+        for(int i = 0;i<n;++i)
+            cin>>v[i];
+        int target;
+        cin>>target;
+        auto it = find(v.begin(),v.end(),target);
+        if(it!=v.end())
+            v.erase(it);
+        for(auto& e:v)
+            cout<<e<<" ";
+        cout<<endl;
+    }
+    return 0;
+}
+【CSP-J入门组】【22228】：https://ac.nowcoder.com/acm/problem/22228
+#include <vector>
+#include <algorithm>
+#include <iostream>
+using namespace std;
+int main(){
+    int n;
+    while(cin>>n){
+        vector<int> v(n);
+        for(int i = 0;i<n;++i)
+            cin>>v[i];
+        int target;
+        cin>>target;
+        auto it = find(v.begin(),v.end(),target);
+        if(it!=v.end())
+            v.erase(it);
+        for(auto& e:v)
+            cout<<e<<" ";
+        cout<<endl;
+    }
+    return 0;
+}
+【CSP-J入门组】【22229】：https://ac.nowcoder.com/acm/problem/22229
+#include <iostream>
+#include <vector>
+using namespace std;
+int Find(const vector<vector<int>>& mp,const int& target){
+    int sz = mp.size();
+    for(int i = 0;i<sz;++i){
+        if(mp[i][0] == target){
+            return i;
+        }
+    }
+    return -1;
+}
+int main(){
+    int n,num;
+    cin>>n;
+    vector<vector<int>> mp;
+    while(n--){
+        cin>>num;
+        int inx = Find(mp,num);
+        if(inx != -1)
+            ++mp[inx][1];
+        else
+            mp.push_back({num,1});
+    }
+    int sz = mp.size();
+    int res = mp[0][0];
+    int res_cnt = mp[0][1];
+    for(int i = 1;i<sz;++i){
+        if(mp[i][1]>res_cnt){
+            res = mp[i][0];
+            res_cnt = mp[i][1];
+        }
+    }
+    cout<<res<<endl;
+    return 0;
+}
+【CSP-J入门组】【22230】：https://ac.nowcoder.com/acm/problem/22230
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main(){
+    int sz;
+    cin>>sz;
+    vector<vector<int>> sq(sz,vector<int>(sz));
+    int left = 0,top = 0,right =sz-1,bottom= sz-1;
+    int l,r,b,t;
+    int num = 1;
+    while(num<=sz*sz){
+        l = left;
+        while(l<=right)
+            sq[top][l++] = num++;
+        ++top;
+        t = top;
+        while(t<=bottom)
+            sq[t++][right] = num++;
+        --right;
+        r = right;
+        while(r>=left)
+            sq[bottom][r--] = num++;
+        --bottom;
+        b = bottom;
+        while(b>=top)
+            sq[b--][left] = num++;
+        ++left;
+    }
+    for(int i = 0;i<sz;++i){
+        for(int j = 0;j<sz;++j)
+            cout<<sq[i][j]<<" ";
+        cout<<endl;
+    }
+    return 0;
+}
+【CSP-J入门组】【22231】：https://ac.nowcoder.com/acm/problem/22231
+#include <iostream>
+#include <vector>
+using namespace std;
+int main() {
+    int n;
+    cin >> n;
+    vector<vector<int>> snake(n, vector<int>(n));
+    int num = 1;
+    int x = 0, y = 0;
+    int flag;
+    for (int k = 0; k < 2 * n; ++k) {
+        flag = k > n-1 ? 1 : 0;
+        if (!flag) {//上三角
+            if (!(k & 1)) {//斜向上
+                while (x >= 0)
+                    snake[x--][y++] = num++;
+                ++x;
+            }
+            else {//斜向下
+                while (y >= 0)
+                    snake[x++][y--] = num++;
+                ++y;
+            }
+        }
+        else {//下三角
+            if (k == n) {//主对角线需要将坐标校正回来
+                if (k & 1)
+                    ++x, --y;
+                else
+                    --x, ++y;
+            }
+            if (!(k & 1)) {//斜向上
+                while (y < n)
+                    snake[x--][y++] = num++;
+                x += 2, --y;
+            }
+            else {//斜向上
+                while (x < n)
+                    snake[x++][y--] = num++;
+                y += 2, --x;
+            }
+        }
+    }
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j)
+           cout << snake[i][j] << " ";
+        cout << endl;
+    }
+    return 0;
+}
+【CSP-J入门组】【22232】：https://ac.nowcoder.com/acm/problem/22232
+#include <iostream>
+#include <vector>
+using namespace std;
+class Solution{
+    public:
+    int Count(const vector<vector<char>>& board,const int& x,const int& y){
+        int cnt = 0;
+        int m = board.size();
+        int n = board[0].size();
+        for(int i = 0;i<8;++i){
+            int nx = x + dir[i][0];
+            int ny = y + dir[i][1];
+            if(nx<0||ny<0||nx>=m||ny>=n||board[nx][ny]=='?')
+                continue;
+            ++cnt;
+        }
+        return cnt;
+    }
+    private:
+        int dir[8][2] = {{1,0},{-1,0},{0,1},{0,-1},{-1,-1},{1,1},{1,-1},{-1,1}};
+};
+int main(){
+    int row,col;
+    cin>>row>>col;
+    Solution s;
+    vector<vector<char>> board(row,vector<char>(col));
+    for(int i = 0;i<row;++i)
+        for(int j = 0;j < col;++j)
+            cin>>board[i][j];
+    vector<vector<char>> cnt(row,vector<char>(col,'*'));
+    for(int i = 0;i< row;++i){
+        for(int j = 0;j < col;++j){
+            if(board[i][j] == '?')
+                cnt[i][j] = s.Count(board, i, j) + '0';
+        }
+    }
+    for(int i = 0;i<row;++i){
+        for(int j = 0;j < col;++j)
+            cout<<cnt[i][j];
+        cout<<endl;
+    }
+    return 0;
+}
+【CSP-J入门组】【22233】：https://ac.nowcoder.com/acm/problem/22233
+【CSP-J入门组】【22235】：https://ac.nowcoder.com/acm/problem/22235
+【CSP-J入门组】【22236】：https://ac.nowcoder.com/acm/problem/22236
+【CSP-J入门组】【22237】：https://ac.nowcoder.com/acm/problem/22237
+【CSP-J入门组】【22239】：https://ac.nowcoder.com/acm/problem/22239
+【CSP-J入门组】【22240】：https://ac.nowcoder.com/acm/problem/22240
+【CSP-J入门组】【22241】：https://ac.nowcoder.com/acm/problem/22241
+
