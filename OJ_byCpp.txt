@@ -5721,8 +5721,73 @@ int main() {
     return 0;
 }
 【CSP-J入门组】【22236】：https://ac.nowcoder.com/acm/problem/22236
+#include <iostream>
+#include <cmath>
+using namespace std;
+class Solution{
+    public:
+    int Renew(const int n,const int& m,const int& a){
+        int _m = m%a?m/a+1:m/a;
+        int _n = n%a?n/a+1:n/a;
+        return _m*_n;
+    }
+};
+int main(){
+    int n,m,a;
+    cin>>n>>m>>a;
+    Solution s;
+    cout<<s.Renew(n,m,a)<<endl;
+    return 0;
+}
 【CSP-J入门组】【22237】：https://ac.nowcoder.com/acm/problem/22237
 【CSP-J入门组】【22239】：https://ac.nowcoder.com/acm/problem/22239
+#include <cmath>
+#include <iostream>
+using namespace std;
+class Solution{
+    public:
+    bool Possibility(int x,int y,int M){
+        int sum = abs(x) + abs(y);
+        if(sum<=M && !((M-sum)&1))
+            return true;
+        else
+            return false;
+    }
+};
+int main(){
+    int a,b,M;
+    cin>>a>>b>>M;
+    Solution s;
+    if(s.Possibility(a,b,M))
+        cout<<"Yes"<<endl;
+    else
+        cout<<"No"<<endl;
+    return 0;
+}
 【CSP-J入门组】【22240】：https://ac.nowcoder.com/acm/problem/22240
+#include <iostream>
+using namespace std;
+class Solution{
+    public:
+    int possible(const int& n,const int& a,const int& b){
+        int res = 0;
+        int pre = n - a - 1;
+        for(int i = n - 1;pre>=0;--i,--pre){
+            if(n-1-i<=b)
+                ++res;
+            else
+                break;
+        }
+        return res;
+    }
+};
+int main(){
+    int n,a,b;
+    cin>>n>>a>>b;
+    Solution s;
+    cout<<s.possible(n,a,b)<<endl;
+    return 0;
+}
+
 【CSP-J入门组】【22241】：https://ac.nowcoder.com/acm/problem/22241
 
