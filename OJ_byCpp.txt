@@ -5740,6 +5740,27 @@ int main(){
     return 0;
 }
 【CSP-J入门组】【22237】：https://ac.nowcoder.com/acm/problem/22237
+#include <iostream>
+using namespace std;
+class Solution{
+    public:
+    void Seek(const int& n,const int& k,int* res){
+        if(k==n || !n || !k)//至少合适位置
+            res[0] = 0;//已满,空车,无车
+        else
+            res[0] = 1;//连续座
+        res[1] = min(2*k,n-k);
+    }
+};
+int main(){
+    int n,k;
+    cin>>n>>k;
+    int* res = new  int[2];
+    Solution s;
+    s.Seek(n,k,res);
+    cout<<res[0]<<" "<<res[1]<<endl;
+    return 0;
+}
 【CSP-J入门组】【22239】：https://ac.nowcoder.com/acm/problem/22239
 #include <cmath>
 #include <iostream>
@@ -5790,4 +5811,31 @@ int main(){
 }
 
 【CSP-J入门组】【22241】：https://ac.nowcoder.com/acm/problem/22241
-
+#include <iostream>
+#include <queue>
+using namespace std;
+class Solution{
+    public:
+    void Water(const int& Y,const int& k,const int& n,queue<int>& s){
+        for(int i = 1;i <= n/k;++i){
+            if(i*k>=Y)
+                s.push(k*i-Y);
+        }
+    }
+};
+int main(){
+    int Y,n,k;
+    cin>>Y>>k>>n;
+    queue<int> s;
+    Solution so;
+    so.Water(Y,k,n,s);
+    if(s.empty())
+        cout<<-1<<endl;
+    else{
+        while(s.size()){
+            cout<<s.front()<<" ";
+            s.pop();
+        }
+    }
+    return 0;
+}
