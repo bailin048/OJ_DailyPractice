@@ -5950,3 +5950,119 @@ public:
         return res;
     }
 };
+
+LeetCode【105】【根据前中序恢复二叉树】：https://leetcode-cn.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
+class Solution {
+public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        int n = preorder.size();
+        return creat_VLR_LVR(preorder, inorder, n);
+    }
+    TreeNode* creat_VLR_LVR(vector<int>& preorder, vector<int>& inorder, int n) {
+        if (!n)
+            return nullptr;
+        int k = 0;
+        while (inorder[k] != preorder[0])
+            ++k;
+        TreeNode* t = new TreeNode(inorder[k]);
+        vector<int> inl(inorder.begin(), inorder.begin() + k);
+        vector<int> inr(inorder.begin() + k + 1, inorder.end());
+        vector<int> prel(preorder.begin() + 1, preorder.begin() + k+1);
+        vector<int> prer(preorder.begin() + k + 1, preorder.end());
+        t->left = creat_VLR_LVR(prel, inl, k);
+        t->right = creat_VLR_LVR(prer, inr, n - k - 1);
+        return t;
+    }
+};
+
+LeetCode【450】【删除二叉搜索树中的节点】：https://leetcode-cn.com/problems/delete-node-in-a-bst/
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+        if(!root)
+            return nullptr;
+        if(key>root->val)
+            root->right = deleteNode(root->right,key);
+        else if(key<root->val)
+            root->left = deleteNode(root->left,key);
+        else{
+            TreeNode* p = nullptr;
+            if(root->left && root->right){
+                p = root->right;
+                while(p->left)
+                     p = p->left;
+                p->left = root->left;
+                root = root->right;
+            }
+            else{
+                if(root->left)
+                    return root->left;
+                else
+                    return root->right;
+            }
+        }
+        return root;
+    }
+};
+
+剑指offer【36】【二叉搜索树与双向链表】：https://leetcode-cn.com/problems/er-cha-sou-suo-shu-yu-shuang-xiang-lian-biao-lcof/
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* left;
+    Node* right;
+
+    Node() {}
+
+    Node(int _val) {
+        val = _val;
+        left = NULL;
+        right = NULL;
+    }
+
+    Node(int _val, Node* _left, Node* _right) {
+        val = _val;
+        left = _left;
+        right = _right;
+    }
+};
+*/
+class Solution {
+public:
+    Node* treeToDoublyList(Node* root) {
+        if(!root)
+            return root;
+        DFS(root);
+        head->left = pre;
+        pre->right = head;
+        return head;
+    }
+    void DFS(Node* cur){
+        if(!cur)
+            return;
+        DFS(cur->left);
+        if(pre)
+            pre->right = cur;
+        else
+            head = cur;
+        cur->left = pre;
+        pre = cur;
+        DFS(cur->right);
+    }
+private:
+    Node* pre;
+    Node* head;
+};
