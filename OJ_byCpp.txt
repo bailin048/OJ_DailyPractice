@@ -6066,3 +6066,40 @@ private:
     Node* pre;
     Node* head;
 };
+
+LeetCode【1117】【H2O生成】：https://leetcode-cn.com/problems/building-h2o/
+#include <semaphore.h> 
+class H2O {
+public:
+    H2O() {
+        sem_init(&hjob,0,0);// H 反应条件信号量
+        sem_init(&ojob,0,0);// O 反应条件信号量
+        sem_init(&hlimit,0,2);// H线程信号量
+        sem_init(&olimit,0,1);// O线程信号量
+    }
+
+    void hydrogen(function<void()> releaseHydrogen) {
+        sem_wait(&hlimit);// 保证只有2个H线程进入执行
+        sem_post(&hjob);// 释放H原子到达信号
+        sem_wait(&ojob);// 等待O原子到达
+        // releaseHydrogen() outputs "H". Do not change or remove this line.
+        releaseHydrogen();        
+        sem_post(&hlimit);// 相当于唤醒1个H线程
+    }
+
+    void oxygen(function<void()> releaseOxygen) {
+        sem_wait(&olimit);// 保证只有1个O线程进入执行
+        sem_post(&ojob);// 释放O原子到达信号，因为有2个H线程等待所以释放2个
+        sem_post(&ojob);
+        sem_wait(&hjob);// 等待H原子到达，2个原因同上
+        sem_wait(&hjob);
+        // releaseOxygen() outputs "O". Do not change or remove this line.
+        releaseOxygen();
+        sem_post(&olimit);// 相当于唤醒1个O线程
+    }
+    private:
+        sem_t hjob;
+        sem_t ojob;
+        sem_t hlimit;
+        sem_t olimit;
+};
