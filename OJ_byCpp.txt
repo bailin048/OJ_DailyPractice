@@ -6103,3 +6103,62 @@ public:
         sem_t hlimit;
         sem_t olimit;
 };
+牛客【组队竞赛】：大意是给3*n个整数，每3个数字为一组，如何分配使所有组的第二大数字之和最大
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+class Solution {
+public:
+    long long MaxLevel(vector<int>& level, const int& n) {
+        sort(level.begin(), level.end());
+        long long  res = 0;
+        for (int i = n; i < 3 * n; i+=2)
+            res += level[i];
+        return res;
+    }
+};
+int main() {
+    int n;
+    cin >> n;
+    vector<int> level(3*n);
+    for (int i = 0; i < 3*n; ++i)
+        cin >> level[i];
+    Solution s;
+    cout << s.MaxLevel(level, n) << endl;
+    return 0;
+}
+
+牛客【删除字符串】：删除s1中s2含有的所有字符：
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+class Solution {
+public:
+    void Remove(string& s1, const string& s2) {
+        int sz = s2.size();
+        for (auto& s : s2) {
+            auto it = s1.begin();
+            while (it != s1.end()) {
+                it = find(it, s1.end(), s);
+                if(it == s1.end())
+                    break;
+                it = s1.erase(it, it+1);
+            }
+        }
+    }
+};
+int main() {
+    char* buf = new char[512];
+    memset(buf, '\0', 512);
+    cin.getline(buf, 512);
+    string s1(buf);
+    memset(buf, '\0', 512);
+    cin.getline(buf, 512);
+    string s2(buf);
+    Solution s;
+    s.Remove(s1, s2);
+    cout << s1 << endl;
+    return 0;
+}
