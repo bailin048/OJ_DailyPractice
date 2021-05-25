@@ -6262,3 +6262,34 @@ int main() {
     cout << str << endl;
 };
 
+LeetCode【993】【二叉树的堂兄弟节点】：https://leetcode-cn.com/problems/cousins-in-binary-tree/
+class Solution {
+public:
+    bool isCousins(TreeNode* root, int x, int y) {
+        h.push_back(0),h.push_back(0);
+        par.push_back(nullptr),par.push_back(nullptr);
+        Measure(root,x,0,0,nullptr);
+        Measure(root,y,1,0,nullptr);
+        return h[0]==h[1] && par[0]!=par[1];
+    }
+    private:
+    void Measure(TreeNode* root,const int& key,const int& index,int hv,TreeNode* p){
+        if(!root){
+            h[index] = hv;
+            par[index] = nullptr;
+            return;
+        }
+        if(root->val != key){
+            if(root->left)
+                Measure(root->left,key,index,hv+1,root);
+            if(root->right)
+                Measure(root->right,key,index,hv+1,root); 
+        }else{
+            h[index] = hv;
+            par[index] = p;
+        }
+    }
+    private:
+    vector<int> h;
+    vector<TreeNode*> par;
+};
