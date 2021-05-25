@@ -6162,3 +6162,103 @@ int main() {
     cout << s1 << endl;
     return 0;
 }
+
+【牛客】【子排列划分】：给一个数组，将该数组划分为非递增/非递减子排列，最少划分为几段？
+//排序子序列
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    int Split(const vector<int>& seq) {
+        int sz = seq.size();
+        int cnt = 0;//划分次数
+        vector<int> tmp(sz);
+        tmp[0] = 0;
+        for (int i = 1; i < sz; ++i) {
+            if (seq[i] - seq[i - 1] > 0)//递增
+                tmp[i] = 1;
+            else if (seq[i] - seq[i - 1] == 0)//相等
+                tmp[i] = 0;
+            else//递减
+                tmp[i] = -1;
+        }
+        auto it = tmp.begin();
+        while (it != tmp.end()) {
+            auto zero = find(it, tmp.end(), 0);
+            if (zero != tmp.end())
+                it = tmp.erase(zero, zero + 1);
+            else
+                break;
+        }
+        sz = tmp.size();
+        for (int i = 1; i < sz; i++)
+            if (tmp[i - 1] != tmp[i]) {
+                ++cnt;
+                ++i;
+            }
+            
+        return cnt+1;
+    }
+};
+int main() {
+    int n;
+    cin >> n;
+    vector<int> seq(n);
+    for (int i = 0; i < n; ++i)
+        cin >> seq[i];
+    Solution s;
+    cout << s.Split(seq) << endl;
+    return 0;
+}
+
+【牛客】【单词翻转】：给一个英语句子，将单词翻转:eg.i  like beijing!    输出：beijing! like i
+#include <iostream>
+#include <string>
+#include <string.h>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    void Reverse(string& str) {
+        char* start = (char*)str.c_str();
+        char* begin = start;
+        char* end = start;
+        string res;
+        while (*end)
+            ++end;
+        start = end - 1;
+        while (start != begin) {
+            while (start!=begin && isspace(*start))//越过空格
+                --start;
+            end = start;//end指向单词最后一个字母
+            while (start!=begin && !isspace(*start))//越过单词
+                --start;
+            if (start-begin>0) {
+                string tmp(start + 1, end + 1);//单词记录
+                res += tmp;
+                res += ' ';
+            }
+            else if (start == begin) {
+                string tmp(start, end + 1);//单词记录
+                res += tmp;
+            }else
+                break;
+        }
+        str = res;
+        return;
+    }
+};
+int main() {
+    char* buf = new char[101];
+    memset(buf, '\0', 101);
+    cin.getline(buf, 101);
+    Solution s;
+    string str(buf);
+    s.Reverse(str);
+    cout << str << endl;
+};
+
