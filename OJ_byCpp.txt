@@ -6359,3 +6359,68 @@ int main() {
     cout << s.MoreThanHalfNum_Solution(v) << endl;
     return 0;
 }
+
+【牛客】【A,B,C糖果】：
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Solution{
+    public:
+    void CandyCal(vector<int>& res,const vector<int>& input){
+        res[0] = (input[0]+input[2])>>1;
+        res[1] = input[2] - res[0];
+        res[2] = input[3] - res[1]; 
+    }
+};
+
+int main(){
+    vector<int> input(4);
+    vector<int> res(3,0);
+    for(int i = 0; i < 4; ++i)
+        cin>>input[i];
+    Solution s;
+    s.CandyCal(res,input);
+    if(res[0]-res[1]!=input[0] || res[1]-res[2]!=input[1] || 
+       res[0]+res[1]!=input[2] || res[1]+res[2]!=input[3]){
+        cout<<"No"<<endl;
+        return 0;
+    }
+    cout<<res[0]<<" "<<res[1]<<" "<<res[2]<<endl;
+    return 0;
+}
+
+【牛客】【十进制转任意进制】：
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+class Solution{
+    public:
+        char num[16] = {'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+    public:
+    void swift(int M,const int& N){
+        int flag = M<0?1:0;
+        string res;
+        M *= M<0?-1:1;
+        while(M > 0){
+            res += num[M%N];
+            M /= N;
+        }
+        if(flag)
+            res += '-';
+        reverse(res.begin(),res.end());
+        if(res.size()==0)
+            cout<<"0"<<endl;
+        else
+            cout<<res<<endl;
+    }
+};
+int main(){
+    int M,N;
+    cin>>M>>N;
+    Solution s;
+    s.swift(M,N);
+    return 0;
+}
