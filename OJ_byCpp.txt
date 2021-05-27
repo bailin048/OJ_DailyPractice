@@ -6456,3 +6456,44 @@ public:
     sem_t one_done;
     sem_t two_done;
 };
+
+LeetCode【682】【棒球比赛】：https://leetcode-cn.com/problems/baseball-game/
+class Solution {
+public:
+    int calPoints(vector<string>& ops) {
+        int sz = ops.size();
+        stack<int> st;
+        st.push(to_num(ops[0]));
+        for(int i = 1; i < sz; ++i){
+            if(ops[i] == "+"){
+                int num1 = st.top();
+                st.pop();
+                int num2 = st.top();
+                st.push(num1);
+                st.push(num1+num2);
+            }
+            else if(ops[i] == "D")
+                st.push(2*st.top());
+            else if(ops[i] == "C")
+                st.pop();
+            else
+                st.push(to_num(ops[i]));
+        }
+        int score = 0;
+        while(!st.empty()){
+            score+=st.top();
+            st.pop();
+        }
+        return score;
+    }
+    private:
+    int to_num(string s){
+        int num = 0;
+        int flag = s[0] == '-'?-1:1;
+        int sz = s.size();
+        int i = flag == -1?1:0;
+        for(; i < sz; ++i)
+            num = num*10 + (s[i]-'0'); 
+        return num*flag;
+    }
+};
