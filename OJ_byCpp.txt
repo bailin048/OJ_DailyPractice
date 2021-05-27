@@ -6424,3 +6424,35 @@ int main(){
     s.swift(M,N);
     return 0;
 }
+
+LeetCode【1114】【按序打印】：https://leetcode-cn.com/problems/print-in-order/
+#include <semaphore.h>
+class Foo {
+public:
+    Foo() {
+        sem_init(&one_done,0,0);
+        sem_init(&two_done,0,0);
+    }
+
+    void first(function<void()> printFirst) {
+        // printFirst() outputs "first". Do not change or remove this line.
+        printFirst();
+        sem_post(&one_done);
+    }
+
+    void second(function<void()> printSecond) {
+        sem_wait(&one_done);
+        // printSecond() outputs "second". Do not change or remove this line.
+        printSecond();
+        sem_post(&two_done);
+    }
+
+    void third(function<void()> printThird) {
+        sem_wait(&two_done);
+        // printThird() outputs "third". Do not change or remove this line.
+        printThird();
+    }
+    private:
+    sem_t one_done;
+    sem_t two_done;
+};
