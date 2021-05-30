@@ -6559,3 +6559,65 @@ public:
         return (int)flag*res;
     }
 };
+
+LeetCode【692】【前K个高频单词】：https://leetcode-cn.com/problems/top-k-frequent-words/
+class Solution {
+public:
+    vector<string> topKFrequent(vector<string>& words, int k) {
+        unordered_map<string,int> cnt;
+        for(auto& s:words)
+            ++cnt[s];
+        vector<pair<string,int>> tmp(cnt.begin(),cnt.end());
+        sort(tmp.begin(),tmp.end(),compare);
+        vector<string> ans;
+        for(int i = 0; i < k; ++i)
+            ans.push_back(tmp[i].first);
+        return ans;
+    }
+private:
+static bool compare(const pair<string,int>& t1,const pair<string,int>& t2){
+        if(t1.second == t2.second)
+            return t1.first<t2.first;
+        return t1.second>t2.second;
+    }
+};
+
+LeetCode【884】【 两句话中的不常见单词】：https://leetcode-cn.com/problems/uncommon-words-from-two-sentences/
+class Solution {
+public:
+    vector<string> uncommonFromSentences(string s1, string s2) {
+        vector<string> v1;
+        vector<string> v2;
+        Swift(v1,s1);
+        Swift(v2,s2);
+        map<string,int> mp1;
+        map<string,int> mp2;
+        for(auto& s:v1)
+            ++mp1[s];
+        for(auto& s:v2)
+            ++mp2[s];
+        vector<string> ans;
+        for(auto& it:mp1)
+            if(it.second==1 && mp2[it.first]==0)
+                ans.push_back(it.first);
+         for(auto& it:mp2)
+            if(it.second==1 && mp1[it.first]==0)
+                ans.push_back(it.first);
+        return ans;
+    }
+private:
+    void Swift(vector<string>& v, const string& s) {
+        int start = 0;
+        int end = 0;
+        int sz = s.size();
+        while (end < sz) {
+            while (start < sz && s[start] == ' ')
+                ++start;
+            end = start;
+            while (end < sz && s[end] != ' ')
+                ++end;
+            v.push_back(s.substr(start, end - start));
+            start = end;
+        }
+    }
+};
