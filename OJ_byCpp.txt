@@ -6846,3 +6846,27 @@ int main() {
     S.Show(s);
     return 0;
 }
+
+【牛客】【华为机试题，棋盘路线】：从左上角沿着格子边缘走，多少走法走到右下角
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Solution{
+    public:
+    int WayNum(const int& n,const int& m){
+        vector<vector<int>> board(n+1,vector<int>(m+1,1));
+        for(int i = 1; i <= n; ++i){
+            for(int j = 1; j <= m; ++j)
+                board[i][j] = board[i-1][j] + board[i][j-1];
+        }
+        return board[n][m];
+    }
+};
+int main(){
+    int n,m;
+    Solution S;
+    while(cin>>n>>m)
+        cout<<S.WayNum(n,m)<<endl;
+    return 0;
+}
