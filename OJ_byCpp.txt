@@ -6947,3 +6947,53 @@ int main(){
         S.SafeLevel(s);
     return 0;
 }
+
+【牛客】【寻找最近父节点】：满二叉树从根节点按层序编号，1开编，输入两个数，求最近父节点
+class LCA {
+public:
+    int getLCA(int a, int b) {
+        if(a==b)
+            return a;
+        if(a/2 == b/2)
+            return a/2;
+        while(a!=b){
+            if(a>b)
+                a /= 2;
+            else if(b>a)
+                b /= 2;
+        }
+        return a;
+    }
+};
+【牛客】【二进制序列最长连续1长度】：
+#include <iostream>
+#include <vector>
+using namespace std;
+class Solution {
+public:
+    void Rec(const int& n) {
+        vector<int> s(32, 0);
+        for (int i = 0; i < 32; ++i)
+            s[32 - 1 - i] = (n >> i) & 1;
+        int len = 0;
+        int l = 0;
+        int r = 0;
+        while (r < 32) {
+            while (l < 32 && !s[l])
+                ++l;
+            r = l;
+            while (r < 32 && s[r])
+                ++r;
+            len = r - l > len ? r - l : len;
+            l = r;
+        }
+        cout << len << endl;
+    }
+};
+int main() {
+    Solution S;
+    int n;
+    while (cin >> n)
+        S.Rec(n);
+    return 0;
+}
