@@ -6997,3 +6997,46 @@ int main() {
         S.Rec(n);
     return 0;
 }
+
+【牛客】【将偶数分解为两个差值最小的素数和】：
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+class Solution{
+public:
+    void Seek(const int& n){
+        int l = n/2,r = n/2;
+        while(!test(l) || !test(r)){//任何一个非素数都会继续循环；
+            if(!test(l) || !test(r))
+                --l,++r;
+        }
+        cout<<l<<endl<<r<<endl;
+    }
+private:
+    bool test(const int& x){//素数返回true，否则false
+        if(x == 2)
+            return true;
+        if(x == 1 || !(x%2) || (x>10 && !(x%5)))
+           return false;
+        for(int i = 3; i <= sqrt(x); ++i)
+            if(!(x%i))
+                return false;
+        return true;
+    }
+};
+int main(){
+    int n;
+    Solution S;
+    while(cin>>n)
+        S.Seek(n);
+    return 0;
+}
+
+【牛客】【将m的二进制值插入到n的二进制值得j至i位】:
+class BinInsert {
+public:
+    int binInsert(int n, int m, int j, int i) {
+        return  n ^= (m << j);
+    }
+};
