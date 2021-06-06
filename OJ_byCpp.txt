@@ -7040,3 +7040,92 @@ public:
         return  n ^= (m << j);
     }
 };
+
+【牛客】【跳石板】：https://www.nowcoder.com/questionTerminal/4284c8f466814870bae7799a07d49ec8
+#include <iostream>
+#include <vector>
+#include <cmath>
+using namespace std;
+
+class Solution {
+public:
+    int MinStep(const int& N, const int& M) {
+        vector<int> step(M + 1, M + 1);
+        step[N] = 0;
+        for (int i = N; i <= M; ++i) {
+            if (step[i] == M + 1)
+                continue;
+            for (int j = 2; j * j <= i; ++j) {
+                if (!(i % j)) {
+                    if (i + j <= M)
+                        step[i + j] = min(step[i + j], step[i] + 1);
+                    if (i + i / j <= M)
+                        step[i + i / j] = min(step[i + i / j], step[i] + 1);
+                }
+            }
+        }
+        return step[M] == M + 1 ? -1 : step[M];
+    }
+};
+
+int main() {
+    int N, M;
+    Solution S;
+    while (cin >> N >> M)
+        cout << S.MinStep(N, M) << endl;
+    return 0;
+}
+
+
+【牛客】【参数分割】：
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    void Split(string& s) {
+        vector<string> v;
+        bool flag1 = false, flag2 = false;
+        char* start = (char*)s.c_str();
+        char* left = start;
+        char* right = left;
+        while (*right) {
+            while (*left == ' ')//越过空格
+                ++left;
+            if (*left == '"') {
+                flag1 = true;
+                ++left;
+            }
+            right = left;
+            while (*right && *right != ' ' || flag1) {
+                if (*right == '"') {
+                    flag2 = true;
+                    break;
+                }
+                ++right;
+            }
+            string tmp(s.substr(left - start, right-left));
+            v.push_back(tmp);
+            if (*right)
+                ++right;
+            else
+                break;
+            left = right;
+            flag1 = flag2 = false;
+        }
+        int sz = v.size();
+        cout << sz << endl;
+        for (int i = 0; i < sz; ++i)
+            cout << v[i] << endl;
+    }
+};
+
+int main() {
+    string s;
+    Solution S;
+    while (getline(cin, s))
+        S.Split(s);
+    return 0;
+}
