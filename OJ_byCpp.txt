@@ -7223,3 +7223,49 @@ int main() {
         cout << S.CountDay(n) << endl;
     return 0;
 }
+
+【牛客】【手套】：https://www.nowcoder.com/questionTerminal/365d5722fff640a0b6684391153e58d8
+class Gloves {
+public:
+    int findMinimum(int n, vector<int> left, vector<int> right) {
+        int left_sum = 0,right_sum = 0;
+        int left_min = 27,right_min = 27;
+        int zeros = 0;
+        for(int i = 0; i <n ; ++i){
+            if(!left[i] || !right[i])//不能匹配
+                zeros += (left[i]+right[i]);//全取
+            else{
+                left_sum += left[i];//左手套求和
+                right_sum += right[i];//右手套求和
+                left_min = min(left[i],left_min);//左手套最少值
+                right_min = min(right[i],right_min);//右手套最少值
+            }
+        }
+        //在一边覆盖所有颜色需要取的最少数量
+        int res = zeros + min(left_sum-left_min+1,right_sum-right_min+1);
+        return res + 1;//在另一组拿一个即可
+    }
+};
+
+【牛客】【N对应的二进制1的个数】：
+#include <iostream>
+using namespace std;
+
+class Solution {
+public:
+    int CountOne(int& N) {
+        int cnt = 0;
+        while (N) {
+            ++cnt;
+            N &= (N - 1);
+        }
+        return cnt;
+    }
+};
+int main() {
+    int n;
+    Solution S;
+    while (cin >> n)
+        cout << S.CountOne(n) << endl;
+    return 0;
+}
