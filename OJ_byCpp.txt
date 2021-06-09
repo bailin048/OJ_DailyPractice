@@ -7077,7 +7077,7 @@ int main() {
 }
 
 
-【牛客】【参数分割】：
+【牛客】【参数解析】：
 #include <iostream>
 #include <string>
 #include <vector>
