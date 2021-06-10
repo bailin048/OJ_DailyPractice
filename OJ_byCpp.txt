@@ -7269,3 +7269,196 @@ int main() {
         cout << S.CountOne(n) << endl;
     return 0;
 }
+
+【牛客】【扑克牌】：
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    void Winner(string& s) {
+        vector<vector<string>> card(split(s));
+        int sz1 = card[0].size();
+        int sz2 = card[0].size();
+        int win = WhichWinner(card);
+        if (win == -1) {
+            cout << "ERROR" <<endl;
+            return;
+        }
+        int sz_w = card[win].size();
+        for (int i = 0; i < sz_w; ++i)
+            cout << card[win][i] << " ";
+        cout << endl;
+    }
+private:
+    vector<vector<string>> split(string& s) {
+        bool flag = false;
+        vector<vector<string>> ans(2);
+        auto it = find(s.begin(), s.end(), '-');
+        string s1(s.begin(), it);
+        string s2(it + 1, s.end());
+        int i = 0;
+        it = s1.begin();
+        while (it != s1.end()) {
+             if (*it == ' ') {
+                ++it;
+                continue;
+             }
+             ans[0].push_back("");
+             while (it!=s1.end() && *it != ' ') {
+                    ans[0][i] += *it;
+                    ++it;
+             }
+              ++i;
+            }
+        i = 0;
+        it = s2.begin();
+        while (it != s2.end()) {
+            if (*it == ' ') {
+                ++it;
+                continue;
+            }
+            ans[1].push_back("");
+            while (it != s2.end() && *it != ' ') {
+                ans[1][i] += *it;
+                ++it;
+            }
+            ++i;
+        }
+        return ans;
+    }
+    int WhichWinner(vector<vector<string>>& card) {
+        int sz0 = card[0].size();
+        int sz1 = card[1].size();
+        //存在对王
+        if (card[0][0].size() == 5)
+            return 0;
+        if (card[1][0].size() == 5)
+            return 1;
+        vector<string> tmp{ "3","4","5","6","7","8","9","10","J","Q","K","A","2" };
+        if (sz0 == sz1) { //牌数相等
+            bool f0 = false, f1 = false;
+            for (int i = 0; i < 13; ++i) {
+                if (!f0 && tmp[i] == card[0][0]) {
+                    f0 = true;
+                    break;
+                }
+                if (!f1 && tmp[i] == card[1][0]) {
+                    f1 = true;
+                    break;
+                }
+            }
+            return f0 ? 1 : 0;
+        }
+        else if (sz0 == 4 || sz1 == 4) //存在炸弹
+            return sz0 == 4 ? 0 : 1;//谁是炸弹谁赢
+        return -1;//异常
+    }
+};
+int main() {
+    string s;
+    Solution S;
+    while (getline(cin, s))
+        S.Winner(s);
+    return 0;
+}
+
+
+【牛客】【N内的完备数】：
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    void Winner(string& s) {
+        vector<vector<string>> card(split(s));
+        int sz1 = card[0].size();
+        int sz2 = card[0].size();
+        int win = WhichWinner(card);
+        if (win == -1) {
+            cout << "ERROR" <<endl;
+            return;
+        }
+        int sz_w = card[win].size();
+        for (int i = 0; i < sz_w; ++i)
+            cout << card[win][i] << " ";
+        cout << endl;
+    }
+private:
+    vector<vector<string>> split(string& s) {
+        bool flag = false;
+        vector<vector<string>> ans(2);
+        auto it = find(s.begin(), s.end(), '-');
+        string s1(s.begin(), it);
+        string s2(it + 1, s.end());
+        int i = 0;
+        it = s1.begin();
+        while (it != s1.end()) {
+             if (*it == ' ') {
+                ++it;
+                continue;
+             }
+             ans[0].push_back("");
+             while (it!=s1.end() && *it != ' ') {
+                    ans[0][i] += *it;
+                    ++it;
+             }
+              ++i;
+            }
+        i = 0;
+        it = s2.begin();
+        while (it != s2.end()) {
+            if (*it == ' ') {
+                ++it;
+                continue;
+            }
+            ans[1].push_back("");
+            while (it != s2.end() && *it != ' ') {
+                ans[1][i] += *it;
+                ++it;
+            }
+            ++i;
+        }
+        return ans;
+    }
+    int WhichWinner(vector<vector<string>>& card) {
+        int sz0 = card[0].size();
+        int sz1 = card[1].size();
+        //存在对王
+        if (card[0][0].size() == 5)
+            return 0;
+        if (card[1][0].size() == 5)
+            return 1;
+        vector<string> tmp{ "3","4","5","6","7","8","9","10","J","Q","K","A","2" };
+        if (sz0 == sz1) { //牌数相等
+            bool f0 = false, f1 = false;
+            for (int i = 0; i < 13; ++i) {
+                if (!f0 && tmp[i] == card[0][0]) {
+                    f0 = true;
+                    break;
+                }
+                if (!f1 && tmp[i] == card[1][0]) {
+                    f1 = true;
+                    break;
+                }
+            }
+            return f0 ? 1 : 0;
+        }
+        else if (sz0 == 4 || sz1 == 4) //存在炸弹
+            return sz0 == 4 ? 0 : 1;//谁是炸弹谁赢
+        return -1;//异常
+    }
+};
+int main() {
+    string s;
+    Solution S;
+    while (getline(cin, s))
+        S.Winner(s);
+    return 0;
+}
