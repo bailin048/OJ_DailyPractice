@@ -7462,3 +7462,76 @@ int main() {
         S.Winner(s);
     return 0;
 }
+
+【牛客】【超长正整数相加】：
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Solution {
+public:
+    string BigNumAdd(const string& n1, const string& n2) {
+        int sz1 = n1.size();
+        int sz2 = n2.size();
+        int len = sz1 > sz2 ? sz1 + 1 : sz2 + 1;
+        string ans(len, '0');
+        int flag = 0;
+        int index1 = sz1 - 1;
+        int index2 = sz2 - 1;
+        int tmp = 0;
+        int x = 0, y = 0;
+        for (int i = len - 1; i >= 0; --i) {
+            x = index1 >= 0 ? n1[index1--] - '0' : 0;
+            y = index2 >= 0 ? n2[index2--] - '0' : 0;
+            tmp = x + y + flag;
+            ans[i] = tmp % 10 + '0';
+            flag = tmp / 10;
+        }
+        if (ans[0] == '0')
+            ans.erase(ans.begin());
+        return ans;
+    }
+};
+int main() {
+    string s1, s2;
+    Solution S;
+    while (cin >> s1 >> s2)
+        cout << S.BigNumAdd(s1, s2) << endl;
+    return 0;
+}
+
+【牛客】【INOC产品部】【杨辉三角的变形】：
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    int SeekLoc(const int& N) {
+        vector<int> Old(2 * N + 1, 0);
+        vector<int> New(2 * N + 1, 0);
+        Old[N] = 1;//中间初始值
+        for (int i = 1; i <= N; ++i) {
+            for (int j = 0; j < i; ++j) {
+                New[N - j] = Old[N - j] + Old[N - j - 1] + Old[N - j + 1];
+                New[N + j] = New[N - j];
+            }
+            Old = New;
+        }
+        int res = -1;
+        for (int i = 1; i < N; ++i) {
+            if (!(New[i] & 1)) {
+                res = i;
+                break;
+            }
+        }
+        return res;
+    }
+};
+int main() {
+    int n;
+    Solution S;
+    while (cin >> n)
+        cout << S.SeekLoc(n) << endl;
+    return 0;
+}
