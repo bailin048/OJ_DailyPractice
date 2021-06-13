@@ -7612,3 +7612,62 @@ int main() {
         cout << S.Rabbits(n) << endl;
     return 0;
 }
+
+【牛客】【汽水瓶】:
+#include <iostream>
+using namespace std;
+class Solution{
+public:
+    int Bottles(int n){
+        int res = 0;
+        while(n>2){
+            int water = n/3;
+            n -= water*2;
+            res += water;
+        }
+        if(n==2)//只有2个空瓶可以借
+            res += 1;
+        return res;
+    } 
+};
+
+int main(){
+    int n;
+    Solution S;
+    while(cin>>n,n!=0)
+        cout<<S.Bottles(n)<<endl;
+    return 0;
+}
+
+【牛客】【寻找a,b两个字符串的最长公共子串】：
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    string FindSubStr(string& a, string& b) {
+        if (a.size() > b.size())//保证a是短串
+            swap(a, b);
+        string str_m;//存储最长公共子串
+        for (int i = 0; i < a.size(); i++){
+            for (int j = i; j < a.size(); j++){
+                string temp = a.substr(i, j - i + 1);
+                if (int(b.find(temp)) < 0)
+                    break;
+                else if (str_m.size() < temp.size())
+                    str_m = temp;
+            }
+        }
+        return str_m;
+    }
+};
+int main() {
+    string s1;
+    string s2;
+    Solution S;
+    while (cin >> s1 >> s2)
+        cout << S.FindSubStr(s1, s2) << endl;
+    return 0;
+}
