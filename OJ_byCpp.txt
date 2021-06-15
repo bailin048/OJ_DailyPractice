@@ -7671,3 +7671,56 @@ int main() {
         cout << S.FindSubStr(s1, s2) << endl;
     return 0;
 }
+
+【牛客】【公共字串计算】：
+#include <string>
+#include <algorithm>
+#include <iostream>
+using namespace std;
+class Solution{
+public:
+    int getCommonStrLength(string& shorts,string& longs){
+        int szs = shorts.size();
+        int szl = longs.size();
+        if(szs<szl){
+            swap(shorts,longs);
+            swap(szs,szl);
+        }
+        int len = 0;
+        for(int i = 0; i < szs; ++i){
+            for(int j = i; j <szs - 1; ++j){
+                string tmp(shorts.substr(i,j-i+1));
+                if(int(longs.find(tmp)) >= 0)
+                    len = len<j-i+1?j-i+1:len;
+            }
+        }
+        return len;
+    }
+};
+
+【牛客】【翻转字符串】：
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Solution{
+public:
+    void Reverse(string& s){
+        int sz = s.size();
+        for(int i = 0;i < sz/2; ++i){
+            char tmp = s[i];
+            s[i] = s[sz-1-i];
+            s[sz-1-i] = tmp;
+        }
+    }
+};
+
+int main(){
+    string s;
+    Solution S;
+    while(cin>>s){
+        S.Reverse(s);
+        cout<<s<<endl;
+    }
+    return 0;
+}
