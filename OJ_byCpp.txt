@@ -7863,3 +7863,78 @@ int main() {
     }
     return 0;
 }
+
+【牛客】【小易的升级之路】：
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    int Ability(int& a, const int& n, const vector<int>& monster) {
+        for (int i = 0; i < n; ++i) {
+            if (monster[i] <= a)
+                a += monster[i];
+            else
+                a += GCD(a, monster[i]);
+        }
+        return a;
+    }
+private:
+    int GCD(int n, int m) {
+        while (n != m) {
+            if (n > m)
+                n -= m;
+            else if (m > n)
+                m -= n;
+        }
+        return n;
+    }
+};
+
+int main() {
+    int n, a;
+    Solution S;
+    while (cin >> n >> a) {
+        vector<int> monster(n);
+        for (int i = 0; i < n; ++i)
+            cin >> monster[i];
+        cout << S.Ability(a, n, monster) << endl;
+    }
+    return 0;
+}
+
+【牛客】【字符串中第一个出现一次的字符】：
+#include <iostream>
+#include <string>
+#include <map>
+using namespace std;
+
+class Solution {
+public:
+    void SeekFirst(const string& s) {
+        int sz = s.size();
+        map<char, int> mp;
+        for (auto& ss : s)
+            ++mp[ss];
+        int index = sz;
+        for (auto& it : mp) {
+            if (it.second == 1) {
+                int tmp = s.find(it.first);
+                index = tmp < index ? tmp : index;
+            }
+        }
+        if (index > sz - 1)
+            cout << -1 << endl;
+        else
+            cout << s[index] << endl;
+    }
+};
+
+int main() {
+    string s;
+    Solution S;
+    while (cin >> s)
+        S.SeekFirst(s);
+    return 0;
+}
