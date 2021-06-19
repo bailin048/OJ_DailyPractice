@@ -7978,3 +7978,86 @@ public:
         return dp[m][n];
     }
 };
+
+【牛客】【年终奖】：
+class Bonus {
+public:
+    int getMost(vector<vector<int> > board) {
+        vector<vector<int>> dp(board);
+        for(int i = 1; i<6;++i){
+            dp[0][i] += dp[0][i-1];
+            dp[i][0] += dp[i-1][0];
+        }
+        for(int i = 1; i<6; ++i){
+            for(int j = 1;j<6;++j){
+                dp[i][j] += max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+        return dp[5][5];
+    }
+};
+
+【牛客】【迷宫问题】：https://www.nowcoder.com/questionTerminal/535df0770f0940f092ab77db0907e5c9
+#include <iostream>
+#include <vector>
+#include <deque>
+#include <string>
+#pragma warning(disable:4996)
+using namespace std;
+
+class Solution {
+public:
+    void ShortPath(const vector<vector<int>>& board) {
+        m = board.size();
+        n = board[0].size();
+        vector<vector<bool>> visited(m, vector<bool>(n, false));
+        visited[0][0] = true;
+        deque<string> dq;
+        dq.push_back("(0,0)");
+        BackTrack(board, 0, 0, dq, visited);
+
+        while (!ans.empty()) {
+            cout << ans.front() << endl;
+            ans.pop_front();
+        }
+    }
+private:
+    void BackTrack(const vector<vector<int>>& board, int x, int y, deque<string>& dq, vector<vector<bool>>& vis) {
+        if (x == m - 1 && y == n - 1) {
+            if (ans.empty() || dq.size() < ans.size())
+                ans = dq;
+            return;
+        }
+        if (x >= m || y >= n || x < 0 || y < 0)
+            return;
+        for (int i = 0; i < 4; ++i) {
+            int nx = x + dir[i][0];
+            int ny = y + dir[i][1];
+            if (nx >= m || ny >= n || nx < 0 || ny < 0 || board[nx][ny] || vis[nx][ny])
+                continue;
+            vis[nx][ny] = true;
+            char tmp[64] = { 0 };
+            sprintf(tmp, "(%d,%d)", nx, ny);
+            dq.push_back(string(tmp));
+            BackTrack(board, nx, ny, dq, vis);
+            dq.pop_back();
+        }
+    }
+private:
+    int m;
+    int n;
+    int dir[4][2] = { {0,1},{1,0},{0,-1},{-1,0} };
+    deque<string> ans;
+};
+int main() {
+    int n, m;
+    Solution S;
+    while (cin >> m >> n) {
+        vector<vector<int>> board(m, vector<int>(n));
+        for (int i = 0; i < m; ++i)
+            for (int j = 0; j < n; ++j)
+                cin >> board[i][j];
+        S.ShortPath(board);
+    }
+    return 0;
+}
