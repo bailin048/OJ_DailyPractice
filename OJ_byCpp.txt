@@ -8059,3 +8059,65 @@ int main() {
     }
     return 0;
 }
+
+【牛客】【星际密码】：
+#include <iostream>
+#include <vector>
+using namespace std;
+vector<int> rec(10001);
+class Solution {
+public:
+    void Pwd(const vector<int>& num, const int& n) {
+        for (int i = 0; i < n; ++i) 
+            printf("%04d",rec[num[i]]);
+        cout << endl;
+    }
+};
+int main() {
+    rec[0] = rec[1] = 1;
+    for (int i = 2; i < 10001; ++i)
+        rec[i] = (rec[i - 2] + rec[i - 1]) % 10000;
+    int n;
+    Solution S;
+    while (cin >> n) {
+        vector<int> num(n);
+        for (int i = 0; i < n; ++i)
+            cin >> num[i];
+        S.Pwd(num, n);
+    }
+    return 0;
+}
+【牛客】【数根】：
+#include <iostream>
+#include <string> 
+using namespace std;
+
+class Solution {
+public:
+    int NumRoot(string& n) {
+        int sz = n.size();
+        if (sz == 1)
+            return n[0] - '0';
+        int root = 0;
+        while (n.size() != 1) {
+            for (int i = 0; i < sz; ++i)
+                root += (n[i] - '0');
+            n = "";
+            if (root > 9) {
+                n = string(to_string(root));
+                sz = n.size();
+                root = 0;
+            }
+            else
+                break;
+        }
+        return root;
+    }
+};
+int main() {
+    string n;
+    Solution S;
+    while (cin >> n)
+        cout << S.NumRoot(n) << endl;
+    return 0;
+}
