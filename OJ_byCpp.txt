@@ -8121,3 +8121,50 @@ int main() {
         cout << S.NumRoot(n) << endl;
     return 0;
 }
+
+【牛客】【猫进碗】：
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Solution {
+public:
+    void CanIn(const string& r, const string& cat) {
+        string circle = BigMul(BigMul(r, "2"), "314");
+        int sz = cat.size();
+        int len = circle.size();
+        string integar;
+        for (int i = 0; i < len - 2; ++i)
+            integar += circle[i];
+        if (cat > integar)
+            cout << "No" << endl;
+        else
+            cout << "Yes" << endl;
+    }
+private:
+    string BigMul(const string& n1, const string& n2) {
+        if (n1 == "0" || n2 == "0")
+            return "0";
+        int len1 = n1.size(), len2 = n2.size();
+        string ans(len1 + len2, '0');
+        for (int i = len1 - 1; i >= 0; --i) {
+            for (int j = len2 - 1; j >= 0; --j) {
+                int cur = (n1[i] - '0') * (n2[j] - '0') + (ans[i + j + 1] - '0');
+                ans[i + j + 1] = cur % 10 + '0';
+                ans[i + j] += cur / 10;
+            }
+        }
+        if (ans[0] == '0')
+            ans.erase(ans.begin());
+        return ans;
+    }
+};
+
+int main() {
+    string r;
+    string cat;
+    Solution S;
+    while (cin >> cat >> r)
+        S.CanIn(r, cat);
+    return 0;
+}
