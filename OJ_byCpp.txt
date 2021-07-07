@@ -8168,3 +8168,54 @@ int main() {
         S.CanIn(r, cat);
     return 0;
 }
+
+【牛客】【三角形】：https://www.nowcoder.com/questionTerminal/c67a09062c0f4a5b964eef0945d3dd06
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    void IsTriangle(const string& a, const string& b, const string& c) {
+        if (StringAdd(a, b, c) &&
+            StringAdd(a, c, b) &&
+            StringAdd(b, c, a))
+            cout << "Yes" << endl;
+        else
+            cout << "No" << endl;
+    }
+private:
+    bool StringAdd(const string& s1, const string& s2, const string& s3) {
+        string ss1(s1);
+        string ss2(s2);
+        int sz1 = ss1.size(), sz2 = ss2.size();
+        int sz = sz1 > sz2 ? sz1 : sz2;
+        reverse(ss1.begin(), ss1.end());
+        reverse(ss2.begin(), ss2.end());
+        int flag = 0;
+        string res;
+        for (int i = 0; i < sz; ++i) {
+            int n1 = i >= sz1 ? 0 : (ss1[i] - '0');
+            int n2 = i >= sz2 ? 0 : (ss2[i] - '0');
+            int tmp = n1 + n2 + flag;
+            res += (tmp % 10 + '0');
+            flag = tmp / 10;
+        }
+        if (flag)
+            res += '1';
+        reverse(res.begin(), res.end());
+        sz = res.size();
+        if (sz == s3.size())
+            return res > s3;
+        return sz > s3.size();
+    }
+};
+
+int main() {
+    string a, b, c;
+    Solution S;
+    while (cin >> a >> b >> c)
+        S.IsTriangle(a, b, c);
+}
