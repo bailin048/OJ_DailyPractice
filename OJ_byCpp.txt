@@ -8219,3 +8219,54 @@ int main() {
     while (cin >> a >> b >> c)
         S.IsTriangle(a, b, c);
 }
+
+【牛客】【猴子分桃】：https://www.nowcoder.com/questionTerminal/480d2b484e1f43af8ea8434770811b4a
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+class Solution {
+public:
+    void PeachOlder(int& N) {
+        long a = pow(5, N) - 4;
+        long b = pow(4, N) + N - 4;
+        cout << a << " " << b << endl;
+    }
+};
+int main() {
+    int N;
+    Solution S;
+    while (cin >> N, N)
+        S.PeachOlder(N);
+    return 0;
+}
+
+【牛客】【奇数位是奇数偶数位是偶数】：
+class Solution {
+public:
+    /**
+     *  奇数位上都是奇数或者偶数位上都是偶数
+     *  输入：数组arr，长度大于2
+     *  len：arr的长度
+     *  将arr调整成奇数位上都是奇数或者偶数位上都是偶数
+     */
+    void oddInOddEvenInEven(vector<int>& arr, int len) {
+        int left = 0, right = len - 1;
+        while (left < right) {
+            while (left < right &&
+                ((left & 1) && (arr[left] & 1)) ||
+                !(left & 1) && !(arr[left] & 1))
+                ++left;
+            while (left < right &&
+                (!(right & 1) && !(arr[right] & 1)) ||
+                ((right & 1) && (arr[right] & 1)))
+                --right;
+            if (left < right) {
+                int tmp = arr[left];
+                arr[left++] = arr[right];
+                arr[right--] = tmp;
+            }
+        }
+    }
+};
+
