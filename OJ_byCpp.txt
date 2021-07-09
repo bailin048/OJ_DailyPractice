@@ -8266,3 +8266,57 @@ public:
     }
 };
 
+【牛客】【有假币】：
+#include <iostream>
+using namespace std;
+
+class Solution{
+public:
+    int MinT(int& N){
+        int res = 0;
+        while(N>1){
+            N = (N/3+ (N%3>0));
+            ++res;
+        }
+        return res;
+    }
+};
+int main(){
+    int N;
+    Solution S;
+    while(cin>>N,N)
+        cout<<S.MinT(N)<<endl;
+    return 0;
+}
+
+【牛客】【】：
+class Solution {
+public:
+    int getFirstUnFormedNum(vector<int> arr, int len) {
+        vector<int> sum;
+        //计算子集
+        int top = 1 << len;
+        for (int mask = 1; mask < top; ++mask) {
+            int tmp = 0;
+            for (int i = 0; i < len; ++i)
+                if (mask & (1 << i))
+                    tmp += arr[i];
+            sum.push_back(tmp);
+        }
+        //删除重复数字
+        set<int> sset(sum.begin(),sum.end());
+        auto e = sset.end();
+        --e;
+        //计算没算出的数字
+        vector<int> ans;
+        for (int i = *sset.begin(); i <= *e; ++i) {
+            if (sset.end() == find(sset.begin(), sset.end(), i))
+                ans.push_back(i);
+        }
+        //取最小
+        int sz = ans.size();
+        if (!sz)
+            return (*e + 1);
+        return ans[0];
+    }
+};
