@@ -8411,3 +8411,165 @@ int main() {
     }
     return 0;
 }
+
+【牛客】【分解因式】：
+#include <iostream>
+#include <cmath>
+#include <string>
+using namespace std;
+
+class Solution {
+public:
+    string AnalysisFactors(int& n) {
+        string ans;
+        ans += to_string(n);
+        string tmp(" = ");
+        ans += tmp;
+        int idx = 0;
+        tmp = " * ";
+        while (n != 1) {
+            while (n != 1 && (n % table[idx] == 0)) {
+                ans += to_string(table[idx]);
+                ans += tmp;
+                n /= table[idx];
+            }
+            if (n < table[++idx])
+                break;
+        }
+        auto e = ans.end();
+        ans.erase(e - 3, e);
+        return ans;
+    }
+public:
+    Solution() {
+        table = new int[78498];
+        table[0] = 2;
+        table[1] = 3;
+        table[2] = 5;
+        table[3] = 7;
+        int idx = 4;
+        for (int i = 11; i < 1000000; i += 2) {
+            if (i % 5 == 0)
+                continue;
+            bool flag = true;
+            for (int j = 3; j <= sqrt(i); j+=2) {
+                if (i % j != 0)
+                    continue;
+                flag = false;
+                break;
+            }
+            if (flag)
+                table[idx++] = i;
+        }
+    }
+    ~Solution() {
+        delete[] table;
+    }
+private:
+    int* table;
+};
+
+int main() {
+    int n;
+    Solution S;
+    while (cin >> n)
+        cout << S.AnalysisFactors(n) << endl;
+    return 0;
+}
+
+【牛客】【美国节日】：https://www.nowcoder.com/questionTerminal/d95d98a2f96e49078cd7df84ba0c9d79
+#include <iostream>
+#include <string>
+#include <vector>
+#pragma warning(disable:4996)
+using namespace std;
+
+class Solution {
+public:
+    void Festival(const int& year) {
+        vector<string> ans(8);
+        Compute(ans, year);
+        for (int i = 0; i < 8; ++i)
+            cout << ans[i] << endl;
+        cout << endl;
+    }
+private:
+    void Compute(vector<string>& ans, const int& year) {
+        NoCompute(ans, year);
+        string tmp;
+        char dates[15] = { 0 };
+
+        int day = 1;
+        int w = Week(year - 1, 13);
+        if (w == 0 || w == 1)
+            day = 2 - w;
+        else
+            day += (8 - w);
+        sprintf(dates, "%02d-%02d", 1, day + 14);
+        tmp = string(dates);
+        ans[1] += tmp;
+
+        day = 1;
+        w = Week(year - 1, 14);
+        if (w == 0 || w == 1)
+            day = 2 - w;
+        else
+            day += (8 - w);
+        sprintf(dates, "%02d-%02d", 2, day + 14);
+        tmp = string(dates);
+        ans[2] += tmp;
+
+        day = 31;
+        w = Week(year, 5, 31);
+        if (w == 1)
+            day = 31;
+        else if (w == 0)
+            day = 25;
+        else
+            day -= (w - 1);
+        sprintf(dates, "%02d-%02d", 5, day);
+        tmp = string(dates);
+        ans[3] += tmp;
+
+        day = 1;
+        w = Week(year, 9);
+        if (w == 0 || w == 1)
+            day += 1 - w;
+        else
+            day += (8 - w);
+        sprintf(dates, "%02d-%02d", 9, day);
+        tmp = string(dates);
+        ans[5] += tmp;
+
+        day = 1;
+        w = Week(year, 11);
+        if (w > 4)
+            day += (11 - w);
+        else
+            day += (4 - w);
+        sprintf(dates, "%02d-%02d", 11, day + 21);
+        tmp = string(dates);
+        ans[6] += tmp;
+    }
+    void NoCompute(vector<string>& ans, const int& year) {
+        string tmp(to_string(year));
+        tmp += '-';
+        for (int i = 0; i < 8; ++i)
+            ans[i] = tmp;
+        ans[0] += "01-01";
+        ans[4] += "07-04";
+        ans[7] += "12-25";
+    }
+    int Week(const int& year, const int& month, const int& day = 1) {
+        int c = year / 100, y = year % 100, d = day, m = month;
+        int w = (c / 4 - 2 * c + y + y / 4 + 13 * (m + 1) / 5 + d - 1) % 7;
+        return (w + 7) % 7;
+    }
+};
+int main() {
+    int year;
+    Solution S;
+    while (cin >> year)
+        S.Festival(year);
+    return 0;
+}
