@@ -8573,3 +8573,126 @@ int main() {
         S.Festival(year);
     return 0;
 }
+
+【牛客】【斐波那契凤尾】：https://www.nowcoder.com/questionTerminal/c0a4b917a15f40a49ca10532ab9019fb
+#include <iostream>
+#include <string>
+#define TOP 1000000
+using namespace std;
+
+class Solution{
+public:
+    void NFaccnoi(const int& N){
+        string ans(to_string(table[N]));
+        int sz = ans.size();
+        if(N>=29 && sz!=6){
+            int n = 6-sz;
+            while(n--)
+                ans.insert(ans.begin(),'0');
+        }
+        cout<<ans<<endl;
+    }
+public:
+    Solution(){
+        table = new int[100001];
+        table[0] = 1;
+        table[1] = 1;
+        for(int i = 2; i < 100001; ++i)
+            table[i] = (table[i-1]+table[i-2])%TOP;
+    }
+    ~Solution(){
+        delete table;
+    }
+private:
+    int* table;
+};
+
+int main(){
+    int n;
+    Solution S;
+    while(cin>>n)
+        S.NFaccnoi(n);
+    return 0;
+}
+
+【牛客】【淘宝网店】：https://www.nowcoder.com/questionTerminal/754921e9c98b43d1b2d70c227b844101
+#include <iostream>
+using namespace std;
+
+class Solution{
+public:
+    long Profit(const int& y1,const int& m1,const int& d1,
+                const int& y2,const int& m2,const int& d2){
+        long res = 0; 
+        bool leapyear;
+        //中间有年份则计算中间年份 
+        for(int i = y1+1;i <= y2-1;++i){
+            leapyear = IsLeapYear(i);
+            if(leapyear)
+                res += 580;
+            else
+                res += 579;
+        }
+        if(y1==y2 && m1 == m2){//同年同月
+            res += (d2-d1+1);
+            if(!Prime[m1])
+                res *= 2;
+            return res;
+        }
+        //同年 or 跨年不同月
+        //第一个月
+        leapyear = IsLeapYear(y1);
+        if(m1==2 && leapyear)
+            res += days[0]-d1+1;
+        else if(Prime[m1])
+            res += days[m1]-d1+1;
+        else
+            res += (days[m1]-d1+1)*2;
+        //第一年m1月后的其余月份
+        for(int i = m1+1; i <= 12; ++i){
+            if(i == 2 && leapyear)
+                res += days[0];
+            else if(Prime[i])
+                res += days[i];
+            else
+                res += days[i]*2;
+        }
+        //最后一月
+        if(Prime[m2])
+            res += d2;
+        else
+            res += d2*2;
+        if(y1 != y2){//不同年
+            leapyear = IsLeapYear(y2);
+            //m2之前的同年月份
+            for(int i = 1; i < m2; ++i){
+                if(leapyear && i == 2)
+                    res += days[0];
+                else if(Prime[i])
+                    res += days[i];
+                else
+                    res += days[i]*2;
+            }
+        }
+       return res;
+    }
+private:
+    bool IsLeapYear(const int& year){
+        if(year%400==0)
+            return true;
+        if(year%4==0 && year%100)
+            return true;
+        return false;
+    }
+private:
+    int days[13] = {29,31,28,31,30,31,30,31,31,30,31,30,31};
+    bool Prime[13] = {1,0,1,1,0,1,0,1,0,0,0,1,0};
+};
+
+int main(){
+    int y1,y2,m1,m2,d1,d2;
+    Solution S;
+    while(cin>>y1>>m1>>d1>>y2>>m2>>d2)
+        cout<<S.Profit(y1,m1,d1,y2,m2,d2)<<endl;
+    return 0;
+}
