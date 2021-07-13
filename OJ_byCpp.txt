@@ -8363,6 +8363,9 @@ public:
                 primetable[index++] = i;
         }
     }
+    ~Solution(){
+       delete[] primetable;
+   }
 private:
     int primetable[9592];
 };
@@ -8676,6 +8679,10 @@ public:
         }
        return res;
     }
+    ~Solution(){
+       delete[] days;
+       delete[] Prime;
+     }
 private:
     bool IsLeapYear(const int& year){
         if(year%400==0)
@@ -8694,5 +8701,71 @@ int main(){
     Solution S;
     while(cin>>y1>>m1>>d1>>y2>>m2>>d2)
         cout<<S.Profit(y1,m1,d1,y2,m2,d2)<<endl;
+    return 0;
+}
+
+【牛客】客似云来】：https://www.nowcoder.com/questionTerminal/3549ff22ae2c4da4890e9ad0ccb6150d
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    long long Number(const int& d1, const int& d2) {
+        if (d1 == d2)
+            return tabeln[d1 - 1];
+        if (1 == d1)
+            return tabels[d2 - 1];
+        return tabels[d2 - 1] - tabels[d1 - 2];
+    }
+public:
+    Solution():tabeln(80),tabels(80) {
+        tabeln[0] = tabels[0] = 1;
+        tabeln[1] = 1, tabels[1] = 2;
+        for (int i = 2; i < 80; ++i) {
+            tabeln[i] = tabeln[i - 1] + tabeln[i - 2];
+            tabels[i] = tabeln[i] + tabels[i - 1];
+        }
+    }
+private:
+    vector<long long> tabeln;//第n天的数目
+    vector<long long> tabels;//第一天到第n天的总数
+};
+
+int main() {
+    Solution S;
+    int d1, d2;
+    while (cin >> d1 >> d2)
+        cout << S.Number(d1, d2) << endl;
+    return 0;
+}
+
+【牛客】【剪花布条】：https://www.nowcoder.com/questionTerminal/1046cd038f7a4b04b2b77b415973de1c
+#include <iostream>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+class Solution{
+public:
+    int Number(const string& sample,const string& target){
+        size_t pos = 0;
+        int cnt = 0;
+        size_t ed = string::npos;
+        int sz = target.size();
+        while((pos=sample.find(target,pos)) != ed){
+            ++cnt;
+            pos += sz;
+        }
+        return cnt;
+    }
+};
+
+int main(){
+    Solution S;
+    string s;
+    string t;
+    while(cin>>s>>t)
+        cout<<S.Number(s, t)<<endl;
     return 0;
 }
