@@ -8769,3 +8769,74 @@ int main(){
         cout<<S.Number(s, t)<<endl;
     return 0;
 }
+
+【牛客】【收件人列表】：
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    string Name(vector<string>& v, const int& N) {
+        string ans;
+        for (int i = 0; i < N; ++i) {
+            bool exist = (v[i].find(',',0) != string::npos) || (v[i].find( ' ',0) != string::npos);
+            exert(ans, v[i], exist);
+        }
+        auto e = ans.end();
+        e -= 2;
+        ans.erase(e, ans.end());
+        return ans;
+    }
+private:
+    void exert(string& ans, string& s, bool exist) {
+        if (exist) {
+            s.insert(s.begin(), '"');
+            s.insert(s.end(), '"');
+        }
+        ans += s;
+        ans += ", ";
+    }
+};
+
+int main() {
+    int n;
+    Solution S;
+    while (cin >> n) {
+        vector<string> v(n);
+        getchar();
+        for (int i = 0; i < n; ++i) 
+            getline(cin, v[i]);
+        cout << S.Name(v, n) << endl;
+    }
+    return 0;
+}
+
+【牛客】【养兔子】：
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Solution{
+public:
+    long long FacN(const int& N){
+        return table[N-1];
+    }
+    Solution():table(90){
+        table[0] = 1;
+        table[1] = 2;
+        for(int i = 2; i < 90; ++i)
+            table[i] = table[i-1] + table[i-2];
+    }
+private:
+   vector<long long> table;
+};
+
+int main(){
+    int n;
+    Solution S;
+    while(cin>>n)
+        cout<<S.FacN(n)<<endl;
+    return 0;
+}
