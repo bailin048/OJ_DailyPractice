@@ -8992,7 +8992,7 @@ int main() {
     return 0;
 }
 
-【牛客】【Rational Arithmetic】：
+【牛客】【Rational Arithmetic】：https://www.nowcoder.com/questionTerminal/b388bdee5e3e4b1c86a79ad1877a3aa4?toCommentId=9495842&ran=103
 #include <iostream>
 #include <string>
 #include <vector>
@@ -9000,12 +9000,16 @@ int main() {
 using namespace std;
 class Solution {
 public:
+    //对外接口
 	void Calculate(vector<string>& n) {
 		//划分数据
 		int index = 0, idx = 0;
 		Split(n[0], index, idx);
 		idx = 0;
 		Split(n[1], index, idx);
+        //为避免两有理数被多次计算字符串，此处进行计算
+        Head(num[0], num[1], n1);
+        Head(num[2], num[3], n2);
 		// +
 		int s = num[0] * num[3] + num[2] * num[1];
 		int p = num[1] * num[3];
@@ -9020,13 +9024,13 @@ public:
 		// /
 		s = num[0] * num[3];
 		p = num[1] * num[2];
-		if (p < 0 && s>0)
+		if (p < 0 && s>0)//若分母为负数，交换负号
 			s *= -1, p *= -1;
 		Show(s, p, '/');
 	}
 	Solution() :num(4),N(6) {}
 private:
-private:
+    //更相减损术
 	int GDC(int m1, int m2) {
 		m1 *= m1 < 0 ? -1 : 1;
 		m2 *= m2 < 0 ? -1 : 1;
@@ -9040,15 +9044,18 @@ private:
 		}
 		return m1;
 	}
+    //格式控制及输出
 	void Show(const int& s, const int& p, const char& sys) {
 		string head;
-		Head(num[0], num[1], head);
+        //拼接第一个有理数
+		head += n1;
 		head += ' ';
 		head += sys;
 		head += ' ';
-		Head(num[2], num[3], head);
-		head += ' ';
-		head += "= ";
+        //拼接第二个有理数
+		head += n2;
+		head += " = ";
+        //拼接结果
 		if (!p)
 			head += "Inf";
 		else if (!s)
@@ -9057,6 +9064,7 @@ private:
 			Head(s, p, head);
 		cout << head << endl;
 	}
+    //输出字符串拼接
 	void Head(const int& s, const int& p, string& head) {
 		if (s == 0) {
 			head += '0';
@@ -9066,12 +9074,9 @@ private:
 			if (flag)
 				head += "(-";
 			head += to_string(abs(s / p));//整数部分
-			if (s/p*p!=s) {//c存在小数部分
+			if (s/p*p != s) {//存在小数部分
 				head += ' ';
-				int fac = GDC(abs(s) % p, p);//最大公因数
-				head += to_string((abs(s) - abs(s) / p * p) / fac);
-				head += '/';
-				head += to_string(p / fac);
+				 CalFraction(s,p,head);
 			}
 			if (flag)
 				head += ")";
@@ -9081,17 +9086,20 @@ private:
 		else {//不存在整数部分
 			bool flag = s < 0;//负数为真
 			if (flag)
-				head += "(-";
-			if (s / p * p != s) {//c存在分数部分
-				int fac = GDC(abs(s) % p, p);//最大公因数
-				head += to_string((abs(s) - abs(s) / p * p) / fac);
-				head += '/';
-				head += to_string(p / fac);
-			}
+		    head += "(-";
+            CalFraction(s,p,head);
 			if (flag)
 				head += ")";
 		}
 	}
+    //计算分数部分
+    void CalFraction(const int& s,const int& p,string& head){
+        int fac = GDC(abs(s) % p, p);//最大公因数
+		head += to_string((abs(s) - abs(s) / p * p) / fac);
+		head += '/';
+		head += to_string(p / fac);
+    }
+    //数字切割
 	void Split(string& n,int& index,int& idx) {
 		int sys = n[0] == '-' ? -1 : 1;//正负判断
 		idx += sys == -1 ? 1 : 0;//确定因符号引起的偏移
@@ -9108,6 +9116,8 @@ private:
 private:
 	vector<int> num;//[a1,b1,a2,b2]
 	vector<string> N;  //[k,a,b,k,a,b]
+    string n1;//数1的输出格式
+    string n2;//数2的输出格式
 };
 
 int main() {
@@ -9116,4 +9126,3 @@ int main() {
 	while (cin >> n[0] >> n[1])
 		S.Calculate(n);
 }
-
