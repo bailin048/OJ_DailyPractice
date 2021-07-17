@@ -8926,3 +8926,194 @@ int main() {
         S.Possiblity(n);
     return 0;
 }
+
+【牛客】【Pre-Post】:
+#include <iostream>
+#include <string>
+#include <map>
+using namespace std;
+
+class Solution {
+public:
+    int KindsofMTree(const int& n,const string& pr, const string& po) {
+        m = n;
+        ans = 1;
+        pre = pr;
+        post = po;
+        int sz = pr.size();
+        for (int i = 0; i < sz; ++i)
+            mp[post[i]] = i;
+        Creat(0, sz - 1, 0, sz - 1);
+        return ans;
+    }
+private:
+    void Creat(int preS, int preE, int postS, int postE) {
+        if (preS >= preE)
+            return;
+        int i = preS + 1, cnt = 0;//cnt统计子树的个数,i是标识当前树的根节点的子树的根节点，在pre中的下标
+        int idx = mp[pre[i]];
+        while (i <= preE) {
+            Creat(i, i + idx - postS, postS, idx);
+            ++cnt;
+            if (idx != postE - 1) {//子树不止一个,把要递归搜索的树的区间整体移动=
+                i += idx - postS + 1;   //idx-postS是刚刚递归过的子树的大小
+                                  //i要跨过这个区间，找到下一个要搜索的根节点
+                postS = idx + 1;    //post的区间起始位置也要前进1位
+                idx = mp[pre[i]];//idx重新定位下一个要搜索的子树根节点在post中的下标
+            }
+            else
+                break;//完成对当前区间中所有字数根节点的全部搜索
+        }
+        ans *= Cmk(m, cnt);//计算排列组合，cnt表示当前层有几个子树
+    }
+    int Cmk(int m, const int& k) {
+        int numerator = 1, denominator = 1;
+        for (int i = 0; i < k; i++, --m)
+            numerator *= m;
+        for (int i = 1; i <= k; ++i)
+            denominator *= i;
+        return numerator / denominator;
+    }
+private:
+    int ans;
+    map<char, int> mp;
+    string pre;
+    string post;
+    int m;
+};
+
+int main() {
+    string pre;
+    string post;
+    int n;
+    Solution S;
+    while (cin >> n, cin >> pre, cin >> post)
+        cout << S.KindsofMTree(n,pre, post) << endl;
+    return 0;
+}
+
+【牛客】【Rational Arithmetic】：
+#include <iostream>
+#include <string>
+#include <vector>
+#include <cmath>
+using namespace std;
+class Solution {
+public:
+	void Calculate(vector<string>& n) {
+		//划分数据
+		int index = 0, idx = 0;
+		Split(n[0], index, idx);
+		idx = 0;
+		Split(n[1], index, idx);
+		// +
+		int s = num[0] * num[3] + num[2] * num[1];
+		int p = num[1] * num[3];
+		Show(s, p, '+');
+		// -
+		s = num[0] * num[3] - num[2] * num[1];
+		Show(s, p, '-');
+		// *
+		s = num[0] * num[2];
+		p = num[1] * num[3];
+		Show(s, p, '*');
+		// /
+		s = num[0] * num[3];
+		p = num[1] * num[2];
+		if (p < 0 && s>0)
+			s *= -1, p *= -1;
+		Show(s, p, '/');
+	}
+	Solution() :num(4),N(6) {}
+private:
+private:
+	int GDC(int m1, int m2) {
+		m1 *= m1 < 0 ? -1 : 1;
+		m2 *= m2 < 0 ? -1 : 1;
+		while (m1 != m2) {
+			if (m1 > m2)
+				m1 -= m2;
+			else if (m1 < m2)
+				m2 -= m1;
+			else
+				return m1;
+		}
+		return m1;
+	}
+	void Show(const int& s, const int& p, const char& sys) {
+		string head;
+		Head(num[0], num[1], head);
+		head += ' ';
+		head += sys;
+		head += ' ';
+		Head(num[2], num[3], head);
+		head += ' ';
+		head += "= ";
+		if (!p)
+			head += "Inf";
+		else if (!s)
+			head += '0';
+		else
+			Head(s, p, head);
+		cout << head << endl;
+	}
+	void Head(const int& s, const int& p, string& head) {
+		if (s == 0) {
+			head += '0';
+		}
+		else if (abs(s) > p) {//存在整数部分
+			bool flag = s < 0;//负数为真
+			if (flag)
+				head += "(-";
+			head += to_string(abs(s / p));//整数部分
+			if (s/p*p!=s) {//c存在小数部分
+				head += ' ';
+				int fac = GDC(abs(s) % p, p);//最大公因数
+				head += to_string((abs(s) - abs(s) / p * p) / fac);
+				head += '/';
+				head += to_string(p / fac);
+			}
+			if (flag)
+				head += ")";
+		}
+		else if (s == p)
+			head += '1';
+		else {//不存在整数部分
+			bool flag = s < 0;//负数为真
+			if (flag)
+				head += "(-";
+			if (s / p * p != s) {//c存在分数部分
+				int fac = GDC(abs(s) % p, p);//最大公因数
+				head += to_string((abs(s) - abs(s) / p * p) / fac);
+				head += '/';
+				head += to_string(p / fac);
+			}
+			if (flag)
+				head += ")";
+		}
+	}
+	void Split(string& n,int& index,int& idx) {
+		int sys = n[0] == '-' ? -1 : 1;//正负判断
+		idx += sys == -1 ? 1 : 0;//确定因符号引起的偏移
+		int pos = n.find('/', idx);//找出完整数字
+		for (int j = idx; j < pos; ++j)
+			num[index] = num[index] * 10 + (n[j] - '0');
+		num[index++] *= sys;
+		idx = pos + 1;
+		pos = n.size();
+		for (int j = idx; j < pos; ++j)
+			num[index] = num[index] * 10 + (n[j] - '0');
+		++index;
+	}
+private:
+	vector<int> num;//[a1,b1,a2,b2]
+	vector<string> N;  //[k,a,b,k,a,b]
+};
+
+int main() {
+	Solution S;
+	vector<string> n(2);
+	while (cin >> n[0] >> n[1])
+		S.Calculate(n);
+}
+
