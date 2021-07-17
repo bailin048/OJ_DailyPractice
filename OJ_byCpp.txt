@@ -9028,7 +9028,7 @@ public:
 			s *= -1, p *= -1;
 		Show(s, p, '/');
 	}
-	Solution() :num(4),N(6) {}
+	Solution() :num(4) {}
 private:
     //更相减损术
 	int GDC(int m1, int m2) {
@@ -9115,7 +9115,6 @@ private:
 	}
 private:
 	vector<int> num;//[a1,b1,a2,b2]
-	vector<string> N;  //[k,a,b,k,a,b]
     string n1;//数1的输出格式
     string n2;//数2的输出格式
 };
