@@ -9125,3 +9125,87 @@ int main() {
 	while (cin >> n[0] >> n[1])
 		S.Calculate(n);
 }
+
+【牛客】【mkdir】：https://www.nowcoder.com/questionTerminal/433c0c6a1e604a4795291d9cd7a60c7a
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+bool comp(const string& s1, const string& s2) {
+    return s1 < s2;
+}
+class Solution {
+public:
+    void Mkdir(vector<string>& path, const int& n) {
+        sort(path.begin(), path.end(), comp);
+        for (int i = 1; i < n; ++i) {
+            int pos = path[i].find(path[i - 1], 0);
+            if (pos != string::npos && path[i][pos + path[i - 1].size()] == '/')
+                path[i - 1] = "";
+        }
+        auto it = path.begin();
+        while (it != path.end()) {
+            it = find(it, path.end(), "");
+            if (it != path.end())
+                it = path.erase(it);  
+        }
+        int sz = path.size();
+        for (int i = 0; i < sz; ++i)
+            cout << string(head + path[i]) << endl;
+        cout << endl;
+    }
+    Solution():head("mkdir -p ") {}
+private:
+    string head;
+};
+
+int main() {
+    Solution S;
+    int n;
+    while (cin >> n) {
+        getchar();
+        vector<string> path(n);
+        for (int i = 0; i < n; ++i)
+            getline(cin, path[i]);
+        S.Mkdir(path, n);
+    }
+    return 0;
+}
+
+【牛客】【最大连接数量】：
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+using namespace std;
+
+class Solution {
+public:
+    int MaxConnect(const vector<string>& req) {
+        int res = 0;
+        int sz = req.size();
+        string q;
+        for (int i = 0; i < sz; ++i) {
+            if (req[i][2] == 'c')
+                q += req[i][0];
+            else
+                q.erase(find(q.begin(), q.end(), req[i][0]));
+            res = res < q.size() ? q.size() : res;
+        }
+        return res;
+    }
+};
+int main() {
+    Solution S;
+    int n;
+    while (cin >> n) {
+        getchar();
+        vector<string> v(n);
+        for (int i = 0; i < n; ++i)
+            getline(cin, v[i]);
+        cout << S.MaxConnect(v) << endl;
+    }
+    return 0;
+}
