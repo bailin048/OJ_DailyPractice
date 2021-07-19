@@ -9209,3 +9209,105 @@ int main() {
     }
     return 0;
 }
+
+【牛客】【蘑菇阵】：
+#include <vector>
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+class Solution {
+public:
+    double Possibility(vector<vector<int>>& board) {
+        int n = board.size();
+        int m = board[0].size();
+        vector<vector<double>> dp(n+1, vector<double>(m+1, 0.0));
+        for (int i = 1; i <= n; ++i) {
+            for (int j = 1; j <= m; ++j) {
+                if(i == 1 && j == 1) {dp[i][j] = 1; continue;}
+                if(!board[i-1][j-1]) {dp[i][j] = 0; continue;}
+                if(i == n && j == m) {dp[i][j] = dp[i-1][j] + dp[i][j-1]; continue;}
+                if(i == n) {dp[i][j] = dp[i-1][j]*0.5 + dp[i][j-1]; continue;}
+                if(j == m) {dp[i][j] = dp[i-1][j] + dp[i][j-1]*0.5; continue;}
+                if(i == 1) {dp[i][j] = dp[i][j-1]*0.5; continue;}
+                if(j == 1) {dp[i][j] = dp[i-1][j]*0.5; continue;}
+                dp[i][j] = dp[i][j-1]*0.5 + dp[i-1][j]*0.5;
+            }
+        }
+        return dp[n][m];
+    }
+};
+
+int main() {
+    Solution S;
+    int n, m, k;
+    int x, y;
+    while (cin >> n >> m >> k) {
+        vector<vector<int>> board(n, vector<int>(m, 1));
+        for (int i = 0; i < k; ++i) {
+            cin >> x >> y;
+            board[x - 1][y - 1] = 0;
+        }
+        cout << fixed << setprecision(2) << S.Possibility(board) << endl;
+    }
+}
+
+【牛客】【红与黑】：
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+class Solution {
+public:
+    int Bricks(vector<string>& board, const int& wid, const int& len) {
+        m = wid, n = len;
+        vector<vector<bool>> visited(m, vector<bool>(n, false));
+        int x, y;
+        bool flag = true;
+        for (x = 0; x < m; ++x) {
+            for (y = 0; y < n; ++y) {
+                if (board[x][y] == '@') {
+                    visited[x][y] = true;
+                    flag = false;
+                    break;
+                }
+            }
+            if (!flag)
+                break;
+        }
+        DFS(board, visited, x, y);
+        return cnt;
+    }
+private:
+    void DFS(const vector<string>& board, vector<vector<bool>>& visited, int x, int y) {
+        for (int i = 0; i < 4; ++i) {
+            int nx = x + dir[i][0];
+            int ny = y + dir[i][1];
+            if (nx >= m || nx < 0 || ny >= n || ny < 0 ||
+                visited[nx][ny] || board[nx][ny] == '#')
+                continue;
+            visited[nx][ny] = true;
+            ++cnt;
+            DFS(board, visited, nx, ny);
+        }
+    }
+private:
+    int m;
+    int n;
+    int cnt = 1;
+    int dir[4][2] = { {1,0},{0,1},{-1,0},{0,-1} };
+};
+
+int main() {
+    Solution S;
+    int m, n;
+    while (cin >> m >> n) {
+        getchar();
+        vector<string> board(m);
+        for (int i = 0; i < m; ++i)
+            getline(cin, board[i]);
+        cout << S.Bricks(board, m, n) << endl;
+    }
+    return 0;
+}
