@@ -9260,8 +9260,9 @@ using namespace std;
 
 class Solution {
 public:
-    int Bricks(vector<string>& board, const int& wid, const int& len) {
+    int Bricks(const vector<string>& board, const int& wid, const int& len) {
         m = wid, n = len;
+        cnt = 1;
         vector<vector<bool>> visited(m, vector<bool>(n, false));
         int x, y;
         bool flag = true;
@@ -9295,7 +9296,7 @@ private:
 private:
     int m;
     int n;
-    int cnt = 1;
+    int cnt;
     int dir[4][2] = { {1,0},{0,1},{-1,0},{0,-1} };
 };
 
@@ -9308,6 +9309,136 @@ int main() {
         for (int i = 0; i < m; ++i)
             getline(cin, board[i]);
         cout << S.Bricks(board, m, n) << endl;
+    }
+    return 0;
+}
+
+【牛客】【最长公共子序列】：https://www.nowcoder.com/questionTerminal/9ae56e5bdf4f480387df781671db5172
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+class Solution{
+public:
+    int MaxLen(const string& A,const string& B){
+        int sz1 = A.size();
+        int sz2 = B.size();
+        vector<vector<int>> dp(sz1,vector<int>(sz2,0));
+        dp[0][0] = A[0]==B[0]?1:0;
+        for(int i=1; i<sz1; i++) {
+            dp[i][0] = (A[i] == B[0]) ? 1 : 0;
+            dp[i][0] = max(dp[i-1][0], dp[i][0]);
+        }
+        for(int j=1; j<sz2; j++) {
+            dp[0][j] = (A[0] == B[j]) ? 1 : 0;
+            dp[0][j] = max(dp[0][j-1], dp[0][j]);
+        }
+        // 计算
+        for(int i=1; i<sz1; i++) {
+            for(int j=1; j<sz2; j++) {
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
+                if(A[i] == B[j]) {
+                    dp[i][j] = max(dp[i][j], dp[i-1][j-1]+1);
+                }
+            }
+        }
+        return dp[sz1-1][sz2-1];
+    }
+};
+
+int main(){
+    Solution S;
+    string s1;
+    string s2;
+    while(cin>>s1>>s2)
+        cout<<S.MaxLen(s1, s2)<<endl;
+    return 0;
+}
+
+【牛客】【字符串计数】：
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+class Solution{
+public:
+    int Number(const vector<string>& s,const vector<int>& l){
+        vector<int> dp(l[1]+1);
+        int ans = 0;
+        for(int i = 1; i <= l[1]; ++i){
+            dp[i] = (26*(dp[i-1]))%1000007;
+            if(i<=s[0].size()) dp[i] -= s[0][i-1];
+            if(i<=s[1].size()) dp[i] += s[1][i-1];
+            if(i == s[1].size()) dp[i]--;
+            if(i>=l[0]) ans += dp[i];
+        }
+        return ans%1000007;
+    }
+};
+
+int main(){
+    Solution S;
+    vector<string> s(2);
+    vector<int> l(2);
+    while(cin>>s[0]>>s[1]>>l[0]>>l[1])
+        cout<<S.Number(s,l)<<endl;
+    return 0;
+}
+
+【牛客】【发邮件】：
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Solution{
+public:
+    long long Number(const int& n){
+        vector<long long> dp(n+1,0);
+        dp[2] = 1;
+        for(int i = 3; i <= n; ++i)
+            dp[i] = (i-1)*(dp[i-1]+dp[i-2]);
+        return dp[n];
+    }
+};
+
+int main(){
+    Solution S;
+    int n;
+    while(cin>>n)
+        cout<<S.Number(n)<<endl;
+    return 0;
+}
+
+【牛客】【最长上升子序列】：
+#include <vector>
+#include <iostream>
+using namespace std;
+
+class Solution{
+public:
+    int MaxLen(const int& n,const vector<int>& v){
+        int ans = 1;
+        vector<int> dp(n,1);
+        for(int i = 1; i < n; ++i){
+            for(int j = 0; j < i; ++j)
+                if(v[i]>v[j])
+                    dp[i] = max(dp[i],dp[j]+1);
+            ans = max(ans,dp[i]);
+        }
+        return ans;
+    }
+};
+
+int main(){
+    Solution S;
+    int n;
+    while(cin>>n){
+        vector<int> v(n);
+        for(int i = 0; i<n; ++i)
+            cin>>v[i];
+        cout<<S.MaxLen(n, v)<<endl;
     }
     return 0;
 }
