@@ -9551,3 +9551,66 @@ int main(){
     }
     return 0; 
 }
+
+【牛客】【解读密码】：
+#include <iostream>
+#include <string>
+using namespace std;
+
+class Solution{
+public:
+    string Number(const string& s){
+        int sz = s.size();
+        string ans;
+        for(int i = 0; i < sz; ++i)
+            if(s[i]>='0' && s[i]<='9')
+                ans += s[i];
+        return ans;
+    }
+};
+
+int main(){
+    string in;
+    Solution S;
+    while(getline(cin,in))
+        cout<<S.Number(in)<<endl;
+    return 0;
+}
+
+【牛客】【走迷宫】：
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+
+class Solution {
+public:
+    void MinStep(const vector<string>& board,vector<vector<int>>& len,int x,int y) {
+        if(x < 1 || y < 1 || x > 8 || y > 8 || board[x][y] == '#')
+            return;
+        int MIN = min(min(len[x - 1][y], len[x + 1][y]), min(len[x][y - 1], len[x][y + 1])) + 1;
+        if(MIN < len[x][y])
+            len[x][y] = MIN;
+        else
+            return;
+        MinStep(board, len, x - 1, y);
+        MinStep(board, len, x + 1, y);
+        MinStep(board, len, x, y - 1);
+        MinStep(board, len, x, y + 1);
+    }
+
+};
+
+int main() {
+    Solution S;
+    vector<string> board(10);
+    while (getline(cin, board[0])) {
+        for (int i = 1; i < 10; ++i)
+            getline(cin, board[i]);
+        vector<vector<int>> len(10,vector<int>(10,101));
+        len[0][1] = 0;
+        S.MinStep(board,len,1,1);
+        cout<<len[8][8]+1<<endl;
+    }
+    return 0;
+}
