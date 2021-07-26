@@ -9614,3 +9614,115 @@ int main() {
     }
     return 0;
 }
+
+【牛客】【求和】：
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    void ShowPro(const int& x, const int& y) {
+        n = x, m = y;
+        vector<int> seq;
+        BackTrack(0, 1, seq);
+    }
+private:
+    void BackTrack(int sum, int start, vector<int>& seq) {
+        if (sum == m) {
+            int sz = seq.size();
+            for (auto& e : seq)
+                cout << e << " ";
+            cout << endl;
+        }
+        for (int i = start; i < n; ++i) {
+            if (sum + i > m)
+                return;
+            seq.push_back(i);
+            BackTrack(sum + i, i + 1, seq);
+            seq.pop_back();
+        }
+    }
+private:
+    int n;
+    int m;
+};
+
+int main() {
+    Solution S;
+    int n, m;
+    while (cin >> n >> m)
+        S.ShowPro(n, m);
+    return 0;
+}
+
+【牛客】【电话号码】：
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <set>
+using namespace std;
+
+class Solution {
+public:
+    void Tel(vector<string>& tel, const int& n) {
+        Handle(tel, n);
+        Swift(tel, n);
+        sort(tel.begin(), tel.end(), comp);
+        DelCom(tel, n);
+        int sz = tel.size();
+        for (int i = 0; i < sz; ++i)
+            cout << tel[i] << endl;
+        cout<<endl;
+    }
+    Solution() :sym("22233344455566677778889999") {}
+private:
+    void DelCom(vector<string>& tel, const int& n) {
+        set<string> st(tel.begin(), tel.end());
+        tel.clear();
+        for (auto& e : st)
+            tel.push_back(e);
+    }
+    void Handle(vector<string>& tel, const int& n) {
+        for (int i = 0; i < n; ++i) {
+            auto it = tel[i].begin();
+            while (it != tel[i].end()) {
+                it = find(it, tel[i].end(), '-');
+                if (it != tel[i].end())
+                    it = tel[i].erase(it);
+                else
+                    break;
+            }
+        }
+    }
+    void Swift(vector<string>& tel, const int& n) {
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < 7; ++j) {
+                if (tel[i][j] >= '0' && tel[i][j] <= '9')
+                    continue;
+                tel[i][j] = sym[tel[i][j] - 'A'];
+            }
+        }
+        for (int i = 0; i < n; ++i)
+            tel[i].insert(3, "-");
+    }
+private:
+    string sym;
+private:
+    static bool comp(const string& s1, const string& s2) {
+        return s1 < s2;
+    }
+};
+
+int main() {
+    Solution S;
+    int n;
+    while (cin >> n) {
+        getchar();
+        vector<string> tel(n);
+        for (int i = 0; i < n; ++i)
+            getline(cin, tel[i]);
+        S.Tel(tel, n);
+    }
+}
