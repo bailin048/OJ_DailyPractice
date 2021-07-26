@@ -9726,3 +9726,83 @@ int main() {
         S.Tel(tel, n);
     }
 }
+
+【牛客】【骆驼命名法】：
+#include <string>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    void Swift(string& str) {
+        auto it = find(str.begin(), str.end(), '_');
+        while (it != str.end()) {
+            ++it;
+            *it -= 32;
+            it = find(it+1, str.end(), '_');
+        }
+        it = find(str.begin(), str.end(), '_');
+        while (it != str.end()) {
+            it = str.erase(it);
+            if (it != str.end())
+                it = find(str.begin(), str.end(), '_');
+        }
+    }
+};
+
+int main() {
+    Solution S;
+    string tmp;
+    while (cin >> tmp) {
+        S.Swift(tmp);
+        cout << tmp << endl;
+    }
+    return 0;
+}
+
+【牛客】【单词翻转】：
+#include <iostream>
+#include <string>
+#include <vector>
+using namespace std;
+
+class Solution {
+public:
+    void Rerverse(string& str) {
+        Split(str);
+    }
+private:
+    void Split(string& str) {
+        vector<string> v;
+        string tmp;
+        int sz = str.size();
+        for (int i = 0; i < sz; ++i) {
+            while(i<sz && isalpha(str[i])) 
+                tmp += str[i++];
+            v.push_back(tmp);
+            tmp.clear();
+            if(i<sz)
+                ++i;
+            while (i<sz && !isalpha(str[i])) { ++i; }
+            i -= 1;
+        }
+        sz = v.size();
+        str.clear();
+        for (int i = sz - 1; i >= 0; --i) {
+            str += v[i];
+            if (i)
+                str += " ";
+        }
+    }
+};
+
+int main() {
+    Solution S;
+    string str;
+    while (getline(cin, str)) {
+        S.Rerverse(str);
+        cout << str << endl;
+    }
+    return 0;
+}
