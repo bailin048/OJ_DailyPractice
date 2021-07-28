@@ -9892,3 +9892,76 @@ int main() {
     }
     return 0;
 }
+
+【牛客】【数组中出现次数超过一半的数字】：
+class Solution {
+public:
+    int MoreThanHalfNum_Solution(vector<int> numbers) {
+        int x;
+        int flag = 0;
+        int sz = numbers.size();
+        for(int i = 0; i < sz; ++i){
+            x = flag==0?numbers[i]:x;
+            flag += numbers[i]==x?1:-1;
+        }
+        return x;
+    }
+};
+
+【牛客】【简单错误记录】：
+#include<iostream>
+#include<algorithm>
+#include<vector>
+using namespace std;
+
+struct error_codes{
+    string filename;
+    int codeline;
+    int counter=1;
+    bool operator==(const error_codes &a){
+        if(a.filename==filename&&a.codeline==codeline){
+            return true;
+        }else{
+            return false;
+        }
+    }
+};
+
+string getfilename(string &path);
+
+int main(){
+    vector<error_codes> arr;
+    string path;
+    int codeline;
+    while(cin>>path>>codeline){
+    	error_codes temp;
+        temp.filename=getfilename(path);
+        temp.codeline=codeline;
+        vector<error_codes>::iterator res;
+        res=find(arr.begin(),arr.end(),temp);
+        if(res==arr.end()){
+            arr.push_back(temp);
+        }else{
+            res->counter++;
+        }
+    }
+    int j=0;
+    if(arr.size()>8){
+        j=arr.size()-8;
+    }
+    for(;j<arr.size();j++){
+        cout<<arr[j].filename<<" "<<arr[j].codeline<<" "<<arr[j].counter<<endl;
+    }
+    return 0;
+}
+
+string getfilename(string &path){
+    int pos;
+    string result;
+    pos=path.rfind('\\');
+    result=path.substr(pos+1,path.size()-pos);
+    if(result.length()>16){
+        result=result.substr(result.length()-16,16);
+    }
+    return result;
+}
