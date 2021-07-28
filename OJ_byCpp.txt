@@ -9806,3 +9806,89 @@ int main() {
     }
     return 0;
 }
+
+【牛客】【乒乓球筐】：
+#include <iostream>
+#include <map>
+#include <string>
+#include <algorithm>
+using namespace std;
+
+class Solution{
+public:
+    void Exist(const string& s1,const string& s2){
+        map<char,int> mp1;
+        map<char,int> mp2;
+        int sz1 = s1.size();
+        int sz2 = s2.size();
+        for(int i = 0; i < sz1; ++i)
+            ++mp1[s1[i]];
+        for(int i = 0; i < sz2; ++i)
+            ++mp2[s2[i]];
+        for(auto& e:mp2){
+            if(!mp1[e.first] || mp1[e.first] < e.second){
+                cout<<"No"<<endl;
+                return;
+            }
+        }
+        cout<<"Yes"<<endl;
+    }
+};
+
+int main(){
+    Solution S;
+    string s1;
+    string s2;
+    while(cin>>s1>>s2)
+        S.Exist(s1, s2);
+    return 0;
+}
+
+【牛客】【查找兄弟单词】：
+#include <string>
+#include <vector>
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    void NumofBro(const vector<string>& dict, const string& word, const int& k) {
+        int res = 0;
+        vector<string> ans;
+        for (auto& e: dict){//在词典中找兄弟
+            if (IsBro(e,word)) {
+                ++res;
+                ans.push_back(e);
+            }
+        }
+        sort(ans.begin(), ans.end(), comp);
+        cout << res << endl;
+        if (k <= res)
+            cout << ans[k - 1] << endl;
+    }
+private:
+    bool IsBro(string s1,string s2){
+        if(s1 == s2)
+            return false;
+        sort(s1.begin(),s1.end());
+        sort(s2.begin(),s2.end());
+        return s1==s2;
+    }
+    static bool comp(const string& s1,const string& s2){
+        return s1<s2;
+    }
+};
+int main() {
+    Solution S;
+    string word;
+    int n, k;
+    while (cin >> n) {
+        vector<string> dict(n);
+        for (int i = 0; i < n; ++i)
+            cin >> dict[i];
+        cin >> word >> k;
+        S.NumofBro(dict, word, k);
+    }
+    return 0;
+}
