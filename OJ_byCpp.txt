@@ -9965,3 +9965,94 @@ string getfilename(string &path){
     }
     return result;
 }
+
+【牛客】【马戏团】：
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+class Per {
+public:
+    int h;
+    int w;
+    int nu;
+    bool operator<(const Per& p) {
+        if (w != p.w)//按体重升序排
+            return w<=p.w;
+        return h > p.h;//体重相同，按身高降序
+    }
+};
+
+class Solution {
+public:
+    int Height(vector<Per>& v) {
+        sort(v.begin(), v.end());
+        int sz = v.size();
+        vector<int> dp(sz, 1);
+        int max = -1;
+        for (int i = 0; i < sz; i++) {
+            for (int j = 0; j < i; j++) 
+                if (dp[j] + 1 > dp[i] && v[i].h >= v[j].h)
+                    dp[i] = dp[j] + 1;
+            if (dp[i] > max) max = dp[i];
+        }
+        return max;
+    }
+};
+
+int main() {
+    Solution S;
+    int N;
+    while (cin >> N) {
+        vector<Per> v(N);
+        for (int i = 0; i < N; ++i) 
+            cin >> v[i].nu >> v[i].w >> v[i].h;
+        cout << S.Height(v) << endl;
+    }
+    return 0;
+}
+
+【牛客】【合唱团】：
+#include <iostream>
+#include <vector>
+#include <cmath>
+#include <limits.h>         
+using namespace std;
+
+class Solution {
+public:
+    long long Cap(vector<int>& v, const int& n, const int& k, const int& d) {
+        vector<vector<long long>> maxMul(n, vector<long long>(k + 1, 0));
+        vector<vector<long long>> minMul(n, vector<long long>(k + 1, 0));
+        for (int i = 0; i < n; i++){
+            maxMul[i][1] = v[i];
+            minMul[i][1] = v[i];
+        }
+        for (int i = 2; i <= k; i++){
+            for (int j = 0; j <n; j++){
+                for (int m = 1; m <=d&&j >= m; m++){
+                    maxMul[j][i] = max(maxMul[j][i], max(maxMul[j - m][i - 1] * v[j], minMul[j - m][i - 1] * v[j]));
+                    minMul[j][i] = min(minMul[j][i], min(minMul[j - m][i - 1] * v[j], maxMul[j - m][i - 1] * v[j]));
+                }
+            }
+        }
+ 
+        long long maxMulResult = 1LL << 63;
+        for (int i = 0; i < n; i++)
+            maxMulResult = max(maxMulResult, maxMul[i][k]);
+        return maxMulResult;
+    }
+};
+int main() {
+    Solution S;
+    int n, k, d;
+    while (cin >> n) {
+        vector<int> v(n);
+        for (int i = 0; i < n; ++i)
+            cin >> v[i];
+        cin >> k >> d;
+        cout << S.Cap(v, n, k, d) << endl;
+    }
+    return 0;
+}
