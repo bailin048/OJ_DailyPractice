@@ -10056,3 +10056,46 @@ int main() {
     }
     return 0;
 }
+
+【牛客】【左右最值最大差】:
+class MaxGap {
+public:
+    int findMaxGap(vector<int> A, int n) {
+        int max = A[0],min;
+        for(int i = 0; i < n; ++i)
+            max = max<A[i]?A[i]:max;
+        min = A[0]>A[n-1]?A[n-1]:A[0];
+        return max - min;
+    }
+};
+
+【牛客】【顺时针打印矩阵】：
+class Printer {
+public:
+    vector<int> clockwisePrint(vector<vector<int>> mat, int n, int m) {
+        int all = n * m;
+        vector<int> res(all);
+        int idx = 0;
+        int left = 0, top = 0, right = m - 1, bottom = n - 1;
+        int l, r, b, t;
+        while (idx < all) {
+            l = left;
+            while (idx < all && l <= right)
+                res[idx++] = mat[top][l++];
+            ++top;
+            t = top;
+            while (idx < all && t <= bottom)
+                res[idx++] = mat[t++][right];
+            --right;
+            r = right;
+            while (idx < all && r >= left)
+                res[idx++] = mat[bottom][r--];
+            --bottom;
+            b = bottom;
+            while (idx < all && b >= top)
+                res[idx++] = mat[b--][left];
+            ++left;
+        }
+        return res;
+    }
+};
