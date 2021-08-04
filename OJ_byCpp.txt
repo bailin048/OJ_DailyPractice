@@ -10099,3 +10099,73 @@ public:
         return res;
     }
 };
+
+【LeetCode】【字符串的排列】：https://leetcode-cn.com/problems/zi-fu-chuan-de-pai-lie-lcof/
+class Solution {
+public:
+    vector<string> permutation(string s) {
+        sz = s.size();
+        sort(s.begin(),s.end());
+        vector<bool> used(sz,false);
+        BackTack("",used,s);
+        return res;
+    }
+private:
+    void BackTack(string tmp,vector<bool>& used,const string& s){
+        if(tmp.size() == sz){
+            res.push_back(tmp);
+            return;
+        }
+        for(int i = 0; i < sz; ++i){
+            if(used[i] || (i>0 && !used[i-1] && s[i-1] == s[i]))
+                continue;
+            used[i] = true;
+            tmp += s[i];
+            BackTack(tmp,used,s);
+            tmp.erase(tmp.end()-1,tmp.end());
+            used[i] = false;
+        }
+    }
+private:
+    vector<string> res;
+    int sz;
+};
+
+【LeetCode219】【存在重复元素】：https://leetcode-cn.com/problems/contains-duplicate-ii/
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        int sz = nums.size();
+        unordered_map<int,int> mp;
+        for(int i = 0; i < sz; ++i){
+            if(mp.count(nums[i]) && i-mp[nums[i]]<=k)
+                return true;
+            mp[nums[i]] = i;
+        }
+        return false;
+    }
+};
+
+【LeetCode228】【汇总区间】：https://leetcode-cn.com/problems/summary-ranges/
+class Solution {
+public:
+    vector<string> summaryRanges(vector<int>& nums) {
+        int sz = nums.size();
+        vector<string> res;
+        int i = 0;
+        while(i<sz){
+            int st = nums[i++];
+            string tmp(to_string(st));
+            while(i<sz && nums[i-1] + 1 == nums[i])
+                ++i;
+            int ed = nums[i-1];
+            if(st != ed){
+                tmp += "->";
+                tmp += to_string(ed);
+            }
+            res.push_back(tmp);
+            tmp.clear();
+        }
+        return res;
+    }
+};
