@@ -10202,3 +10202,98 @@ private:
 private:
     unordered_map<int,int> mp;
 };
+
+【剑指offer20】【表示数值的字符串】：https://leetcode-cn.com/problems/biao-shi-shu-zhi-de-zi-fu-chuan-lcof/
+class Solution {
+public:
+    bool isNumber(string s) {
+        DelSpace(s);//删除前后空格
+        int idx = SplitIndex(s); //获取划分索引
+        int sz = s.size();
+        if (idx != string::npos) {
+            vector<string> num(2);
+            num[0] = s.substr(0, idx);
+            num[1] = s.substr(idx + 1, sz - idx);
+            int sz0 = num[0].size();
+            int sz1 = num[1].size();
+            if (!sz0 && !sz1)//仅有一个符号
+                return false;
+            else if ((s[idx] == 'e' || s[idx] == 'E') && (!sz0 || !sz1))//e为两端
+                return false;
+            else if (s[idx] == '.' && !idx && !isdigit(num[1][0]))//.开头紧跟+/-
+                return false;
+            else if (s[idx] == '.' && sz0 == 1 && !isdigit(num[0][0]) && !sz1)
+                return false;
+            else if(sz0 == 1 && (s[idx] == 'e' || s[idx] == 'E') && (num[0][0] == '+' ||
+                num[0][0] == '-'))
+                return false;
+            bool flag0 = IsNumPre(num[0], sz0);
+            bool flag1 = IsNumPost(num[1], sz1);
+            if (!flag0 || !flag1)
+                return false;
+            return true;
+        }
+        return IsNumPre(s, s.size());
+    }
+private:
+    bool IsNumPre(const string& s,const int& sz) {
+        if (!sz)
+            return true;
+        if (sz == 1 && s[0] == '.')
+            return false;
+        int i = 0;
+        if (s[i] == '+' || s[i] == '-')
+            ++i;
+        while (i < sz && isdigit(s[i]))
+            ++i;
+        if (s[i] == '.')
+            ++i;
+        while (i < sz && isdigit(s[i]))
+            ++i;
+        return i == sz;
+    }
+    bool IsNumPost(const string& s, const int& sz) {
+        if (!sz)
+            return true;
+        if (s == "+" || s == "-")
+            return false;
+        int i = 0;
+        if (sz > 1 && s[i] == '+' || s[i] == '-')
+            ++i;
+        while (i < sz && isdigit(s[i]))
+            ++i;
+        return i == sz;
+    }
+    int SplitIndex(const string & s) {
+        int idx = s.find('e', 0);
+        if (idx != string::npos)
+            return idx;
+        idx = s.find('E', 0);
+        if (idx != string::npos)
+            return idx;
+        idx = s.find('.', 0);
+        if (idx != string::npos)
+            return idx;
+        return string::npos;
+    }
+    void DelSpace(string & s) {
+        int sz = s.size();
+        for (int i = sz - 1; i >= 0; --i) {
+            if (s[i] == ' ')
+                continue;
+            else {
+                s.erase(i + 1, sz - i - 1);
+                break;
+            }
+        }
+        sz = s.size();
+        for (int i = 0; i < sz; ++i) {
+            if (s[i] == ' ')
+                continue;
+            else {
+                s.erase(0, i);
+                break;
+            }
+        }
+    }
+};
