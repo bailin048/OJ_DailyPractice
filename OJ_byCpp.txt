@@ -10297,3 +10297,24 @@ private:
         }
     }
 };
+
+【剑指offer33】【二叉搜索树的后序遍历序列】：https://leetcode-cn.com/problems/er-cha-sou-suo-shu-de-hou-xu-bian-li-xu-lie-lcof/
+class Solution {
+public:
+    bool verifyPostorder(vector<int>& postorder) {
+        return DFS(0,postorder.size()-1,postorder);
+    }
+private:
+    bool DFS(int left,int right,vector<int>& v){
+        if(left>=right)//1个或0个
+            return true;
+        int k = left;
+        while(k<right && v[k]<v[right])//查找比根大的第一个元素
+            ++k;
+        for(int i = k; i < right; ++i){//遍历右子树
+            if(v[i]<v[right])
+                return false;
+        }
+        return DFS(left,k-1,v) && DFS(k,right-1,v);//左子树 && 右子树
+    }
+};
