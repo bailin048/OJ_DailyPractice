@@ -10318,3 +10318,85 @@ private:
         return DFS(left,k-1,v) && DFS(k,right-1,v);//左子树 && 右子树
     }
 };
+【剑指offer40】【最小k个数】：https://leetcode-cn.com/problems/zui-xiao-de-kge-shu-lcof/
+class Solution {
+public:
+    vector<int> getLeastNumbers(vector<int>& arr, int k) {
+        vector<int> hp(arr.begin(),arr.begin()+k);
+        if(!k)
+            return hp;
+        for(int i = k/2-1; i >= 0;  --i)
+            AdjustDown(hp,i,k);
+        int n = arr.size();
+        for(int i = k; i < n;i++){
+            if(arr[i]<hp[0]){//小于最大的数
+                hp[0] = arr[i];
+                AdjustDown(hp,0,k);
+            }
+        }
+        return hp;
+    }
+private:
+   void AdjustDown(vector<int>& hp,int p,const int& k){
+        int tmp = hp[p];
+        int s = 2*p+1;
+        while(s<k){
+            if(s+1<k && hp[s+1]>hp[s])
+                ++s;
+            if(tmp>=hp[s])
+                break;
+            hp[p]= hp[s];
+            p = s;
+            s = 2*p+1;
+       }
+       hp[p] = tmp;
+   }
+};
+
+【LeetCode23】【合并k个升序链表】：https://leetcode-cn.com/problems/merge-k-sorted-lists/
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+       return merge(lists,0,lists.size()-1);
+    }
+private:
+    ListNode* merge(vector<ListNode*>& lists,int l,int r){
+        if(l == r)
+            return lists[l];
+        if(l > r)
+            return nullptr;
+        int mid = (l + r)>>1;
+        return MergeTwo(merge(lists,l,mid),merge(lists,mid+1,r));
+    }
+    ListNode* MergeTwo(ListNode* l1,ListNode* l2){
+        if(!l1 || !l2)
+            return l1?l1:l2;
+        ListNode* head = new ListNode();
+        ListNode* tmp = head;
+        while(l1 && l2){
+            if(l1->val < l2->val){
+                tmp->next = l1;
+                l1 = l1->next;
+            }
+            else{
+                tmp->next = l2;
+                l2 = l2->next;
+            }
+            tmp = tmp->next;
+        }
+        tmp->next = l1?l1:l2;
+        ListNode* res = head->next;
+        delete head;
+        return res;
+    }
+};
