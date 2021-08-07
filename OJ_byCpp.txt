@@ -10400,3 +10400,39 @@ private:
         return res;
     }
 };
+
+【2021荣耀提前批笔试】【N个字符，1<=长度<=L，试问可以组成多少个不同的符号】：
+#include <vector>
+#include <limits.h>
+#include <iostream>
+using namespace std;
+
+class Solution {
+#define MOD  1000000007
+public:
+	unsigned long long NumofID(const int& N, const int& L) {
+		if (!N || !L)
+			return 0;
+		unsigned long long res = N;
+		vector<unsigned long long> v(L, N);
+		for (int i = 1; i < L; ++i) {
+			v[i - 1] %= MOD;
+			while (v[i - 1] > LLONG_MAX / N) //阶乘超范围
+				v[i - 1] -= MOD;
+			v[i] *= v[i - 1];
+			while (res > LLONG_MAX - v[i]) //加法超范围
+				res -= MOD;
+			res += v[i];
+			res %= MOD;
+		}
+		return res;
+	}
+};
+
+int main() {
+	Solution S;
+	int N, L;
+	while (cin >> N >> L, N || L)
+		cout << S.NumofID(N, L) << endl;
+	return 0;
+}
