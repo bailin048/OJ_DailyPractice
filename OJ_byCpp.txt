@@ -10495,3 +10495,39 @@ public:
         return res;
     }
 };
+
+【从s1中删除s2中的字符】：
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <algorithm>
+using namespace std;
+
+class Solution {
+public:
+    string DelSameChar(string& s1, string& s2) {
+        unordered_map<char, int> ump;
+        int sz = s2.size();
+        for (auto& s : s2)
+            ump[s] = 1;
+        for (auto& e : ump) {
+            auto it = s1.begin();
+            while (it != s1.end()) {
+                it = find(it, s1.end(), e.first);
+                if (it != s1.end())
+                    it = s1.erase(it, it + 1);
+            }
+
+        }
+        return s1;
+    }
+};
+
+int main() {
+    Solution S;
+    string s1;
+    string s2;
+    while (getline(cin, s1), getline(cin, s2))
+        cout << S.DelSameChar(s1, s2) << endl;
+    return 0;
+}
