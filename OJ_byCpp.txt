@@ -10531,3 +10531,59 @@ int main() {
         cout << S.DelSameChar(s1, s2) << endl;
     return 0;
 }
+
+【LeetCode679】【24 点游戏】：https://leetcode-cn.com/problems/24-game/
+double Add(const double& x,const double& y){ return x+y; }
+double Mul(const double& x,const double& y){ return x*y; }
+double Min(const double& x,const double& y){ return x-y; }
+double Div(const double& x,const double& y){ 
+    if (y==0)//除数为0
+        return DBL_MIN;
+    return x/y;
+}
+
+class Solution {
+#define VALID_LIMIT 1e-6
+public:
+    bool judgePoint24(vector<int>& cards) {
+        vector<double> num(4);
+        for(int i = 0; i < 4; ++i)
+            num[i] = (double)cards[i];
+        return BackTrack(num);
+    }
+public:
+    Solution(){
+        p[0] = Add;
+        p[1] = Mul;
+        p[2] = Min;
+        p[3] = Div;
+    }
+private:
+     bool BackTrack(vector<double> &l) {
+        int sz = l.size();
+        if (sz == 1) //已运算出结果
+            return fabs(l[0] - 24.0) <  VALID_LIMIT;
+        for (int i = 0; i < sz; ++i) {//控制数1
+            for (int j = 0; j < sz; ++j) {//控制数2
+                if (i != j) {//数1 != 数2
+                    vector<double> list2 = vector<double>();
+                    for (int k = 0; k < sz; k++) {
+                        if (k != i && k != j) //刨去运算的两个数
+                            list2.emplace_back(l[k]);
+                    }
+                    for (int k = 0; k < 4; k++) {//四种运算
+                        if (k < 2 && i > j)//+*满足交换律，不需要重复计算 
+                            continue;
+                        list2.emplace_back((*p[k])(l[i], l[j]));//运算
+                        if (BackTrack(list2))
+                            return true;
+                        list2.pop_back();//回退
+                    }
+                }
+            }
+        }
+        return false;
+    }
+private:
+    double(*p[4])(const double& x,const double& y);
+};
