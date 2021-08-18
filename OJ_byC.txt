@@ -2592,4 +2592,94 @@ public:
     }
 };
 
+【设计单链表】:
+输入：N1 N2 N3 N4 N5
+         N3
+输出：N1 N2 N4 N5
+#include <stdio.h>
+#include <vld.h>
+#include <stdlib.h>
+#pragma warning(disable:4996)
 
+typedef struct n {
+    int data;
+    struct n* next;
+}*pnode;
+pnode BuyNode() {
+    pnode p = (pnode)malloc(sizeof(struct n));
+    if (p != NULL) {
+        p->next = 0;
+        return p;
+    }
+    return NULL;
+}
+void CreatList(pnode head,int n) {
+    pnode q = head;
+    for (int i = 1; i <= n; ++i) {
+        pnode t = BuyNode();
+        t->data = i;
+        q->next = t;
+        q = t;
+    }
+}
+void DelNode(pnode head, int target) {
+    pnode pre = head;
+    pnode q = head->next;
+    while (q != NULL && q->data != target) {
+        pre = q;
+        q = q->next;
+    }
+    if (q != NULL) {
+        pre->next = q->next;
+        free(q);
+    }
+}
+void ShowList(pnode head) {
+    pnode q = head->next;
+    while (q) {
+        printf("N%d ", q->data);
+        q = q->next;
+    }
+    printf("\n");
+}
+void DestoryList(pnode head) {
+    pnode pre = head;
+    pnode q = pre->next;
+    while (pre) {
+        free(pre);
+        pre = q;
+        if(q)
+            q = q->next;
+    }
+}
+int Str2Num(char* str) {
+    int res = 0;
+    while (*str) {
+        res = res * 10 + (*str - '0');
+        ++str;
+    }
+    return res;
+}
+int CheckN(char* str) {
+    int cnt = 0;
+    while (*str) {
+        if (*str == ' ')
+           ++cnt;
+        ++str;
+    }
+    return cnt + 1;
+}
+int main() {
+    int n = 0;
+    char buf[128] = {0};
+    gets(buf);
+    int num = CheckN(buf);
+    pnode List = BuyNode();
+    CreatList(List, num);
+    scanf("%s", buf);
+    int target = Str2Num(buf + 1);
+    DelNode(List, target);
+    ShowList(List);
+    DestoryList(List);
+    return 0;
+}
