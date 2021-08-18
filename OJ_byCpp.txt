@@ -10587,3 +10587,35 @@ private:
 private:
     double(*p[4])(const double& x,const double& y);
 };
+
+【删除字符串首尾空格，中间连续空格只保留一个】：
+class Solution {
+public:
+    string DelSpace(string& s) {
+        DelHead(s);
+        reverse(s.begin(), s.end());
+        DelHead(s);
+        reverse(s.begin(),s.end());
+        auto t = s.begin();
+        bool flag = false;
+        while (t != s.end()) {
+            if (*t != ' ') {
+                flag = false;
+                ++t;
+            }
+            else if (flag && *t == ' ')
+                t = s.erase(t, t + 1);
+            else {
+                flag = true;
+                ++t;
+            }
+        }
+        return s;
+    }
+private:
+    void DelHead(string& s){
+        auto t = s.begin();
+        while (*t == ' ')
+            t = s.erase(t, t + 1);
+    }
+};
