@@ -2600,27 +2600,27 @@ public:
 #include <vld.h>
 #include <stdlib.h>
 #pragma warning(disable:4996)
+#define MAX_LEN 1024
 
 typedef struct n {
     int data;
     struct n* next;
 }*pnode;
-pnode BuyNode() {
+pnode BuyNode(int x) {
     pnode p = (pnode)malloc(sizeof(struct n));
     if (p != NULL) {
-        p->next = 0;
+        p->data = x;
+        p->next = NULL;
         return p;
     }
     return NULL;
 }
-void CreatList(pnode head,int n) {
+void AddNode(pnode head,int x) {
     pnode q = head;
-    for (int i = 1; i <= n; ++i) {
-        pnode t = BuyNode();
-        t->data = i;
-        q->next = t;
-        q = t;
-    }
+    while (q->next != NULL)
+        q = q->next;
+    pnode t = BuyNode(x);
+    q->next = t;
 }
 void DelNode(pnode head, int target) {
     pnode pre = head;
@@ -2654,7 +2654,7 @@ void DestoryList(pnode head) {
 }
 int Str2Num(char* str) {
     int res = 0;
-    while (*str) {
+    while (*str && *str !=' ') {
         res = res * 10 + (*str - '0');
         ++str;
     }
@@ -2669,16 +2669,39 @@ int CheckN(char* str) {
     }
     return cnt + 1;
 }
+void CreatList(pnode head,char* buf) {
+    int val = 0;
+    while (*buf) {
+        if (*buf && *buf == 'N') {
+            ++buf;
+            val = Str2Num(buf);
+            AddNode(head, val);
+        }
+        while (*buf && *buf != 'N')
+            ++buf;
+    }
+}
+void DelPreWork(pnode head, char* buf) {
+    int val = 0;
+    while (*buf) {
+        if (*buf && *buf == 'N') {
+            ++buf;
+            val = Str2Num(buf);
+            DelNode(head, val);
+        }
+        while (*buf && *buf != 'N')
+            ++buf;
+    }
+}
 int main() {
     int n = 0;
-    char buf[128] = {0};
+    char buf[MAX_LEN] = { 0 };
     gets(buf);
-    int num = CheckN(buf);
-    pnode List = BuyNode();
-    CreatList(List, num);
-    scanf("%s", buf);
-    int target = Str2Num(buf + 1);
-    DelNode(List, target);
+    pnode List = BuyNode(0);
+    CreatList(List, buf);
+    memset(buf, 0, MAX_LEN);
+    gets(buf);
+    DelPreWork(List, buf);
     ShowList(List);
     DestoryList(List);
     return 0;
