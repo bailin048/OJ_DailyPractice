@@ -2660,15 +2660,6 @@ int Str2Num(char* str) {
     }
     return res;
 }
-int CheckN(char* str) {
-    int cnt = 0;
-    while (*str) {
-        if (*str == ' ')
-           ++cnt;
-        ++str;
-    }
-    return cnt + 1;
-}
 void CreatList(pnode head,char* buf) {
     int val = 0;
     while (*buf) {
