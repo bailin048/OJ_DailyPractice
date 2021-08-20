@@ -10619,3 +10619,51 @@ private:
             t = s.erase(t, t + 1);
     }
 };
+
+【LeetCode152】【乘积最大子数组】：https://leetcode-cn.com/problems/maximum-product-subarray/
+class Solution {
+public:
+    int maxProduct(vector<int>& nums) {
+        int minn = nums[0];
+        int maxn = nums[0];
+        int ans = nums[0];
+        int sz = nums.size();
+        for(int i = 1; i < sz; ++i){
+            int t_min = minn;
+            int t_max = maxn;
+            minn = min(minn*nums[i], min(nums[i],t_max*nums[i]));
+            maxn = max(maxn*nums[i], max(nums[i],t_min*nums[i]));
+            ans = max(ans,maxn);
+        }
+        return ans;
+    }
+};
+
+【Leetcode4】【 寻找两个正序数组的中位数】：https://leetcode-cn.com/problems/median-of-two-sorted-arrays/
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        priority_queue<int, vector<int>, less<int>> maxHeap;
+        priority_queue<int, vector<int>, greater<int>> minHeap; 
+        int sz1 = nums1.size();
+        int sz2 = nums2.size();
+        int sz = sz1 + sz2;
+        for(int i = 0 ; i < sz; ++i){
+            int x = i>=sz1?nums2[i-sz1]:nums1[i];
+            if(maxHeap.size() == minHeap.size()){
+                minHeap.push(x);
+                maxHeap.push(minHeap.top());
+                minHeap.pop();
+
+            }
+            else{
+                maxHeap.push(x);
+                minHeap.push(maxHeap.top());
+                maxHeap.pop();
+            }
+        }
+        if(minHeap.size() == maxHeap.size())
+            return 0.5*(minHeap.top()+maxHeap.top());
+        return maxHeap.top()*1.0;
+    }
+};
