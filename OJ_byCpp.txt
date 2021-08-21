@@ -10667,3 +10667,64 @@ public:
         return maxHeap.top()*1.0;
     }
 };
+【笔试】：
+起点为（0,0）,方向为4个。0为水路，花费2，1位陆地，花费为1，2为障碍，不可通过，最小费用达到右下角，无法到达返回-1
+class Solution {
+public:
+	int minSailCost(vector<vector<int>>& input) {
+		row = input.size();
+		col = input[0].size();
+		vector<vector<bool>> visited(row, vector<bool>(col, false));
+		BackTrack(input, visited, 0, 0, 0);
+		return MinCost == INT_MAX ? -1 : MinCost;
+	}
+private:
+	void BackTrack(const vector<vector<int>>& input, vector<vector<bool>>& visited, int x, int y, int cost) {
+		if (x == row - 1 && y == col - 1) {
+			MinCost = cost < MinCost ? cost : MinCost;
+			return;
+		}
+		for (int i = 0; i < 4; ++i) {
+			int nx = x + dir[i][0];
+			int ny = y + dir[i][1];
+			if (nx < 0 || nx >= row || ny < 0 || ny >= col || visited[nx][ny] || input[nx][ny] == 2)
+				continue;
+			visited[nx][ny] = true;
+			int fee = input[nx][ny] == 1 ? 1 : 2;
+			BackTrack(input, visited, nx, ny, cost + fee);
+			visited[nx][ny] = false;
+		}
+	}
+public:
+	Solution() :MinCost(INT_MAX), row(0), col(0) {}
+private:
+	int MinCost;
+	int row;
+	int col;
+	int dir[4][2] = { {0,1},{1,0},{0,-1},{-1,0} };
+};
+
+【剑指offer57-II】【和为s的连续正数序列】：
+class Solution {
+public:
+    vector<vector<int>> findContinuousSequence(int target) {
+         vector<vector<int>>vec;
+        vector<int> res;
+        for (int l = 1, r = 2; l < r;){
+            int sum = (l + r) * (r - l + 1) / 2;
+            if (sum == target) {
+                res.clear();
+                for (int i = l; i <= r; ++i) {
+                    res.emplace_back(i);
+                }
+                vec.emplace_back(res);
+                l++;
+            } else if (sum < target) {
+                r++;
+            } else {
+                l++;
+            }
+        }
+        return vec;
+    }
+};
