@@ -10728,3 +10728,115 @@ public:
         return vec;
     }
 };
+
+【剑指 Offer 34】【 二叉树中和为某一值的路径】：https://leetcode-cn.com/problems/er-cha-shu-zhong-he-wei-mou-yi-zhi-de-lu-jing-lcof/
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> pathSum(TreeNode* root, int target) {
+        vector<int> path;
+        DFS(root,target,path);
+        return res;
+    }
+private:
+    void DFS(TreeNode* root, int ans, vector<int> seq){
+        if(root==nullptr)
+            return;
+        ans -= root->val;
+        seq.push_back(root->val);
+        if(ans == 0 && root->left==nullptr && root->right == nullptr){
+            res.push_back(seq);
+            return;
+        }
+        if(root->left != nullptr)
+            DFS(root->left,ans,seq);
+        if(root->right != nullptr)
+            DFS(root->right,ans,seq);
+    }
+};
+
+【剑指 Offer 41】【 数据流中的中位数】：https://leetcode-cn.com/problems/shu-ju-liu-zhong-de-zhong-wei-shu-lcof/
+class MedianFinder {
+public:
+    /** initialize your data structure here. */
+    MedianFinder() {
+    }
+    
+    void addNum(int num) {
+        if(Biger.size() == Smaller.size()){
+            Smaller.push(num);
+            Biger.push(Smaller.top());
+            Smaller.pop();
+        }else{
+            Biger.push(num);
+            Smaller.push(Biger.top());
+            Biger.pop();
+        }
+    }
+    
+    double findMedian() {
+        if(Biger.size() == Smaller.size())
+            return 0.5*(Biger.top() + Smaller.top());
+        return 1.0*Biger.top();
+    }
+private:
+    priority_queue<int, vector<int>, less<int>> Biger;
+    priority_queue<int, vector<int>, greater<int>> Smaller;
+};
+
+【剑指 Offer 46】【 把数字翻译成字符串】：https://leetcode-cn.com/problems/ba-shu-zi-fan-yi-cheng-zi-fu-chuan-lcof/
+class Solution {
+public:
+    set<string> st;
+    vector<int> digit;
+    int translateNum(int num) {
+        Split(num);
+        DFS("", 0);
+        return st.size();
+    }
+private:
+    void DFS(string tmp,int idx){
+        if(idx == sz){
+            cout<<tmp<<endl;
+            st.insert(tmp);
+            return;
+        }
+        int x = 0;
+        for(int i = idx; i < idx + 2 && i < sz; ++i){
+            x = x*10 + digit[i];
+            if(x > 25 || (i-idx==1 && x<10))
+                return;
+            tmp += dict[x];
+            DFS(tmp,i+1);
+            tmp.erase(tmp.end()-1,tmp.end());
+        }
+    }
+    void Split(int num){
+        while(num){
+            digit.push_back(num%10);
+            num/=10;
+        }
+        reverse(digit.begin(),digit.end());
+        sz = digit.size();
+    }
+public:
+    Solution(){
+        char tmp = 'a';
+        for(int  i = 0 ; i <= 25; ++i)
+            dict[i] = tmp++;
+    }
+private:
+    map<int,char> dict;
+    int sz;
+};
