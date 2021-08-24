@@ -11010,3 +11010,79 @@ public:
         return res;     
     }
 };
+
+【LeetCode229】【求众数 II】：https://leetcode-cn.com/problems/majority-element-ii/
+class Solution {
+public:
+    vector<int> majorityElement(vector<int>& nums) {
+        int sz = nums.size();
+        int limit = sz/3;
+        unordered_map<int,int> ump;
+        for(int i = 0; i < sz; ++i)
+            ++ump[nums[i]];
+        vector<int> res;
+        for(auto& it:ump){
+            if(it.second > limit)
+                res.push_back(it.first);
+        }
+        reverse(res.begin(),res.end());
+        return res;
+    }
+};
+
+【LeetCode179】【最大数】：https://leetcode-cn.com/problems/largest-number/
+class Solution {
+public:
+    string largestNumber(vector<int>& nums) {
+        int sz = nums.size();
+        vector<string> tmp(sz);
+        for(int i = 0; i < sz; ++i)
+            tmp[i] = to_string(nums[i]);
+        sort(tmp.begin(),tmp.end(),comp);
+        string res;
+        for(int i = 0 ; i < sz; ++i)
+            res += tmp[i];
+        sz = res.size();
+        string zeros(sz,'0');
+        return zeros==res?"0":res;
+    }
+private:
+    static bool comp(string s1, string s2){
+        return s1+s2>s2+s1;
+    }
+};
+
+【LeetCode654】【最大二叉树】：https://leetcode-cn.com/problems/maximum-binary-tree/
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* constructMaximumBinaryTree(vector<int>& nums) {
+        return helper(nums,0,nums.size());
+    }
+private:
+    TreeNode* helper(const vector<int>& num, int left, int right){
+        if(left==right)
+            return nullptr;
+        int pos = MaxIdx(num, left, right);
+        TreeNode* root = new TreeNode(num[pos]);
+        root->left = helper(num, left, pos);
+        root->right = helper(num, pos+1, right);
+        return root;
+    }
+    int MaxIdx(const vector<int>& num, int left, int right){
+        int res = left; 
+        for(int i = left + 1; i < right; ++i)
+            res = num[i]>num[res]?i:res;
+        return res;
+    }
+};
