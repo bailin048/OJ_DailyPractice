@@ -10974,3 +10974,22 @@ private:
         return inv_cnt;
     }
 };
+
+【LeetCode347】【前 K 个高频元素】：https://leetcode-cn.com/problems/top-k-frequent-elements/
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int,int> ump;
+        for(auto& x:nums)
+            ++ump[x];
+        vector<pair<int,int>> tar(ump.begin(),ump.end());
+        sort(tar.begin(), tar.end(), comp);
+        vector<int> res(k);
+        for(int i = 0; i < k; ++i)
+            res[i] = tar[i].first;
+        return res;
+    }
+    static bool comp(const pair<int,int>& p1,const pair<int,int>& p2){
+        return p1.second>p2.second;
+    }
+};
