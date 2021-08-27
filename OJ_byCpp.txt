@@ -11168,3 +11168,139 @@ private:
         return t;
     }
 };
+
+【LeetCode148】【 排序链表】：https://leetcode-cn.com/problems/sort-list/
+class Solution {
+public:
+    ListNode* sortList(ListNode* head) {
+        return sortList(head, nullptr);
+    }
+private:
+    ListNode* sortList(ListNode* head, ListNode* tail){
+        if(head == nullptr)
+            return head;
+        if(head->next == tail){
+            head->next = nullptr;
+            return head;
+        }
+        ListNode* slow = head, *fast = head;
+        while(fast != tail){
+            slow = slow->next;
+            fast = fast->next;
+            if(fast != tail)
+                fast = fast->next;
+        }
+        ListNode* mid = slow;
+        return merge(sortList(head, mid),sortList(mid,tail));
+    }
+    ListNode* merge(ListNode* head1, ListNode* head2){
+        ListNode* dummyhead= new ListNode(0);
+        ListNode *temp = dummyhead, *temp1 = head1, *temp2 = head2;
+        while(temp1!=nullptr && temp2!=nullptr){
+            if(temp1->val <= temp2->val){
+                temp->next = temp1;
+                temp1 = temp1->next;
+            }
+            else{
+                temp->next = temp2;
+                temp2 = temp2->next;
+            }
+            temp = temp->next;
+        }
+        if(temp1!=nullptr)
+            temp->next = temp1;
+        else if(temp2!=nullptr)
+            temp->next = temp2;
+        ListNode *res = dummyhead->next;
+        delete dummyhead;
+        return res;
+    }
+};
+
+【LeetCode143】【重排链表】：https://leetcode-cn.com/problems/reorder-list/
+【线性表】
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+        vector<ListNode*> num;
+        ListNode* tmp = head;
+        while(tmp){
+            num.push_back(tmp);
+            tmp = tmp->next;
+        }
+        int i = 0, j = num.size()-1;
+        while(i<j){
+            num[i++]->next = num[j];
+            if(i == j)
+                break;
+            num[j--]->next = num[i];
+        }
+        num[i]->next = nullptr;
+    }
+};
+【中点+翻转+合并】
+class Solution {
+public:
+    void reorderList(ListNode* head) {
+        ListNode* mid = SeekMid(head);
+        ListNode* l1 = head;
+        ListNode* l2 = mid->next; 
+        mid->next = nullptr;
+        l2 = Reverse(l2);
+        Merge(l1, l2);
+    }
+private:
+    ListNode* SeekMid(ListNode* head){
+        ListNode* slow = head;
+        ListNode* fast = head;
+        while(fast->next != nullptr && fast->next->next!=nullptr){
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        return slow;
+    }
+    ListNode* Reverse(ListNode* l){
+        ListNode* pre = nullptr;
+        ListNode* cur = l;
+        while(cur != nullptr){
+            ListNode* tmp = cur->next;
+            cur->next = pre;
+            pre = cur;
+            cur = tmp;
+        }  
+        return pre;
+    }
+    void Merge(ListNode* l1, ListNode* l2){
+        ListNode* l1_tmp;
+        ListNode* l2_tmp;
+        while(l1!=nullptr && l2!=nullptr){
+            l1_tmp = l1->next;
+            l2_tmp = l2->next;
+            l1->next = l2;
+            l2->next = l1_tmp;
+            l1 = l1_tmp;
+            l2 = l2_tmp;
+        }
+    }
+};
+
+【901】【 股票价格跨度】：https://leetcode-cn.com/problems/online-stock-span/
+class StockSpanner {
+public:
+    StockSpanner() {}
+    
+    int next(int price) {
+        int w = 1;
+        while(!prices.empty() && price >= prices.top()){
+            w += weight.top();
+            prices.pop();
+            weight.pop();
+        }
+        prices.push(price);
+        weight.push(w);
+        return w;
+    }
+private:
+    stack<int> prices;
+    stack<int> weight;
+};
