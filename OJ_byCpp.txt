@@ -11304,3 +11304,39 @@ private:
     stack<int> prices;
     stack<int> weight;
 };
+
+【剑指 Offer II 105】【岛屿的最大面积】：https://leetcode-cn.com/problems/ZL6zAn/
+class Solution {
+public:
+    int maxAreaOfIsland(vector<vector<int>>& grid) {
+        row = grid.size();
+        col = grid[0].size();
+        maxArea = 0;
+        vector<vector<bool>> visited(row, vector<bool> (col,false));
+        for(int i = 0; i < row; ++i)
+            for(int j = 0; j < col; ++j)
+                if(grid[i][j] && !visited[i][j]){
+                    int area = 1;
+                    DFS(grid,visited, i, j, area);
+                } 
+        return maxArea;
+    }
+private:
+    void DFS(const vector<vector<int>>& grid, vector<vector<bool>>& visited,int x, int y,int& area){
+        maxArea = area>maxArea?area:maxArea;
+        visited[x][y] = true;
+        for(int i = 0; i < 4; ++i){
+            int nx = x + dir[i][0];
+            int ny = y + dir[i][1];
+            if(nx<0 || nx>=row || ny<0 || ny>=col || !grid[nx][ny] || visited[nx][ny])
+                continue;
+            ++area;
+            DFS(grid,visited,nx,ny,area);
+        }
+    }
+private:
+    int maxArea;
+    int row;
+    int col;
+    int dir[4][2] = {{1,0},{0,1},{-1,0},{0,-1}}; 
+};
