@@ -11359,3 +11359,43 @@ public:
         return dp[m-1][n-1];
     }
 };
+
+【剑指 Offer II 021】【. 删除链表的倒数第 n 个结点】：https://leetcode-cn.com/problems/SLwz0R/
+class Solution {
+public:
+    ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode* dummy = new ListNode(0,head);
+        ListNode* first = head;
+        ListNode* second = dummy;
+        while(n--)
+            first = first->next;
+        while(first){
+            first = first->next;
+            second = second->next;
+        }
+        second->next = second->next->next;
+        ListNode* ans = dummy->next;
+        delete dummy;
+        return ans;
+    }
+};
+
+【剑指 Offer II 024】【. 反转链表】：https://leetcode-cn.com/problems/UHnkqh/
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        if(head==nullptr || head->next==nullptr)
+            return head;
+        ListNode* dummy = new ListNode(0);
+        ListNode* cur = head;
+        ListNode* back = cur->next;
+        while(cur!=nullptr){
+            cur->next = dummy->next;
+            dummy->next = cur;
+            cur = back;
+            if(back!=nullptr)
+                back = back->next;
+        }
+        return dummy->next;
+    }
+};
