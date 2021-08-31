@@ -11399,3 +11399,54 @@ public:
         return dummy->next;
     }
 };
+
+【剑指 Offer II 044】【. 二叉树每层的最大值】：https://leetcode-cn.com/problems/hPov7L/
+class Solution {
+public:
+    vector<int> largestValues(TreeNode* root) {
+        vector<int> res;
+        if(root == nullptr)
+            return res;
+        queue<TreeNode*> Q;
+        Q.push(root);
+        while(!Q.empty()){
+            int sz = Q.size();
+            int tmp_max = INT_MIN;
+            for(int i = 0; i < sz; ++i){
+                TreeNode* t = Q.front();
+                Q.pop();
+                tmp_max = t->val>tmp_max?t->val:tmp_max;
+                if(t->left)
+                    Q.push(t->left);
+                if(t->right)
+                    Q.push(t->right);
+            }
+            res.push_back(tmp_max);
+        }
+        return res;
+    }
+};
+
+【剑指 Offer II 045】【. 二叉树最底层最左边的值】：https://leetcode-cn.com/problems/LwUNpT/
+class Solution {
+public:
+    int findBottomLeftValue(TreeNode* root) {
+        DFS(root, 0);
+        return res;
+    }
+private:
+    void DFS(TreeNode* root,int curdepth){
+        if(root == nullptr)
+            return;
+        ++curdepth;
+        if(curdepth>depth){
+            depth = curdepth;
+            res = root->val;
+        }
+        DFS(root->left,curdepth);
+        DFS(root->right,curdepth);
+    }
+private:
+    int depth = 0;
+    int res;
+};
