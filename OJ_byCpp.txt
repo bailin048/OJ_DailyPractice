@@ -11490,3 +11490,15 @@ private:
     int n;
     int dir[4][2] ={{1,0},{0,1},{-1,0},{0,-1}}; 
 };
+
+【LeetCode560】【和为K的子数组】：
+int res = 0;
+        int sum = 0;
+        unordered_map<int,int> ump;
+        ump[0] = 1;
+        for(auto& x: nums){
+            sum += x;
+            res +=ump[sum-k];
+            ++ump[sum];
+        }
+        return res;
