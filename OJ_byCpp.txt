@@ -11563,3 +11563,44 @@ public:
 private:
     vector<int> nums;
 };
+
+【LeetCode99】【. 恢复二叉搜索树】：https://leetcode-cn.com/problems/recover-binary-search-tree/
+class Solution {
+public:
+    void recoverTree(TreeNode* root) {
+        vector<int> in;
+        Inorder(in,root);
+        int cnt = 0;
+        int sz = in.size();
+        vector<int> err(2,-1);
+        vector<int> tmp(in);
+        sort(tmp.begin(),tmp.end());
+        for(int i = 0; i < sz; ++i){
+            if(in[i]!=tmp[i]){
+                err[0] = in[i];
+                err[1] = tmp[i];
+                break;
+            }
+        }
+        Recover(root,err,2);
+    }
+private:
+    void Recover(TreeNode* root, const vector<int>& err,int cnt){
+        if(root == nullptr)
+            return;
+        if(root->val == err[0] || root->val == err[1]){
+            root->val = root->val==err[0]?err[1]:err[0];
+            if(cnt == 0)
+                return;
+        }
+        Recover(root->left,err,cnt);
+        Recover(root->right,err,cnt);
+    }
+    void Inorder(vector<int>& in,TreeNode* root){
+        if(root==nullptr)
+            return;
+        Inorder(in,root->left);
+        in.push_back(root->val);
+        Inorder(in,root->right);
+    }
+};
