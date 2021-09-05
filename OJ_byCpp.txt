@@ -11604,3 +11604,33 @@ private:
         Inorder(in,root->right);
     }
 };
+
+【剑指 Offer II 034】【. 外星语言是否排序】：https://leetcode-cn.com/problems/lwyVBB/submissions/
+class Solution {
+public:
+    bool isAlienSorted(vector<string>& words, string order) {
+        int i = 1;
+        for(auto& c:order)
+            dict[c] = i++;
+        int sz = words.size();
+        for(int i = 1; i < sz; ++i){
+            if(!IsSorted(words[i-1],words[i]))
+                return false;
+        }
+        return true;
+    }
+    bool IsSorted(const string& s1,const string& s2){
+        int sz1 =  s1.size(); 
+        int sz2 = s2.size();
+        int i = 0;
+        for(; i<sz1 && i<sz2; ++i){
+            if(dict[s1[i]]>dict[s2[i]])
+                return false;
+            if(dict[s1[i]]<dict[s2[i]])
+                return true;
+        }
+        return i==sz1;
+    }
+private:
+    unordered_map<char,int> dict;
+};
