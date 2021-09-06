@@ -11634,3 +11634,35 @@ public:
 private:
     unordered_map<char,int> dict;
 };
+
+【剑指 Offer II 015】【. 字符串中的所有变位词】：https://leetcode-cn.com/problems/VabMRr/
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        vector<int> res;
+        int sz = s.size();
+        int len = p.size();
+        unordered_map<char, int> ump;
+        for (auto& c : p)
+            ++ump[c];
+        unordered_map <char, int> tar;
+        int i = 0, j = 0;
+        while(j<len)
+            ++tar[s[j++]];
+        --j;
+        while (j < sz) {
+            if (IsEqual(tar, ump)) 
+                res.push_back(i);
+            --tar[s[i++]];
+            ++tar[s[++j]]; 
+        }
+        return res;
+    }
+private:
+    bool IsEqual(unordered_map<char, int>& tar, unordered_map<char, int>& ump) {
+        for (auto& t : ump)
+            if (tar[t.first] != t.second)
+                return false;
+        return true;
+    }
+};
