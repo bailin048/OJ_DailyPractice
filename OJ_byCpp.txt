@@ -11687,3 +11687,46 @@ public:
         return dp[0][sz-1];
     }
 };
+
+【459】【. 重复的子字符串】：https://leetcode-cn.com/problems/repeated-substring-pattern/
+class Solution {
+public:
+    bool repeatedSubstringPattern(string s) {
+        string tmp = s+s;
+        int n = s.size();
+        for(int i = 1; i <= n/2; ++i){
+            string tmp2(tmp.begin()+i,tmp.begin()+i+n);
+            if(tmp2 == s)
+                return true;
+        }
+        return false;
+    }
+};
+
+【316】【. 去除重复字母】：https://leetcode-cn.com/problems/remove-duplicate-letters/
+class Solution {
+public:
+    string removeDuplicateLetters(string s) {
+        vector<int> rec(26,0);
+        vector<bool> vis(26,false);
+        for(auto& c:s)
+            ++rec[c-'a'];
+        string res;
+        for(auto& c:s){
+            if(!vis[c-'a']){
+                while(!res.empty() && res.back()>c){
+                    if(rec[res.back()-'a']>0){
+                        vis[res.back()-'a'] = false;
+                        res.pop_back();
+                    }
+                    else
+                        break;
+                }
+                res += c;
+                vis[c-'a'] = true;
+            }
+            --rec[c-'a'];
+        } 
+        return res;
+    } 
+};
