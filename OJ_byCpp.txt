@@ -11911,3 +11911,124 @@ public:
         return maxlen;
     }
 };
+
+#include <iostream>
+#include <unordered_map>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <set>
+using namespace std;
+/*
+题目一：像素放大
+现在我们需要放大一张图片，图片都是由像素组成的，放大图像就是放大像素。
+放大像素的过程如下：
+现在原有图像像素信息如右：1 0
+						  0 1
+现在需要将其放大3倍,结果如右：1 1 1 0 0 0
+                              1 1 1 0 0 0
+							  1 1 1 0 0 0
+							  0 0 0 1 1 1
+							  0 0 0 1 1 1 
+							  0 0 0 1 1 1
+再举一个栗子，原像素信息：1 1 0
+                          1 0 1
+						  0 0 1
+现将其放大2倍，结果如右：1 1 1 1 0 0
+                         1 1 1 1 0 0
+						 1 1 0 0 1 1
+						 1 1 0 0 1 1
+						 0 0 0 0 1 1
+						 0 0 0 0 1 1
+现输入原像素信息，请你输出放大后的图像
+输入：第一行输入N，K，使用空格间隔
+接着N行，每行N个数字，共同组成原图像，请将其放大K倍后输出
+示例：
+输入：2 2
+      1 0
+	  0 1
+输出：1 1 0 0
+      1 1 0 0
+      0 0 1 1
+	  0 0 1 1
+*/
+class Solution {
+public:
+	void BigImage(const int& N, const int& K, const vector<vector<int>>& nums) {
+		for (int i = 0; i < N; ++i) {
+			vector<int> tmp1(N * K);
+			int idx = 0;
+			for (int j = 0; j < N; ++j) {
+				for (int t = 0; t < K; ++t)
+					tmp1[idx++] = nums[i][j];
+			}
+			for (int j = 0; j < K; ++j) {
+				for (int t = 0; t < N * K; ++t)
+					cout << tmp1[t] << " ";
+				cout << endl;
+			}
+		}
+	}
+};
+int main() {
+	Solution S;
+	int N, K;
+	while (cin >> N >> K) {
+		vector<vector<int>> nums(N, vector<int>(N));
+		for (int i = 0; i < N; ++i)
+			for (int j = 0; j < N; ++j)
+				cin >> nums[i][j];
+		S.BigImage(N, K, nums);
+	}
+	return 0;
+}
+/*
+题目二：组合数
+若两个数m,n的最小公因数GCD(m,n)=1，最小公倍数LCM(m,n)=m*n,
+那我们就称(m,n)是积为m*n的一对目标组合。
+现输入一个数N，请求出积为N的目标组合的数目。
+示例：
+输入：30
+输出：4（解释：(1,30)(2,15)(3,10)(5,6)）
+*/
+
+
+class Solution {
+public:
+	int NumofTargetCombine(const int& N) {
+		unordered_map<int, int> ump;
+		FindFactors(N, ump);
+		int res = 0;
+		for (auto& it : ump) {
+			if (GCD(it.first, it.second) == 1)
+				++res;
+		}
+		return res;
+	}
+private:
+	void FindFactors(const int& N, unordered_map<int,int>& ump) {
+		for (int i = 1; i <= sqrt(N); ++i) {
+			if (N % i == 0)
+				ump[i] = N / i;
+		}
+	}
+	int GCD(int m, int n) {
+		while (m != n) {
+			if (m > n)
+				m -= n;
+			else if (m < n)
+				n -= m;
+			else
+				break;
+		}
+		return m;
+	}
+};
+
+int main() {
+	Solution S;
+	int N;
+	while (cin >> N)
+		cout << S.NumofTargetCombine(N) << endl;
+	return 0;
+}
