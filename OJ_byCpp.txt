@@ -12032,3 +12032,109 @@ int main() {
 		cout << S.NumofTargetCombine(N) << endl;
 	return 0;
 }
+
+【566】【. 重塑矩阵】：https://leetcode-cn.com/problems/reshape-the-matrix/
+class Solution {
+public:
+    vector<vector<int>> matrixReshape(vector<vector<int>>& mat, int r, int c) {
+        int m = mat.size();
+        int n = mat[0].size();
+        if(m*n!=c*r)
+            return mat;
+        vector<vector<int>> res(r,vector<int>(c));
+        int idx = 0;
+        for(int i = 0; i < r; ++i){
+            for(int j = 0; j < c; ++j){
+                res[i][j] = mat[idx/n][idx%n];
+                ++idx;
+            }
+        }
+        return res;
+    }
+};
+
+【575】【. 分糖果】：https://leetcode-cn.com/problems/distribute-candies/
+class Solution {
+public:
+    int distributeCandies(vector<int>& candyType) {
+        unordered_map<int,int> ump;
+        for(int& x:candyType)
+            ++ump[x];
+        return min(candyType.size()/2,ump.size());
+    }
+};
+
+【5】【. 最长回文子串】：https://leetcode-cn.com/problems/longest-palindromic-substring/
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        int sz = s.size();
+        int start = 0,end = 0; 
+        for(int i = 0; i < sz; ++i){
+            auto [left1,right1] = expand(s,i,i);
+            auto [left2,right2] = expand(s,i,i+1);
+            if(right1-left1 > end-start)
+                end = right1, start = left1;
+            if(right2-left2 > end-start)
+                end = right2, start = left2;
+        }
+        return s.substr(start,end-start+1);
+    }
+private:
+    pair<int,int> expand(const string& s, int left, int right){
+        int sz = s.size();
+        while(left>=0 && right<sz && s[left]==s[right])
+            --left,++right;
+        return {left+1,right-1};
+    }
+};
+
+【71】【. 简化路径】：https://leetcode-cn.com/problems/simplify-path/
+class Solution {
+public:
+    string simplifyPath(string path) {
+        deque<string> dq;
+        int left = 1;
+        int sz = path.size();
+        for(int i = 1; i < sz; ++i){
+            while(i <sz && path[i] != '/')
+                ++i;
+            string tmp = path.substr(left,i-left);
+            if(tmp == ".."){
+                if(!dq.empty())
+                    dq.pop_back();
+            }
+            else if(tmp != "." && tmp!="")
+                dq.push_back(tmp);
+            left = i + 1;  
+        }
+        string res;
+        while(!dq.empty()){
+            res += "/";
+            res += dq.front();
+            dq.pop_front();
+        }
+        return res==""?"/":res;
+    }
+};
+
+【56】【. 合并区间】：https://leetcode-cn.com/problems/merge-intervals/
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        vector<vector<int>> res;
+        if(!intervals.size())
+            return res;
+        sort(intervals.begin(), intervals.end());
+        int sz = intervals.size();
+        res.push_back(intervals[0]);
+        for(int i = 1; i < sz; ++i){
+            int left = intervals[i][0], right = intervals[i][1];
+            if(left > res.back()[1])
+                res.push_back(intervals[i]);
+            else
+                res.back()[1] = max(right, res.back()[1]);
+        }
+        return res;
+    }
+};
