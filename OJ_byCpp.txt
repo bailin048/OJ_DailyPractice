@@ -12229,3 +12229,114 @@ private:
 private:
     vector<string> res;
 };
+
+【40】【. 组合总和 II】：https://leetcode-cn.com/problems/combination-sum-ii/
+class Solution {
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        Target = target;
+        sz = candidates.size();
+        vector<int> tmp;
+        vector<bool> used(sz, false);
+        BackTrack(candidates, used, 0, 0, tmp);
+        return res;
+    }
+private:
+    void BackTrack(const vector<int>& nums,vector<bool> used, int idx, int sum,vector<int> tmp){
+        if(sum == Target){
+            res.push_back(tmp);
+            return;
+        }
+        for(int i = idx; i < sz; ++i){
+            if(i>0 && nums[i-1]==nums[i] && !used[i-1])
+                continue;
+            sum += nums[i];
+            if(sum > Target)
+                return;
+            tmp.push_back(nums[i]);
+            used[i] = true;
+            BackTrack(nums, used, i + 1, sum, tmp);
+            tmp.pop_back();
+            sum -= nums[i];
+            used[i] = false;
+        }
+    }
+private:
+    vector<vector<int>> res;
+    int Target;
+    int sz;
+};
+
+【216】【. 组合总和 III】：https://leetcode-cn.com/problems/combination-sum-iii/
+class Solution {
+public:
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<int> tmp;
+        BackTrack(1, 0, tmp, k, n);
+        return res;
+    }
+private:
+    void BackTrack(int idx, int sum, vector<int> tmp, int k, const int& n){
+        if(sum==n && k==0){
+            res.push_back(tmp);
+            return;
+        }
+        for(int i = idx; i < 10; ++i){
+            sum += i;
+            if(sum > n)
+                return;
+            --k;
+            tmp.push_back(i);
+            BackTrack(i + 1, sum, tmp, k, n);
+            ++k;
+            sum -= i;
+            tmp.pop_back();
+        }
+    }
+private:
+    vector<vector<int>> res;
+};
+
+【剑指 Offer II 080】【. 含有 k 个元素的组合】：https://leetcode-cn.com/problems/uUsW3B/
+class Solution {
+public:
+    vector<vector<int>> combine(int n, int k) {
+        vector<int> tmp;
+        BackTrack(1, k, tmp, n);
+        return res;
+    }
+private:
+    void BackTrack(int idx, int k, vector<int> tmp, const int& n){
+        if(k==0){
+            res.push_back(tmp);
+            return;
+        }
+        for(int i = idx; i <= n; ++i){
+            tmp.push_back(i);
+            --k;
+            BackTrack(i+1, k, tmp, n);
+            ++k;
+            tmp.pop_back();
+        }
+    }
+private:
+    vector<vector<int>> res;
+};
+
+【377.】【 组合总和 Ⅳ】：https://leetcode-cn.com/problems/combination-sum-iv/
+class Solution {
+public:
+    int combinationSum4(vector<int>& nums, int target) {
+       vector<int> dp(target + 1);
+        dp[0] = 1;
+        for (int i = 1; i <= target; i++) {
+            for (int& num : nums) {
+                if (num <= i && dp[i - num] < INT_MAX - dp[i]) {
+                    dp[i] += dp[i - num];
+                }
+            }
+        }
+        return dp[target];
+    }
+};
