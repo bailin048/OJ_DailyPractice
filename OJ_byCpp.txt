@@ -12340,3 +12340,110 @@ public:
         return dp[target];
     }
 };
+
+【45】【. 跳跃游戏 II】：https://leetcode-cn.com/problems/jump-game-ii/
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        int sz = nums.size();
+        int end = 0;
+        int maxpos = 0;
+        int step = 0;
+        for(int i = 0; i < sz-1; ++i){
+            maxpos = max(maxpos,i + nums[i]);
+            if(i == end){
+                end = maxpos;
+                ++step;
+            }
+        }
+        return step;
+    }
+};
+
+【57】【. 插入区间】：https://leetcode-cn.com/problems/insert-interval/
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        int sz = intervals.size();
+        int pos = SeekInsertPos(intervals,newInterval);
+        intervals.insert(intervals.begin()+pos, 1, newInterval);
+        vector<vector<int>> res;
+        res.push_back(intervals[0]);
+        for(int i = 1; i <= sz; ++i){
+            int left = intervals[i][0];
+            int right = intervals[i][1];
+            if(left<=res.back()[1])
+                res.back()[1] = max(res.back()[1], right);
+            else
+                res.push_back(intervals[i]);
+        }
+        return res;
+    }
+private:
+    int SeekInsertPos(vector<vector<int>>& intervals, vector<int>& newInterval){
+        if(intervals.size()==0)
+            return 0;
+        int left = 0;
+        int right = intervals.size()-1;
+        while(left<right){
+            int mid = (left+right)/2;
+            if(intervals[mid][0]==newInterval[0])
+                return mid;
+            else if(intervals[mid][0]>newInterval[0])
+                right = mid - 1;
+            else
+                left = mid + 1;
+        }
+        if(intervals[left][0]<newInterval[0])
+            return left+1;
+        return left;
+    }
+};
+
+【79】【. 单词搜索】：https://leetcode-cn.com/problems/word-search/
+class Solution {
+public:
+    bool exist(vector<vector<char>>& board, string word) {
+        m = board.size();
+        n = board[0].size();
+        if(m==n && n==word.size() && n==1 && word[0]==board[0][0])
+            return true;
+        wd = word;
+        vector<vector<bool>> used(m,vector<bool> (n, false));
+        for(int i = 0 ; i < m; ++i){
+            for(int j = 0 ; j < n; ++j){
+                if(board[i][j] == word[0]){
+                    flag = false;
+                    used[i][j] = true;
+                    BackTrack(i, j, 1, board, used);
+                    if(flag)
+                        return true;
+                    used[i][j] = false;
+                }
+            }
+        }
+        return false;
+    }
+private:
+    void BackTrack(int x, int y, int idx, const vector<vector<char>>& board,vector<vector<bool>>& used){
+        if(idx == wd.size()){
+            flag = true;
+            return;
+        }
+        for(int i = 0; i < 4; ++i){
+            int nx = x + dir[i][0];
+            int ny = y + dir[i][1];
+            if(nx<0 || nx>=m || ny<0 || ny>=n || used[nx][ny] || board[nx][ny]!=wd[idx])
+                continue;
+            used[nx][ny] = true;
+            BackTrack(nx, ny, idx + 1, board, used);
+            used[nx][ny] = false; 
+        }
+    }
+private:
+    int m;
+    int n;
+    string wd;
+    bool flag;
+    int dir[4][2] = {{1,0},{0,1},{-1,0},{0,-1}};
+};
