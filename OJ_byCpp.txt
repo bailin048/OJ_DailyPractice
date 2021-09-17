@@ -12447,3 +12447,129 @@ private:
     bool flag;
     int dir[4][2] = {{1,0},{0,1},{-1,0},{0,-1}};
 };
+
+【165.】【 比较版本号】：https://leetcode-cn.com/problems/compare-version-numbers/
+class Solution {
+public:
+    int compareVersion(string version1, string version2) {
+        int sz1 = version1.size();
+        int sz2 = version2.size();
+        int idx1 = 0, idx2 = 0;
+        while(idx1<sz1 && idx2<sz2){
+            int v1 = vers(idx1,version1);
+            int v2 = vers(idx2,version2);
+            if(v1>v2)
+                return 1;
+            else if(v1<v2)
+                return -1;
+        }
+        while(idx1<sz1){
+            int v1 = vers(idx1,version1);
+            if(!v1)
+                continue;
+            if(v1)
+                return 1;
+            else
+                return -1;
+        }
+         while(idx2<sz2){
+            int v2 = vers(idx2,version2);
+            if(!v2)
+                continue;
+            if(v2)
+                return -1;
+            else
+                return 1;
+        }
+        return 0;
+    }
+private:
+    int vers(int& idx, string& version){
+        int v = 0;
+        int sz = version.size();
+        while(idx<sz && version[idx]!='.')
+            v = v*10 + (version[idx++] - '0');
+        ++idx;
+        return v;
+    }
+};
+
+【81】【. 搜索旋转排序数组 II】：https://leetcode-cn.com/problems/search-in-rotated-sorted-array-ii/
+class Solution {
+public:
+    bool search(vector<int>& nums, int target) {
+        int sz = nums.size();
+        if(!sz)
+            return false;
+        if(sz == 1 && target == nums[0])
+            return true;
+        int left = 0;
+        int right = sz-1;
+        while(left<=right){
+            int mid = (left + right)/2;
+            if(nums[mid] == target)
+                return true;
+            if(nums[left]==nums[right] && nums[right]==nums[mid])
+                ++left,--right;
+            else if(nums[left]<=nums[mid]){
+                if(nums[left]<=target && target<nums[mid])
+                    right = mid - 1;
+                else
+                    left = mid + 1;
+            }
+            else{
+                if(nums[mid]<target && target <= nums[sz-1])
+                    left = mid + 1;
+                else
+                    right = mid - 1;
+            }
+        }
+        return false;
+    }
+};
+
+【91. 】【解码方法】：https://leetcode-cn.com/problems/decode-ways/
+class Solution {
+public:
+    int numDecodings(string s) {
+        int sz = s.size();
+        vector<int> dp(sz+1,0);
+        dp[0] = 1;
+        for(int i = 1; i <= sz; ++i){
+            if(s[i-1]!='0')
+                dp[i] += dp[i-1];
+            if(i>1 && s[i-2]!='0' && ((s[i-2]-'0')*10 + (s[i-1]-'0')<=26))
+                dp[i] += dp[i-2];
+        }
+        return dp[sz];
+    }
+};
+
+【95】【. 不同的二叉搜索树 II】：https://leetcode-cn.com/problems/unique-binary-search-trees-ii/
+class Solution {
+public:
+    vector<TreeNode*> generateTrees(int n) {
+        if(!n)
+            return {};
+        return generateTrees(1,n);
+    }
+private:
+    vector<TreeNode*> generateTrees(int start, int end){
+        if(start>end)
+            return {nullptr};
+        vector<TreeNode*> allTree;
+        for(int i = start; i <= end; ++i){
+            vector<TreeNode*> left = generateTrees(start,i-1);
+            vector<TreeNode*> right = generateTrees(i+1,end);
+            for(auto& l:left){
+                for(auto& r:right){
+                    TreeNode* cur = new TreeNode(i);
+                    cur->left = l;
+                    cur->right = r;
+                    allTree.emplace_back(cur);
+                }
+            }
+        }
+        return allTree;
+    }
+};
