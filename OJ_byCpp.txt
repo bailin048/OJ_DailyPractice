@@ -12573,3 +12573,71 @@ private:
         return allTree;
     }
 };
+
+【剑指 Offer 19】【. 正则表达式匹配】：https://leetcode-cn.com/problems/zheng-ze-biao-da-shi-pi-pei-lcof/
+class Solution {
+public:
+    bool isMatch(string s, string p) {
+        int m = s.size();
+        int n = p.size();
+        auto matches = [&](int i, int j) {
+            if (i == 0) 
+                return false;
+            if (p[j - 1] == '.') 
+                return true;
+            return s[i - 1] == p[j - 1];
+        };
+        vector<vector<int>> f(m + 1, vector<int>(n + 1));
+        f[0][0] = true;
+        for (int i = 0; i <= m; ++i) {
+            for (int j = 1; j <= n; ++j) {
+                if (p[j - 1] == '*') {
+                    f[i][j] |= f[i][j - 2];
+                    if (matches(i, j - 1)) {
+                        f[i][j] |= f[i - 1][j];
+                    }
+                }
+                else {
+                    if (matches(i, j)) 
+                        f[i][j] |= f[i - 1][j - 1];
+                }
+            }
+        }
+        return f[m][n];
+    }
+};
+
+【剑指 Offer II 006】【. 排序数组中两个数字之和】：https://leetcode-cn.com/problems/kLl5u1/
+class Solution {
+public:
+    vector<int> twoSum(vector<int>& numbers, int target) {
+        int l = 0, r = numbers.size()-1;
+        while(l<r){
+            int cur = numbers[l] + numbers[r];
+            if(cur == target)
+                break;
+            else if(cur>target)
+                --r;
+            else
+                ++l;
+        }
+        return {l,r};
+    }
+};
+
+【剑指 Offer II 009】【. 乘积小于 K 的子数组】：https://leetcode-cn.com/problems/ZVAVXX/
+class Solution {
+public:
+    int numSubarrayProductLessThanK(vector<int>& nums, int k) {
+        long product = 1;
+        int left = 0;
+        int ret = 0;
+        for (int right = 0; right < nums.size(); ++right) {
+            product *= nums[right];
+            while (left <= right && product >= k) 
+                product /= nums[left++];
+            ret += (left <= right) ? right - left + 1 : 0;
+        }
+        return ret;
+    }
+};
