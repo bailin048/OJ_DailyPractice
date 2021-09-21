@@ -12641,3 +12641,70 @@ public:
         return ret;
     }
 };
+
+【279.】【 完全平方数】：https://leetcode-cn.com/problems/perfect-squares/
+class Solution {
+public:
+    int numSquares(int n) {
+        vector<int> dp(n+1);
+        for(int i = 1; i <= n; ++i){
+            int top =sqrt(i);
+            int m = INT_MAX;
+            for(int j = 1; j <= top; ++j)
+                m = min(m,dp[i-j*j]);
+            dp[i] = 1 + m;
+        }
+        return dp[n];
+    }
+};
+
+【284.】【 顶端迭代器】：https://leetcode-cn.com/problems/peeking-iterator/
+class PeekingIterator : public Iterator {
+public:
+	PeekingIterator(const vector<int>& nums) : Iterator(nums) {
+	    // Initialize any member here.
+	    // **DO NOT** save a copy of nums and manipulate it directly.
+	    // You should only use the Iterator interface methods.
+	    _next = Iterator::hasNext();
+        _val = Iterator::next();
+	}
+	
+    // Returns the next element in the iteration without advancing the iterator.
+	int peek() {
+       return _val;
+	}
+	
+	// hasNext() and next() should behave the same as in the Iterator interface.
+	// Override them if needed.
+	int next() {
+        int cur = _val;
+	    _next = Iterator::hasNext();
+        if(_next)
+            _val = Iterator::next();
+        return cur;
+	}
+	
+	bool hasNext() const {
+	   return _next;  
+	}
+private:
+    bool _next;
+    int _val;
+};
+
+【300.】【 最长递增子序列】：https://leetcode-cn.com/problems/longest-increasing-subsequence/
+class Solution {
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        int sz = nums.size();
+        vector<int> dp(sz);
+        for(int i = 0; i < sz; ++i){
+            dp[i] = 1;
+            for(int j = 0; j < i; ++j){
+                if(nums[j]<nums[i])
+                    dp[i] = max(dp[i],dp[j]+1);
+            }
+        }
+        return *max_element(dp.begin(), dp.end());
+    }
+};
