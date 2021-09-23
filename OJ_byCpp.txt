@@ -12739,3 +12739,76 @@ public:
         return res;
     }
 };
+
+【146.】【 LRU 缓存机制】：https://leetcode-cn.com/problems/lru-cache/solution/lruhuan-cun-ji-zhi-by-leetcode-solution/
+struct DLinkNode{
+    int key;
+    int val;
+    DLinkNode* prev;
+    DLinkNode* next;
+    DLinkNode():key(0), val(0), prev(nullptr), next(nullptr) {}
+    DLinkNode(int _key, int _value): key(_key), val(_value), prev(nullptr), next(nullptr){}
+};
+
+class LRUCache {
+public:
+    LRUCache(int _capacity):capacity(_capacity),size(0) {
+        head = new DLinkNode();
+        tail = new DLinkNode();
+        head->next = tail;
+        tail->prev = head;
+    }
+    
+    int get(int key) {
+        if(!cache.count(key))
+            return -1;
+        DLinkNode* tmp = cache[key];
+        MovetoHead(tmp);
+        return tmp->val;
+    }
+    
+    void put(int key, int value) {
+        if(!cache.count(key)){
+            DLinkNode* node = new DLinkNode(key, value);
+            cache[key] = node;
+            AddtoHead(node);
+            ++size;
+            if(size>capacity){
+                DLinkNode* tmp = RemoveTail();
+                cache.erase(tmp->key);
+                delete tmp;
+                --size;
+            }
+        }else{
+            DLinkNode* tmp = cache[key];
+            tmp->val = value;
+            MovetoHead(tmp);
+        }
+    }
+private:
+    void MovetoHead(DLinkNode* node){
+        RemoveNode(node);
+        AddtoHead(node);
+    }
+    DLinkNode* RemoveTail(){
+        DLinkNode* node = tail->prev;
+        RemoveNode(node);
+        return node;
+    }
+    void AddtoHead(DLinkNode* node){
+        node->next = head->next;
+        node->prev = head;
+        node->next->prev = node;
+        head->next = node;
+    }
+    void RemoveNode(DLinkNode* node){
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+    }
+private:
+    unordered_map<int,DLinkNode*> cache;
+    int capacity; 
+    int size;
+    DLinkNode* head;
+    DLinkNode* tail;
+};
