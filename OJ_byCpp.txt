@@ -12845,3 +12845,43 @@ private:
         return last;
     }
 };
+
+【剑指 Offer II 095.】【 最长公共子序列】：https://leetcode-cn.com/problems/qJnOS7/
+class Solution {
+public:
+    int longestCommonSubsequence(string text1, string text2) {
+        int m = text1.size();
+        int n = text2.size();
+        vector<vector<int>> dp(m+1,vector<int>(n+1,0));
+        for(int i = 1; i <= m; ++i){
+            char c1 = text1[i-1];
+            for(int j = 1; j <= n; ++j){
+                if(c1 == text2[j-1])
+                    dp[i][j] = dp[i-1][j-1] + 1;
+                else
+                    dp[i][j] = max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+        return dp[m][n];
+    }
+};
+
+【583.】【 两个字符串的删除操作】：https://leetcode-cn.com/problems/delete-operation-for-two-strings/
+class Solution {
+public:
+    int minDistance(string word1, string word2) {
+        int m = word1.size();
+        int n = word2.size();
+        vector<vector<int>> dp(m+1,vector<int>(n+1,0));
+        for(int i = 1; i <= m; ++i){
+            char c1 = word1[i-1];
+            for(int j = 1; j <= n; ++j){
+                if(c1 == word2[j-1])
+                    dp[i][j] = dp[i-1][j-1] + 1;
+                else
+                    dp[i][j] = max(dp[i-1][j],dp[i][j-1]);
+            }
+        }
+        return m+n-2*dp[m][n];
+    }
+};
