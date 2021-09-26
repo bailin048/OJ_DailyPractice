@@ -12885,3 +12885,47 @@ public:
         return m+n-2*dp[m][n];
     }
 };
+
+【451】【. 根据字符出现频率排序】：https://leetcode-cn.com/problems/sort-characters-by-frequency/
+class Solution {
+public:
+    string frequencySort(string s) {
+        unordered_map<char,int> ump;
+        for(auto& c:s)
+            ++ump[c];
+        vector<pair<char,int>> vec(ump.begin(),ump.end());
+        sort(vec.begin(),vec.end(),cmp);
+        string res;
+        for(auto& t:vec)
+            for(int i = 0; i < t.second; ++i)
+                res += t.first;
+        return res;
+    }
+private:
+    static bool cmp(const pair<char,int>& p1,const pair<char,int>& p2){
+        return p1.second>p2.second;
+    }
+};
+
+【42】【. 接雨水】：https://leetcode-cn.com/problems/trapping-rain-water/
+class Solution {
+public:
+    int trap(vector<int>& height) {
+        int res = 0;
+        int left = 0,right = height.size()-1;
+        int leftmax = 0,rightmax = 0;
+        while(left<right){
+            leftmax = max(leftmax,height[left]);
+            rightmax = max(rightmax,height[right]);
+            if(height[left] < height[right]){
+                res += leftmax - height[left];
+                ++left;
+            }
+            else{
+                res += rightmax -height[right];
+                --right; 
+            }
+        }
+        return res;
+    }
+};
