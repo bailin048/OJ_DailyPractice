@@ -12929,3 +12929,42 @@ public:
         return res;
     }
 };
+
+【639】【. 解码方法 II】：https://leetcode-cn.com/problems/decode-ways-ii/
+class Solution {
+public:
+    int numDecodings(string s) {
+        int n = s.size();
+        int a=0, b=1, c=0;
+        for(int i = 1; i <= n; ++i){
+            c = (long long)b*CountOneDigit(s[i-1])%mod;
+            if(i>1)
+                c = (c + (long long)a*CountTwoDigit(s[i-2],s[i-1])) %mod;
+            a = b;
+            b = c; 
+        }
+        return c;
+    }
+private:
+    int CountOneDigit(const char& c){
+        if(c == '0')
+            return 0;
+        return c=='*'?9:1;
+    }
+    int CountTwoDigit(const char& c1, const char& c2){
+        if(c1==c2 && c2=='*')
+            return 15;
+        if(c1=='*')
+            return c2<='6'?2:1;
+        if(c2=='*'){
+            if(c1=='1')
+                return 9;
+            else if(c1=='2')
+                return 6;
+            return 0;                
+        }
+        return c1!='0' && (c1-'0')*10 + (c2-'0')<=26;
+    }
+private:
+    static const int mod = 1000000007;
+};
