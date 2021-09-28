@@ -12968,3 +12968,25 @@ private:
 private:
     static const int mod = 1000000007;
 };
+
+【437.】【 路径总和 III】：https://leetcode-cn.com/problems/path-sum-iii/
+class Solution {
+public:
+    int pathSum(TreeNode* root, int targetSum) {
+        ump[0] = 1;
+        return DFS(root, 0, targetSum);
+    }
+private:
+    int DFS(TreeNode* root,int cur, const int& targetSum){
+        if(root == nullptr)
+            return 0;
+        int cnt = 0;
+        cur += root->val;
+        if(ump.count(cur-targetSum))
+            cnt = ump[cur-targetSum];
+        ++ump[cur];
+        cnt += DFS(root->left, cur, targetSum);
+        cnt += DFS(root->right, cur, targetSum);
+        --ump[cur];
+        return cnt;
+    }
