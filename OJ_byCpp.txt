@@ -12990,3 +12990,75 @@ private:
         --ump[cur];
         return cnt;
     }
+}；
+
+【剑指 Offer II 007.】【 数组中和为 0 的三个数】：https://leetcode-cn.com/problems/1fGaJU/
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        vector<vector<int>> res;
+        sort(nums.begin(),nums.end());
+        int sz = nums.size();
+        for(int i = 0; i < sz; ++i){
+            if(i > 0 && nums[i]==nums[i-1])
+                continue;
+            int left = i + 1;
+            int right = sz - 1;
+            while(left<right){
+                if(nums[left]+nums[right]==-nums[i]){
+                    res.push_back({nums[i],nums[left++],nums[right--]});
+                    while(left<right && nums[left] == nums[left-1])
+                        ++left;
+                    while(right>left && nums[right] == nums[right+1])
+                        --right;
+                }
+                else if(nums[left]+nums[right]>-nums[i])
+                    --right;
+                else
+                    ++left;
+            }
+        }
+        return res;
+    }
+};
+
+【剑指 Offer II 008.】【 和大于等于 target 的最短子数组】：https://leetcode-cn.com/problems/2VG8Kg/
+class Solution {
+public:
+    int minSubArrayLen(int target, vector<int>& nums) {
+        int sz = nums.size();
+        int len = INT_MAX;
+        int left = 0;
+        int sum = 0;
+        for(int right = 0; right < sz; ++right){
+            sum += nums[right];
+            while(sum>=target){
+                len = min(len,right-left+1);
+                sum -= nums[left++];
+            }
+        }
+         return len==INT_MAX?0:len;
+    }
+};
+
+【剑指 Offer II 012】【. 左右两边子数组的和相等】：https://leetcode-cn.com/problems/tvdfij/
+class Solution {
+public:
+    int pivotIndex(vector<int>& nums) {
+        unordered_map<int,int> ump;
+        ump[0] = 0;
+        int sz = nums.size();
+        int sum = 0;
+        for(int i = 0; i < sz; ++i){
+            sum += nums[i];
+            ump[i+1] = sum; 
+        }
+        for(int i = 0; i < sz; ++i){
+            int l = ump[i];
+            int r = ump[sz] - ump[i+1];
+            if(l == r)
+                return i;
+        }
+        return -1;
+    }
+};
