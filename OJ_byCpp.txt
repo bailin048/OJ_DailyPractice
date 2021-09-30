@@ -13062,3 +13062,51 @@ public:
         return -1;
     }
 };
+
+【剑指 Offer II 027.】【 回文链表】：https://leetcode-cn.com/problems/aMhZSa/
+class Solution {
+public:
+    bool isPalindrome(ListNode* head) {
+        if (head == nullptr || head->next == nullptr) {
+            return true;
+        }
+        ListNode* dummmy = new ListNode(0);
+        dummmy->next = head;
+        ListNode* slow = dummmy;
+        ListNode* fast = dummmy;
+        while (fast != nullptr && fast->next != nullptr) {
+            slow = slow->next;
+            fast = fast->next->next;
+        }
+        delete dummmy;
+        dummmy = nullptr;
+        ListNode* headB = slow->next;
+        slow->next = nullptr;
+        ListNode* p2 = reverseList(headB);
+        ListNode* p1 = head;
+        while (p2 != nullptr) {
+            if (p1->val != p2->val) {
+                return false;
+            }
+            p1 = p1->next;
+            p2 = p2->next;
+        }
+        return true;
+    }
+
+    ListNode* reverseList(ListNode* head) {
+        if (head == nullptr) {
+            return head;
+        }
+        ListNode* left = nullptr;
+        ListNode* cur = head;
+        ListNode* right = nullptr;
+        while (cur != nullptr) {
+            right = cur->next;
+            cur->next = left;
+            left = cur;
+            cur = right;
+        }
+        return left;
+    }
+};
