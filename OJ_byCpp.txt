@@ -13110,3 +13110,37 @@ public:
         return left;
     }
 };
+
+【1436. 】【旅行终点站】：https://leetcode-cn.com/problems/destination-city/
+class Solution {
+public:
+    string destCity(vector<vector<string>>& paths) {
+        int sz = paths.size();
+        unordered_map<string,int> des;
+        for(int i = 0; i < sz; ++i)
+            ++des[paths[i][0]];
+        for(int i = 0; i < sz; ++i){
+            if(des.count(paths[i][1])==0)
+                return paths[i][1];
+        }
+        return "";
+    }
+};	
+
+【405】【. 数字转换为十六进制数】：https://leetcode-cn.com/problems/convert-a-number-to-hexadecimal/
+class Solution {
+public:
+    string toHex(int num) {
+        if(!num)
+            return "0";
+        string res;
+        for(int i = 7; i >= 0; --i){
+            int val = (num >> (4*i)) & 0xf;
+            if(res.size() > 0 || val >0){
+                char digit = val < 10 ? (char) ('0' + val) : (char) ('a' + val - 10);
+                res.push_back(digit);
+            }
+        }
+        return res;
+    }   
+};
