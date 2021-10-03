@@ -13144,3 +13144,85 @@ public:
         return res;
     }   
 };
+
+【5871.】【 将一维数组转变成二维数组】：https://leetcode-cn.com/problems/convert-1d-array-into-2d-array/
+class Solution {
+public:
+    vector<vector<int>> construct2DArray(vector<int>& original, int m, int n) {    
+        int sz = original.size();
+        if(sz!=m*n)
+            return {};
+        vector<vector<int>> res(m, vector<int>(n));
+        for(int i = 0; i < m; ++i)
+            for(int j = 0; j < n; ++j)
+                res[i][j] = original[i*n +j];
+        return res;
+    }
+};
+
+【166. 】【分数到小数】：https://leetcode-cn.com/problems/fraction-to-recurring-decimal/
+class Solution {
+public:
+    string fractionToDecimal(int numerator, int denominator) {
+        long long a = numerator,b = denominator;
+        if(a%b==0)  return to_string(a/b);
+        string res;
+        if(a*b<0) 
+            res += '-';
+        a = abs(a),b = abs(b);
+        int prepoint = a/b;
+        res += to_string(a/b);
+        res += '.';
+        a %= b;
+        unordered_map<long long,int> ump;
+        while(a!=0){
+            ump[a] = res.size();
+            a *= 10;
+            res += to_string(a / b);
+            a %= b;
+            if(ump.count(a)!=0){
+                int u = ump[a];
+                string cyc = res.substr(u);
+                res.erase(res.begin()+u, res.end());
+                res += '(';
+                res += cyc;
+                res += ')';
+                break;
+            }
+        }
+        return res;
+    }
+};
+
+【5891】【. 找出缺失的观测数据】：
+class Solution {
+public:
+    vector<int> missingRolls(vector<int>& rolls, int mean, int n) {
+        int m = rolls.size();
+        int sum = 0;
+        for(auto& num :rolls)
+            sum += num;
+        int w = (n+m)*mean-sum;
+        if(w<=0)
+            return {};
+        vector<int> res(n,1);
+        w -= n; 
+        if(w<0)
+            return {};
+        for(int i = 0; i < n; ++i){
+            if(!w)
+                break;
+            if(w>0 && w>=6){
+                res[i] += 5;
+                w-=5;
+            }
+            else{
+                res[i] += w;
+                w = 0;
+            }
+        }
+        if(w>0)
+            return {};
+        return res;
+    }
+};
