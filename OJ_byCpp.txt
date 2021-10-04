@@ -13226,3 +13226,103 @@ public:
         return res;
     }
 };
+
+【482.】【 密钥格式化】：https://leetcode-cn.com/problems/license-key-formatting/
+class Solution {
+public:
+    string licenseKeyFormatting(string s, int k) {
+        string res;
+        int sz = s.size();
+        int cnt = 0;
+        for(int i = sz-1; i >= 0; --i){
+            if(s[i]=='-')
+                continue;
+            res += toupper(s[i]);
+            ++cnt;
+            if(cnt%k==0)
+                res += '-';
+        }
+        if(res.size() && res.back() == '-')
+            res.pop_back();
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};
+
+【617】【. 合并二叉树】：https://leetcode-cn.com/problems/merge-two-binary-trees/
+class Solution {
+public:
+    TreeNode* mergeTrees(TreeNode* root1, TreeNode* root2) {
+        if(root1==nullptr)
+            return root2;
+        if(root2==nullptr)
+            return root1;
+        TreeNode* root = new TreeNode(root1->val+root2->val);
+        root->left = mergeTrees(root1->left,root2->left);
+        root->right = mergeTrees(root1->right,root2->right);
+        return root; 
+    }
+};
+
+【567.】【 字符串的排列】：https://leetcode-cn.com/problems/permutation-in-string/
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+        int sz1 = s1.size();
+        int sz2 = s2.size();
+        if(sz1>sz2)
+            return false;
+        vector<int> ump(26,0);
+        vector<int> cmp(26,0);
+        for(int i = 0; i < sz1; ++i){
+            ++ump[s1[i]-'a'];
+            ++cmp[s2[i]-'a'];
+        }
+        if(ump == cmp)
+            return true;
+        for(int i = sz1; i < sz2; ++i){
+            ++cmp[s2[i]-'a'];
+            --cmp[s2[i-sz1]-'a'];
+            if(ump==cmp)
+                return true;
+        }
+        return false;      
+    }
+};
+
+【542】【. 01 矩阵】：https://leetcode-cn.com/problems/01-matrix/
+class Solution {
+private:
+    static constexpr int dirs[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+
+public:
+    vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) {
+        int m = matrix.size(), n = matrix[0].size();
+        vector<vector<int>> dist(m, vector<int>(n));
+        vector<vector<int>> seen(m, vector<int>(n));
+        queue<pair<int, int>> q;
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (matrix[i][j] == 0) {
+                    q.emplace(i, j);
+                    seen[i][j] = 1;
+                }
+            }
+        }
+        while (!q.empty()) {
+            auto [i, j] = q.front();
+            q.pop();
+            for (int d = 0; d < 4; ++d) {
+                int ni = i + dirs[d][0];
+                int nj = j + dirs[d][1];
+                if (ni >= 0 && ni < m && nj >= 0 && nj < n && !seen[ni][nj]) {
+                    dist[ni][nj] = dist[i][j] + 1;
+                    q.emplace(ni, nj);
+                    seen[ni][nj] = 1;
+                }
+            }
+        }
+
+        return dist;
+    }
+};
