@@ -13326,3 +13326,32 @@ public:
         return dist;
     }
 };
+
+【1362】【. 最接近的因数】：https://leetcode-cn.com/problems/closest-divisors/
+class Solution {
+public:
+    vector<int> closestDivisors(int num) {
+        pair<int,int> t1 = FindMidFactors(num+1);
+        pair<int,int> t2 = FindMidFactors(num+2);
+        int m1 = abs(t1.first-t1.second);
+        int m2 = abs(t2.first-t2.second);
+        vector<int> res(2);
+        if(m1<m2){
+            res[0] = t1.first;
+            res[1] = t1.second;
+        }
+        else{
+            res[0] = t2.first;
+            res[1] = t2.second;
+        }
+        return res;
+    }
+private:
+    pair<int,int> FindMidFactors(int num){
+        for(int i = sqrt(num); i>=0; --i){
+            if(num%i==0)
+                return {i,num/i};
+        }
+        return {};
+    }
+};
