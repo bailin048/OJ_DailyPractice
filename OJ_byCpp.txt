@@ -13468,3 +13468,22 @@ public:
         return getString(stk);
     }
 };
+
+【187. 】【重复的DNA序列】：https://leetcode-cn.com/problems/repeated-dna-sequences/
+class Solution {
+public:
+    vector<string> findRepeatedDnaSequences(string s) {
+        int sz = s.size();
+        vector<string> res;
+        if(sz<10)
+            return res;
+        unordered_map<string,int> ump;
+        for(int i = 0; i <= sz-10; ++i){
+            string tmp = s.substr(i,10);
+            ++ump[tmp];
+            if(ump[tmp]==2)
+                res.push_back(tmp);
+        }
+        return res;
+    }
+};
