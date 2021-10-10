@@ -13540,3 +13540,30 @@ private:
         return ans;
     }
 };
+
+
+【423】【. 从英文中重建数字】：https://leetcode-cn.com/problems/reconstruct-original-digits-from-english/
+class Solution {
+public:
+    string originalDigits(string s) {
+        unordered_map<char,int> ump;
+        for(auto& c:s)
+            ++ump[c];
+        vector<int> cnt(10,0);
+        cnt[0]=ump['z'];
+        cnt[2]=ump['w'];
+        cnt[4]=ump['u'];
+        cnt[6]=ump['x'];
+        cnt[8]=ump['g'];
+        cnt[3]=ump['h']-cnt[8];
+        cnt[5]=ump['f']-cnt[4];
+        cnt[7]=ump['s']-cnt[6];
+        cnt[9]=ump['i']-cnt[5]-cnt[6]-cnt[8];
+        cnt[1]=ump['n']-cnt[7]-2*cnt[9];
+        string res;
+        for(int i = 0; i < 10; ++i)
+            for(int j = 0; j < cnt[i]; ++j)
+                res.push_back(i+'0');
+        return res;
+    }
+};
