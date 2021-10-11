@@ -13610,3 +13610,35 @@ private:
     vector<string> tens = {"", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
     vector<string> thousands = {"", "Thousand", "Million", "Billion"};
 };
+
+【5896.】【 股票价格波动】：https://leetcode-cn.com/problems/stock-price-fluctuation/
+class StockPrice {
+public:
+    StockPrice() {
+    }
+    
+    void update(int timestamp, int price) {
+        int oldprice = t[timestamp];
+        t[timestamp] = price;
+        if(oldprice!=0){
+            if(--p[oldprice] == 0)
+                p.erase(oldprice);
+        }
+        ++p[price];
+    }
+    
+    int current() {
+        return t.rbegin()->second;
+    }
+    
+    int maximum() {
+        return p.rbegin()->first;
+    }
+    
+    int minimum() {
+        return p.begin()->first;
+    }
+private:
+    map<int,int> t;
+    map<int,int> p;
+};
