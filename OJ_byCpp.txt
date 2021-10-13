@@ -13677,3 +13677,22 @@ public:
         return flag*res;
     }
 };
+
+【918】【. 环形子数组的最大和】：https://leetcode-cn.com/problems/maximum-sum-circular-subarray/
+class Solution {
+public:
+    int maxSubarraySumCircular(vector<int>& nums) {
+        int sz = nums.size();
+        int sum = nums[0];
+        vector<int> dpmax(nums);
+        vector<int> dpmin(nums);
+        for(int i = 1; i < sz; ++i){
+            dpmax[i] = max(dpmax[i-1]+nums[i],nums[i]);
+            dpmin[i] = min(dpmin[i-1]+nums[i],nums[i]);
+            sum += nums[i];
+        }
+        int maxv = *max_element(dpmax.begin(),dpmax.end());
+        int minv = *min_element(dpmin.begin(),dpmin.end());
+        return max(maxv,sum-minv==0?maxv:sum-minv);
+    }
+};
