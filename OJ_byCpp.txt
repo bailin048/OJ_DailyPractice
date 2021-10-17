@@ -13812,3 +13812,27 @@ private:
     int sz;
     vector<string> res;
 };
+
+【230. 】【二叉搜索树中第K小的元素】：https://leetcode-cn.com/problems/kth-smallest-element-in-a-bst/
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        int idx = 0;
+        int ans = 0; 
+        DFS(root,k,idx,ans);
+        return ans;
+    }
+private:
+    void DFS(TreeNode* root, const int k, int& idx,int& ans){
+        if(nullptr == root)
+            return;
+        DFS(root->left, k, idx, ans);
+        ++idx;
+        if(idx==k){
+            ans = root->val;
+            return;
+        }else if(idx>k)
+            return;
+        DFS(root->right, k, idx, ans);
+    }
+};
