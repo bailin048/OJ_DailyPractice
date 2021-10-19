@@ -13844,3 +13844,96 @@ public:
         return n==1?1:2*(n/2+1-lastRemaining(n/2));
     }
 };
+
+【208.】【 实现 Trie (前缀树)】：https://leetcode-cn.com/problems/implement-trie-prefix-tree/
+class Trie {
+public:
+    Trie():children(26),IsEnd(false) {}
+    
+    void insert(string word) {
+        Trie* node = this;
+        for(auto& ch:word){
+            ch -= 'a';
+            if(node->children[ch] == nullptr)
+                node->children[ch] = new Trie();
+            node = node->children[ch];
+        }
+        node->IsEnd = true;
+    }
+    
+    bool search(string word) {
+        Trie* node = this->searchPrefix(word);
+        return node != nullptr && node->IsEnd;
+    }
+    
+    bool startsWith(string prefix) {
+        return this->searchPrefix(prefix)!=nullptr;
+    }
+private:
+    Trie* searchPrefix(string prefix){
+        Trie* node = this;
+        for(auto& ch:prefix){
+            ch -= 'a';
+            if(node->children[ch] == nullptr)
+                return nullptr;
+            node = node->children[ch];
+        }
+        return node;
+    }
+private:
+    vector<Trie*> children;
+    bool IsEnd;
+};
+
+【211. 】【添加与搜索单词 - 数据结构设计】：https://leetcode-cn.com/problems/design-add-and-search-words-data-structure/
+class TrieNode{
+public:
+    TrieNode():children(26),IsEnd(false){}
+    vector<TrieNode*> children;
+    bool IsEnd;
+
+};
+void Insert(TrieNode* root,const string& word){
+    TrieNode* node = root;
+    for(auto& ch:word){
+        if(node->children[ch-'a']==nullptr)
+            node->children[ch-'a'] = new TrieNode();
+        node = node->children[ch-'a'];
+    }
+    node->IsEnd = true;
+}
+class WordDictionary {
+public:
+    WordDictionary() {
+        trie = new TrieNode();
+    }
+    
+    void addWord(string word) {
+        Insert(trie,word);
+    }
+    
+    bool search(string word) {
+        return Dfs(word, 0, trie);
+    }
+private:
+    bool Dfs(const string& word, int idx, TrieNode* node){
+        if(idx == word.size())
+            return node->IsEnd;
+        char ch = word[idx];
+        if(ch>='a' && ch<='z'){
+            TrieNode* child = node->children[ch-'a'];
+            if(child !=nullptr && Dfs(word, idx+1, child))
+                return true;
+        }
+        else if(ch == '.'){
+            for(int i = 0; i < 26; ++i){
+                TrieNode* child = node->children[i];
+                if(child !=nullptr && Dfs(word, idx+1, child))
+                    return true;
+            }
+        }
+        return false;
+    }
+private:
+    TrieNode* trie;
+};
