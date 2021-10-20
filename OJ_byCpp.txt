@@ -13937,3 +13937,105 @@ private:
 private:
     TrieNode* trie;
 };
+
+【453. 】【最小操作次数使数组元素相等】：https://leetcode-cn.com/problems/minimum-moves-to-equal-array-elements/
+class Solution {
+public:
+    int minMoves(vector<int>& nums) {
+        int nmin = *min_element(nums.begin(),nums.end());
+        int res = 0;
+        for(auto& n:nums)
+            res += (n-nmin);
+        return res;
+    }
+};
+
+【2042. 】【检查句子中的数字是否递增】：https://leetcode-cn.com/contest/weekly-contest-263/problems/check-if-numbers-are-ascending-in-a-sentence/
+class Solution {
+public:
+    bool areNumbersAscending(string s) {
+        vector<int> num;
+        int sz = s.size();
+        int i = 0;
+        while(i<sz){
+            while(i<sz && !isdigit(s[i]))
+                ++i;
+            int tmp = 0;
+            while(i<sz && isdigit(s[i]))
+                tmp = tmp*10 + (s[i++]-'0');
+            if(i!=sz || isdigit(s[i-1]))
+                num.push_back(tmp);
+        }
+        sz = num.size();
+        for(int i = 1; i < sz; ++i){
+            if(num[i]<=num[i-1])
+                return false;
+        }
+        return true;
+    }
+};
+
+【2043】【. 简易银行系统】：https://leetcode-cn.com/contest/weekly-contest-263/problems/simple-bank-system/
+class Bank {
+public:
+    Bank(vector<long long>& balance):acc(balance.size()) {
+        sz = balance.size();
+        for(int i = 0; i < sz; ++i)
+            acc[i] = balance[i];
+    }
+    
+    bool transfer(int account1, int account2, long long money) {
+        if(account1<1 || account1>sz || account2<1 || account2>sz)
+            return false;
+        if(acc[account1-1]<money)
+            return false;
+        acc[account1-1] -= money;
+        acc[account2-1] += money;\
+        return true;
+    }
+    
+    bool deposit(int account, long long money) {
+        if(account<1 || account>sz)
+            return false;
+        acc[account-1] += money;
+        return true;
+    }
+    
+    bool withdraw(int account, long long money) {
+        if(account<1 || account>sz || acc[account-1]<money)
+            return false;
+        acc[account-1] -= money;
+        return true;
+    }
+private:
+    vector<long long> acc;
+    int sz;
+};
+
+【2044. 】【统计按位或能得到最大值的子集数目】：https://leetcode-cn.com/contest/weekly-contest-263/problems/count-number-of-maximum-bitwise-or-subsets/
+class Solution {
+public:
+    int countMaxOrSubsets(vector<int>& nums) {
+        sz = nums.size();
+        BackTrack(nums, 0, 0);
+        int n = res.size();
+        sort(res.begin(),res.end());
+        int cnt = 0;
+        for(int i = n-1; i >= 0; --i){
+            if(res[i] == res[n-1])
+                ++cnt;
+            else
+                break;
+        }
+        return cnt;
+    }
+private:
+    void BackTrack(const vector<int>& nums, int idx, int cur){
+        res.push_back(cur);
+        for(int i = idx; i < sz; ++i)
+            BackTrack(nums, i+1, cur|nums[i]);
+    }
+private:
+    int sz;
+    vector<int> res;
+};
