@@ -14039,3 +14039,26 @@ private:
     int sz;
     vector<int> res;
 };
+
+【66.】【 加一】：https://leetcode-cn.com/problems/plus-one/
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        int sz = digits.size();
+        int flag = 1;
+        for(int i = sz-1; i>=0; --i){
+            digits[i] += flag;
+            if(digits[i]>=10 && i>=0){
+                digits[i]%=10;
+                flag = 1;
+            }
+            else{
+                flag = 0;
+                break;
+            }
+        }
+        if(flag)
+            digits.insert(digits.begin(),1);
+        return digits; 
+    }
+};
