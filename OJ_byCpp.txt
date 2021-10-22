@@ -14062,3 +14062,26 @@ public:
         return digits; 
     }
 };
+
+【1190.】【 反转每对括号间的子串】：https://leetcode-cn.com/problems/reverse-substrings-between-each-pair-of-parentheses/
+class Solution {
+public:
+    string reverseParentheses(string s) {
+        stack<string> st;
+        string res;
+        for(auto& c:s){
+            if(c=='('){
+                st.push(res);
+                res = "";
+            }
+            else if(c==')'){
+                reverse(res.begin(),res.end());
+                res  = st.top() + res;
+                st.pop();
+            }
+            else
+                res += c;
+        }
+        return res;
+    }
+};
