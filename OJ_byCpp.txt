@@ -14085,3 +14085,18 @@ public:
         return res;
     }
 };
+
+【492】【. 构造矩形】：https://leetcode-cn.com/problems/construct-the-rectangle/
+class Solution {
+public:
+    vector<int> constructRectangle(int area) {
+        vector<int> res(2);
+        res[0] = sqrt(area);
+        while(area%res[0])
+            ++res[0];
+        res[1] = area/res[0];
+        if(res[0]<res[1])
+            swap(res[0],res[1]);
+        return res;
+    }
+};
