@@ -14150,3 +14150,51 @@ public:
         return memo[curNeeds];
     }
 };
+
+【25.】【 K 个一组翻转链表】：https://leetcode-cn.com/problems/reverse-nodes-in-k-group/
+class Solution {
+public:
+    ListNode* reverseKGroup(ListNode* head, int k) {
+        if(k==1 || head->next == nullptr)
+            return head;
+        vector<pair<ListNode*, ListNode*>> q;
+        while(head!=nullptr){//k组分割
+            q.push_back({head,nullptr});
+            int cnt = 1;
+            while(head!=nullptr && cnt%k!=0){
+                head = head->next;
+                ++cnt;
+            } 
+            q.back().second = head;
+            if(head)
+                head = head->next;
+        }
+        bool flag = q.back().second==nullptr?true:false;//判断最后一组是否需要翻转(true:不需要 false:需要)
+        int n = q.size();
+        n -= flag?1:0;//有不需要翻转的个数需要-1     
+        for(int i = 0; i < n; ++i){
+            q[i].second->next = nullptr;//尾部断开链接
+            if(i == 0)
+                head = Reverse(q[i].first);
+            else
+                q[i-1].first->next = Reverse(q[i].first);
+        }
+        if(flag)
+            q[n-1].first->next = q.back().first;
+        return head;
+    }
+private:
+    ListNode* Reverse(ListNode* head){
+        ListNode* dummy = new ListNode(0);
+        dummy->next = head;
+        ListNode* rear = head->next;
+        head->next = nullptr;
+        while(rear != nullptr){
+            ListNode* back = rear->next;
+            rear->next = dummy->next;
+            dummy->next = rear;
+            rear = back;
+        }
+        return dummy->next;
+    }
+};
