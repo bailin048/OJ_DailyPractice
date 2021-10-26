@@ -14198,3 +14198,25 @@ private:
         return dummy->next;
     }
 };
+
+【496】【. 下一个更大元素 I】：https://leetcode-cn.com/problems/next-greater-element-i/
+class Solution {
+public:
+    vector<int> nextGreaterElement(vector<int>& nums1, vector<int>& nums2) {
+        stack<int> st;
+        unordered_map<int,int> mp;
+        int sz2 = nums2.size();
+        for(int i = sz2-1; i >= 0; --i){
+            int n = nums2[i];\
+            while(!st.empty() && n>st.top())
+                st.pop();
+            mp[n] = st.empty()?-1:st.top();
+            st.push(n);
+        }
+        int sz1 = nums1.size();
+        vector<int> res(sz1);
+        for(int i = 0; i < sz1; ++i)
+            res[i] = mp[nums1[i]];
+        return res;
+    }
+};
