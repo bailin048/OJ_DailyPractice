@@ -14220,3 +14220,52 @@ public:
         return res;
     }
 };
+
+【301. 】【删除无效的括号】：https://leetcode-cn.com/problems/remove-invalid-parentheses/
+class Solution {
+public:
+    vector<string> removeInvalidParentheses(string s) {
+        len = s.size();
+        maxlen = 0;
+        int l=0,r=0;
+        for(auto& c: s){
+            if(c=='(')
+                ++l;
+            if(c==')')
+                ++r;
+        }
+        half = min(l,r);
+        DFS(0, "", 0, s);
+        vector<string> res(st.begin(),st.end());
+        return res;
+    }
+private:
+    void DFS(int idx, string cur, int score, const string& s){
+        if(score<0 || score>half || idx>len)
+            return;
+        if(idx==len){
+            if(score==0 && cur.size()>=maxlen){
+                if(cur.size()>maxlen)
+                    st.clear();
+                maxlen = cur.size();
+                st.insert(cur);
+            }
+            return;
+        }
+        if(s[idx] == '('){
+            DFS(idx+1,cur+'(',score+1,s);
+            DFS(idx+1,cur,score,s);
+        }
+        else if(s[idx] == ')'){
+            DFS(idx+1,cur+')',score-1,s);
+            DFS(idx+1,cur,score,s);
+        }
+        else
+            DFS(idx+1,cur+s[idx],score,s);
+    }
+private:
+    int len;
+    int maxlen;
+    int half;
+    set<string> st;
+};
