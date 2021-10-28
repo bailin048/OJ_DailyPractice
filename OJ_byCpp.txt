@@ -14269,3 +14269,34 @@ private:
     int half;
     set<string> st;
 };
+
+【869. 】【重新排序得到 2 的幂】：https://leetcode-cn.com/problems/reordered-power-of-2/
+class Solution {
+public:
+    bool reorderedPowerOf2(int n) {
+        string num = to_string(n);
+        sz = num.size();
+        vector<bool> used(sz,false);
+        return BackTrack(num, used, 0, 0);
+    }
+
+private:
+    bool BackTrack(const string& num, vector<bool>& used, int cur, int len){
+        if(len == sz)
+            return IsTwoX(cur);
+        for(int i = 0; i < sz; ++i){
+            if((!cur && num[i]=='0') || used[i])
+                continue;
+            used[i] = true;
+            if(BackTrack(num, used, cur*10+(num[i]-'0'), len+1))
+                return true;
+            used[i] = false;
+        }
+        return false;
+    }
+    bool IsTwoX(int n){
+       return (n&(n-1))==0;
+    }
+private:
+    int sz;
+};
