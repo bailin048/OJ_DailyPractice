@@ -14353,3 +14353,36 @@ public:
         return res;
     }
 };
+
+【500. 】【键盘行】：https://leetcode-cn.com/problems/keyboard-row/
+class Solution {
+public:
+    vector<string> findWords(vector<string>& words) {
+        vector<string> s(3);
+        s[0] = "qwertyuiop";
+        s[1] = "asdfghjkl";
+        s[2] = "zxcvbnm";
+        unordered_map<char,int> ump;
+        for(int i = 0; i < 3; ++i){
+            for(int j = 0; j < s[i].size(); ++j){
+                ump[s[i][j]] = i;
+                ump[s[i][j]-32] = i;
+            }
+        }
+        vector<string> res;
+        int sz = words.size();
+        for(int i = 0; i < sz; ++i){
+            bool flag = true;
+            int tmp = ump[words[i][0]];
+            for(int j = 1; j < words[i].size(); ++j){
+                if(ump[words[i][j]]!=tmp){
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag)
+                res.push_back(words[i]);
+        }
+        return res;
+    }
+};
