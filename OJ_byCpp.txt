@@ -14459,3 +14459,17 @@ public:
         return res;
     }
 };
+
+【1218.】【 最长定差子序列】：https://leetcode-cn.com/problems/longest-arithmetic-subsequence-of-given-difference/
+class Solution {
+public:
+    int longestSubsequence(vector<int>& arr, int difference) {
+        int ans = 0;
+        unordered_map<int,int> dp;
+        for(int& n: arr){
+            dp[n] = dp[n - difference] + 1;
+            ans = ans < dp[n]?dp[n]:ans;
+        }
+        return ans;
+    }
+};
