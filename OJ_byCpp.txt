@@ -14487,3 +14487,16 @@ public:
         return res^sz; 
     }
 };
+
+【598. 】【范围求和 II】：https://leetcode-cn.com/problems/range-addition-ii/
+class Solution {
+public:
+    int maxCount(int m, int n, vector<vector<int>>& ops) {
+        int mina = m, minb = n;
+        for(auto& vec:ops){
+            mina = min(mina,vec[0]);
+            minb = min(minb,vec[1]);
+        }
+        return mina*minb;
+    }
+};
