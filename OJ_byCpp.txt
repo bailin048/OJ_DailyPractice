@@ -14500,3 +14500,30 @@ public:
         return mina*minb;
     }
 };
+
+【299】【. 猜数字游戏】：https://leetcode-cn.com/problems/bulls-and-cows/comments/
+class Solution {
+public:
+    string getHint(string secret, string guess) {
+        int n = secret.size();
+        int cnt_A = 0, cnt_B = 0;
+        vector<int> rec(10,0);
+        for(int i = 0; i < n; ++i){
+            if(secret[i] == guess[i])
+                ++cnt_A;
+            ++rec[secret[i]-'0'];
+            --rec[guess[i]-'0'];
+        }
+        for(int i = 0 ; i < 10; ++i){
+            if(rec[i]>0)
+                cnt_B += rec[i];
+        }
+        cnt_B = n - cnt_B - cnt_A;
+        string res;
+        res += to_string(cnt_A);
+        res += 'A';
+        res += to_string(cnt_B);
+        res += 'B';
+        return res;
+    }
+};
