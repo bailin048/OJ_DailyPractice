@@ -14527,3 +14527,116 @@ public:
         return res;
     }
 };
+
+【495.】【 提莫攻击】：https://leetcode-cn.com/problems/teemo-attacking/
+class Solution {
+public:
+    int findPoisonedDuration(vector<int>& timeSeries, int duration) {
+        int sz = timeSeries.size();
+        int res = 0;
+        int end = 0;
+        for(int i = 0; i < sz; ++i){
+            if(timeSeries[i] >= end)
+                res += duration;
+            else
+                res += timeSeries[i] + duration - end;
+            end = timeSeries[i] + duration; 
+        }
+        return res;
+    }
+};
+
+【488. 】【祖玛游戏】：https://leetcode-cn.com/problems/zuma-game/
+struct State{
+    string board;
+    string hand;
+    int step;
+    State(const string& b,const string& h, int stp):board(b),hand(h),step(stp)
+    {}
+};
+
+class Solution {
+public:
+    int findMinStep(string board, string hand) {
+        unordered_set<string> visited;
+        sort(hand.begin(), hand.end());
+        
+        visited.insert(board+" "+hand);
+        queue<State> Q;
+        Q.push(State(board,hand,0));
+        while(!Q.empty()){
+            State cur = Q.front();
+            Q.pop();
+            for(int j = 0; j < cur.hand.size(); ++j){
+                //手中同色球不会再尝试
+                if(j>0 && cur.hand[j-1]==cur.hand[j])
+                    continue;
+                for(int i = 0; i < cur.board.size(); ++i){
+                    //只往同色球的旁边插
+                    if(i>0 && cur.board[i-1]==cur.hand[j])
+                        continue;
+                    bool choose = false;
+                    //插入位置前后颜色一致
+                    if(i<cur.board.size() && cur.board[i]==cur.hand[j])
+                        choose = true;
+                    //插入球与前面的颜色不一致，但前后一致
+                    if(i>0 && i<cur.board.size() && cur.board[i-1]==cur.board[i] && cur.board[i]!=cur.hand[j])
+                        choose=true;
+                    if(choose){
+                        string new_board = clean(cur.board.substr(0,i) +cur.hand[j] + cur.board.substr(i));
+                        string new_hand = cur.hand.substr(0,j) + cur.hand.substr(j+1);
+                        if(new_board.size()==0)
+                            return cur.step+1;
+                        if(!visited.count(new_board+" "+new_hand)){
+                            Q.push(State(new_board,new_hand,cur.step+1));
+                            visited.insert(new_board+" "+new_hand);
+                        }
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+private:
+    string clean(const string& str){
+        string res;
+        vector<pair<char,int>> st;
+        for(auto& c: str){
+            while(!st.empty() && c!=st.back().first && st.back().second>=3)
+                st.pop_back();
+            if (st.empty() || c != st.back().first) 
+                st.push_back({c,1});
+            else 
+                st.back().second++;
+        }
+        if (!st.empty() && st.back().second >= 3) 
+            st.pop_back();
+        for (int i = 0; i < st.size(); ++i) 
+            for (int j = 0; j < st[i].second; ++j) 
+                res.push_back(st[i].first);
+        return res;
+    }
+};
+
+【629. 】【K个逆序对数组】：https://leetcode-cn.com/problems/k-inverse-pairs-array/
+class Solution {
+public:
+    int kInversePairs(int n, int k) {
+        vector<vector<long>> dp(n+1, vector<long>(k + 1));
+        dp[0][0] = 1;
+        for(int i = 1; i <= n; ++i){
+            dp[i][0] = 1;
+            for(int j = 1; j<=k; ++j){
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+                if(j >= i)
+                    dp[i][j] -= dp[i - 1][j - i];
+                if(dp[i][j] < 0)
+                    dp[i][j] += mod;
+                dp[i][j] = dp[i][j] % mod;
+            }
+        }
+        return dp[n][k];
+    }
+private:
+    static constexpr int mod = 1000000007;
+};
