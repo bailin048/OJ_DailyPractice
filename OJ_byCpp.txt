@@ -14640,3 +14640,22 @@ public:
 private:
     static constexpr int mod = 1000000007;
 };
+
+【375】【. 猜数字大小 II】：https://leetcode-cn.com/problems/guess-number-higher-or-lower-ii/
+class Solution {
+public:
+    int getMoneyAmount(int n) {
+        vector<vector<int>> dp(n+1,vector<int>(n+1,0));
+        for(int i = n-1; i >= 1; --i){
+            for(int j = i+1; j <= n; ++j){
+                int mincost = INT_MAX;
+                for(int k = i; k < j; ++k){
+                    int cost = k + max(dp[i][k-1],dp[k+1][j]);
+                    mincost= min(mincost,cost);
+                }
+                dp[i][j] = mincost;
+            }
+        }
+        return dp[1][n];
+    }
+};
