@@ -14696,3 +14696,67 @@ public:
 private:
     map<string,int> mp;
 };
+
+【5927. 】【反转偶数长度组的节点】：https://leetcode-cn.com/contest/weekly-contest-267/problems/reverse-nodes-in-even-length-groups/
+class Solution {
+public:
+    ListNode* reverseEvenLengthGroups(ListNode* head) {
+        vector<ListNode*> rec;
+        while(head!=nullptr){
+            rec.push_back(head);
+            head = head->next;
+        }
+        int sz = rec.size();
+        int l = 1,r = 2, cnt = 2;
+        bool flag = true;
+        while(r<sz){
+            if(0==(r-l+1)%2){
+                int ll = l, rr = r;
+                while(ll<rr)
+                    swap(rec[ll++],rec[rr--]);
+            }
+            l = r + 1;
+            r = l + cnt;
+            ++cnt;
+            if(r >= sz && flag){
+                r = sz-1;
+                flag = false;
+            }
+        }
+        for(int i = 0; i < sz; ++i){
+            if(i < sz-1)
+                rec[i]->next = rec[i+1];
+            else
+                rec[i]->next = nullptr;
+        }
+        return rec[0];
+    }
+};
+
+【5928. 】【解码斜向换位密码】：https://leetcode-cn.com/contest/weekly-contest-267/problems/decode-the-slanted-ciphertext/
+class Solution {
+public:
+    string decodeCiphertext(string encodedText, int rows) {
+        int sz = encodedText.size();
+        int cols = sz/rows;
+        vector<vector<char>> board(rows,vector<char> (cols,' '));
+        int idx = 0; 
+        for(int i = 0; i < rows; ++i)
+            for(int j = 0; j < cols; ++j)
+                board[i][j] = encodedText[idx++]; 
+        string res;
+        int x = 0, y = 0;
+        while(x < rows && y < cols){
+            int tmp = y;
+            while(x < rows && y < cols)
+                res += board[x++][y++];
+            if(x == rows){
+                x = 0;
+                y = tmp + 1;
+            }
+        }
+        while(res.back()==' ')
+            res.pop_back();
+        return res;
+    }
+};
