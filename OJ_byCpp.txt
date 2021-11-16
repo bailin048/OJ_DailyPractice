@@ -14788,3 +14788,44 @@ public:
         return sqrt(n+0.5);
     }
 };
+
+【391】【. 完美矩形】：https://leetcode-cn.com/problems/perfect-rectangle/
+class Solution {
+    typedef pair<int,int> Point;
+public:
+    bool isRectangleCover(vector<vector<int>>& rectangles) {
+        long area = 0;
+        map<Point,int> cnt;
+        int minX = rectangles[0][0],minY = rectangles[0][1],maxX = rectangles[0][2],maxY = rectangles[0][3];
+        for(auto& rec:rectangles){
+            int x = rec[0], y = rec[1], a = rec[2], b = rec[3];
+            area += (long)(a-x)*(b-y);
+            minX = min(x,minX);
+            minY = min(y,minY);
+            maxX = max(a,maxX);
+            maxY = max(b,maxY);
+            Point p1({x,y});
+            Point p2({x,b});
+            Point p3({a,y});
+            Point p4({a,b});
+            cnt[p1] += 1;
+            cnt[p2] += 1;
+            cnt[p3] += 1;
+            cnt[p4] += 1;
+        }
+        Point PMINMIN({minX,minY});
+        Point PMINMAX({minX,maxY});
+        Point PMAXMIN({maxX,minY});
+        Point PMAXMAX({maxX,maxY});
+        if(area!=(long long)(maxX-minX)*(maxY-minY) || !cnt.count(PMAXMAX) || !cnt.count(PMAXMIN) || !cnt.count(PMINMAX) || !cnt.count(PMINMIN))
+            return false;
+        cnt.erase(PMINMIN);
+        cnt.erase(PMINMAX);
+        cnt.erase(PMAXMIN);
+        cnt.erase(PMAXMAX);
+        for(auto& it:cnt)
+            if(it.second!=2 && it.second!=4)
+                return false;
+        return true;
+    }
+};
