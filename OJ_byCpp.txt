@@ -14852,3 +14852,23 @@ public:
         return res;
     }
 };
+
+【563.】【 二叉树的坡度】：https://leetcode-cn.com/problems/binary-tree-tilt/
+class Solution {
+public:
+    int findTilt(TreeNode* root) {
+        helper(root);
+        return ans;
+    }
+private:
+    int helper(TreeNode* root){
+        if(root==nullptr)
+            return 0;
+        int left = helper(root->left);
+        int right = helper(root->right);
+        ans += fabs(left-right);
+        return left+right+root->val;
+    }
+private:
+    int ans = 0;
+};
