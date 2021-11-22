@@ -14944,3 +14944,29 @@ public:
         return max + 1;
     }
 };
+
+【384.】【 打乱数组】：https://leetcode-cn.com/problems/shuffle-an-array/
+class Solution {
+public:
+    Solution(vector<int>& nums) {
+        num = nums;
+        original.resize(nums.size());
+        copy(num.begin(), num.end(), original.begin());
+    }
+    
+    vector<int> reset() {
+        copy(original.begin(),original.end(),num.begin());
+        return num;
+    }
+    
+    vector<int> shuffle() {
+        for(int i = 0; i < num.size(); ++i){
+            int j = i + rand()%(num.size()-i);
+            swap(num[i],num[j]);
+        }
+        return num;
+    }
+private:
+    vector<int> original;
+    vector<int> num;
+};
