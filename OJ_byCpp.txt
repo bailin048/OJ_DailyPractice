@@ -14970,3 +14970,56 @@ private:
     vector<int> original;
     vector<int> num;
 };
+
+【859.】【 亲密字符串】：https://leetcode-cn.com/problems/buddy-strings/
+class Solution {
+public:
+    bool buddyStrings(string s, string goal) {
+        if(s.size()!=goal.size())
+            return false;
+        set<char> st(s.begin(),s.end());
+        bool flag = (s==goal)?true:false;//二者是否相等
+        bool complete = (s.size()==st.size())?false:true;//是否存在重复字符
+        if(flag && complete)//二者相等，并且存在重复字符
+            return true;
+        if(flag && !complete)//二者相等，但没有重复字符
+            return false;
+        //二者不等，需要交换一次
+        int sz = s.size();
+        int l = 0, r = sz-1;
+        while(l<sz){
+            if(s[l]!=goal[l])
+                break;
+            ++l;
+        }
+        while(r>l){
+            if(s[r]!=goal[r])
+                break;
+            --r;
+        }
+        swap(s[l],s[r]);
+        return s==goal;
+    }   
+};
+
+【97.】【 交错字符串】：https://leetcode-cn.com/problems/interleaving-string/
+class Solution {
+public:
+    bool isInterleave(string s1, string s2, string s3) {
+        int sz1 = s1.size(), sz2 = s2.size(), sz3 = s3.size();
+        if(sz1+sz2 != sz3)
+            return false;
+        vector<vector<int>> dp(sz1+1,vector<int> (sz2+1,false));
+        dp[0][0] = true;
+        for(int i = 0; i <= sz1; ++i){
+            for(int j = 0 ; j <= sz2; ++j){
+                int p = i + j - 1;
+                if(i > 0)
+                    dp[i][j] |= (dp[i-1][j] && s1[i-1]==s3[p]);
+                if(j > 0)
+                    dp[i][j] |= (dp[i][j-1] && s2[j-1]==s3[p]);
+            }
+        }
+        return dp[sz1][sz2];
+    }
+};
