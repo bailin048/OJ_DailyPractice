@@ -15039,3 +15039,28 @@ public:
         return res;
     }
 };
+
+【458.】【 可怜的小猪】：https://leetcode-cn.com/problems/poor-pigs/
+class Solution {
+public:
+    int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
+        return ceil(log(buckets)/(log(minutesToTest/minutesToDie+1)));
+    }
+};
+
+【162. 】【寻找峰值】：https://leetcode-cn.com/problems/find-peak-element/
+class Solution {
+public:
+    int findPeakElement(vector<int>& nums) {
+        int sz = nums.size();
+        int l = 0, r = sz-1;
+        while(l < r){
+            int mid = l + ((r-l)>>1);
+            if(nums[mid]<nums[mid+1])
+                l = mid + 1;
+            else 
+                r = mid;
+        } 
+        return l;
+    }
+};
