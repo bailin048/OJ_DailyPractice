@@ -15078,3 +15078,139 @@ public:
         return left<<shift;
     }
 };
+
+【519. 】【随机翻转矩阵】：https://leetcode-cn.com/problems/random-flip-matrix/
+class Solution {
+public:
+    Solution(int m, int n) {
+        this->m = m;
+        this->n = n;
+        this->total = m * n;
+        srand(time(nullptr));
+    }
+    
+    vector<int> flip() {
+        int x = rand() % total;
+        vector<int> ans;
+        total--;   
+        // 查找位置 x 对应的映射
+        if (map.count(x)) {
+            ans = {map[x] / n, map[x] % n};
+        } else {
+            ans = {x / n, x % n};
+        }
+        // 将位置 x 对应的映射设置为位置 total 对应的映射
+        if (map.count(total)) {
+            map[x] = map[total];
+        } else {
+            map[x] = total;
+        }
+        return ans;
+    }
+    
+    void reset() {
+        total = m * n;
+        map.clear();
+    }
+private:
+    int m;
+    int n;
+    int total;
+    unordered_map<int, int> map;
+};
+
+【438. 】【找到字符串中所有字母异位词】：https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/
+class Solution {
+public:
+    vector<int> findAnagrams(string s, string p) {
+        int sLen = s.size(), pLen = p.size();
+
+        if (sLen < pLen) {
+            return vector<int>();
+        }
+
+        vector<int> ans;
+        vector<int> sCount(26);
+        vector<int> pCount(26);
+        for (int i = 0; i < pLen; ++i) {
+            ++sCount[s[i] - 'a'];
+            ++pCount[p[i] - 'a'];
+        }
+
+        if (sCount == pCount) {
+            ans.emplace_back(0);
+        }
+
+        for (int i = 0; i < sLen - pLen; ++i) {
+            --sCount[s[i] - 'a'];
+            ++sCount[s[i + pLen] - 'a'];
+
+            if (sCount == pCount) {
+                ans.emplace_back(i + 1);
+            }
+        }
+
+        return ans;
+    }
+};
+
+【786. 】【第 K 个最小的素数分数】：https://leetcode-cn.com/problems/k-th-smallest-prime-fraction/
+class Solution {
+    typedef pair<int,int> par;
+public:
+    vector<int> kthSmallestPrimeFraction(vector<int>& arr, int k) {
+        vector<par> vec;
+        int sz = arr.size();
+        for(int i = 0; i < sz; ++i){
+            for(int j = i + 1; j < sz; ++j)
+                vec.push_back(make_pair(arr[i],arr[j]));
+        }
+        sort(vec.begin(),vec.end(),cmp);
+        return {vec[k-1].first,vec[k-1].second};
+    }
+private:
+    static bool cmp(const par& p1, const par& p2){
+        return (p1.first*p2.second)<(p1.second*p2.first);
+    }
+};
+
+【307. 】【区域和检索 - 数组可修改】：https://leetcode-cn.com/problems/range-sum-query-mutable/
+class NumArray {
+public:
+    NumArray(vector<int>& nums):sz(num.size()),num(nums) {
+        double l = sqrt(sz);
+        len = ceil(sz/l);
+        sum.resize(len);
+        for(int i = 0; i < sz; ++i)
+            sum[i/len] += num[i];
+    }
+    
+    void update(int index, int val) {
+        sum[index/len] += (val - num[index]);
+        num[index] = val;
+    }
+    
+    int sumRange(int left, int right) {
+        int leftidx = left/len;
+        int rightidx = right/len;
+        int res = 0;
+        if(leftidx==rightidx){
+            for(int i = left; i <= right; ++i)
+                res += num[i];
+        }
+        else{
+            for(int i = left; i <= (leftidx+1)*len-1; ++i)
+                res += num[i];
+            for(int i = leftidx+1; i <= rightidx-1; ++i)
+                res += sum[i];
+            for(int i = rightidx*len; i <= right; ++i)
+                res += num[i];
+        }
+        return res;
+    }
+private:
+    vector<int> num;
+    vector<int> sum;
+    int len;
+    int sz;
+};
