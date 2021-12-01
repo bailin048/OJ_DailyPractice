@@ -15303,3 +15303,22 @@ private:
         return res;
     }
 };
+
+【739. 】【每日温度】：https://leetcode-cn.com/problems/daily-temperatures/
+class Solution {
+public:
+    vector<int> dailyTemperatures(vector<int>& temperatures) {
+        stack<int> st;
+        int sz = temperatures.size();
+        vector<int> res(sz,0);
+        for(int i = 0 ; i < sz; ++i){
+            while(!st.empty() && temperatures[st.top()]<temperatures[i]){
+                int idx = st.top();
+                res[idx] = i - idx;
+                st.pop();
+            }
+            st.push(i);
+        }
+        return res;
+    }
+};
