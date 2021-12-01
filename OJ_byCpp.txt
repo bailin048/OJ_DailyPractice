@@ -15232,3 +15232,74 @@ public:
        return false;
     }
 };
+
+【1446.】【 连续字符】：https://leetcode-cn.com/problems/consecutive-characters/
+class Solution {
+public:
+    int maxPower(string s) {
+        vector<int> cnt(26,0);
+        int sz = s.size();
+        int idx = 1;
+        cnt[s[0]-'a']=1;
+        while(idx < sz){
+            int tmp = 1;
+            while(idx<sz && s[idx] == s[idx-1])
+                ++tmp,++idx;
+            if(tmp>cnt[s[idx-1]-'a'] )
+                cnt[s[idx-1]-'a'] = tmp;
+            ++idx;
+        }
+        return *max_element(cnt.begin(),cnt.end());
+    }
+};
+
+【306. 】【累加数】：https://leetcode-cn.com/problems/additive-number/
+class Solution {
+public:
+    bool isAdditiveNumber(string num) {
+        int sz = num.size();
+        if(sz<3)
+            return false;
+        int i = 0;
+        for(int j = i+1; j < sz; ++j)
+            for(int k = j+1; k < sz; ++k)
+                if(DFS(num,i,j,k))
+                    return true;
+        return false;
+    }
+private:
+    bool DFS(const string& s, int i, int j, int k){
+        if((s[i]=='0' && j-i>1) || (s[j]=='0' && k-j>1))
+            return false;
+        string a = s.substr(i,j-i);
+        string b = s.substr(j,k-j);
+        string c = Add(a,b);
+        int sz = c.size();
+        if(k+sz>s.size() || c!=s.substr(k,sz))
+            return false;
+        if(k+sz==s.size())
+            return true;
+        return DFS(s,j,k,k+sz);
+    } 
+    string Add(string a,string b){
+        string res;
+        int sz1 = a.size();
+        int sz2 = b.size();
+        int idx = 0, flag = 0;
+        reverse(a.begin(),a.end());
+        reverse(b.begin(),b.end());
+        while(idx<sz1 || idx<sz2){
+            int n1 = idx<sz1?a[idx]-'0':0;
+            int n2 = idx<sz2?b[idx]-'0':0;
+            int sum = n1 + n2 + flag;
+            flag = sum>9?1:0;
+            sum %= 10;
+            res += sum+'0';
+            ++idx;
+        }
+        if(flag)
+            res += '1';
+        reverse(res.begin(),res.end());
+        return res;
+    }
+};
