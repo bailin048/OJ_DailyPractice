@@ -15322,3 +15322,59 @@ public:
         return res;
     }
 };
+
+【506.】【 相对名次】：https://leetcode-cn.com/problems/relative-ranks/
+class Solution {
+public:
+    vector<string> findRelativeRanks(vector<int>& score) {
+        int sz = score.size();
+        vector<pair<int,int>> tmp(sz);
+        for(int i = 0; i < sz; ++i)
+            tmp[i] = make_pair(score[i],i);
+        sort(tmp.begin(), tmp.end(),cmp);
+        vector<string> ord{"Gold Medal","Silver Medal","Bronze Medal"};
+        vector<string> ans(sz);
+        for(int i = 0 ; i < sz; ++i){
+            if(i<=2)
+                ans[tmp[i].second] = ord[i];
+            else
+                ans[tmp[i].second] = to_string(i+1);
+        }
+        return ans;
+    }
+private:
+    static bool cmp(const pair<int,int>& p1,const pair<int,int>& p2){
+        return p1.first>p2.first;
+    }
+};
+
+【416.】【 分割等和子集】：https://leetcode-cn.com/problems/partition-equal-subset-sum/
+class Solution {
+public:
+    bool canPartition(vector<int>& nums) {
+        int sz = nums.size();
+        int target = accumulate(nums.begin(),nums.end(),0);
+        if(target&1)
+            return false;
+        target/=2; 
+        int maxn = *max_element(nums.begin(),nums.end());
+        if(maxn>target)
+            return false;
+        if(maxn == target)
+            return true;
+        vector<vector<int>> dp(sz,vector<int>(target+1,false));
+        for(int i = 0; i < sz; ++i)
+            dp[i][0] = true; 
+        dp[0][nums[0]] = true;
+        for(int i = 1; i < sz; ++i){
+            int n = nums[i];
+            for(int j = 1; j <= target; ++j){
+                if(j >= n)
+                    dp[i][j] = dp[i-1][j] | dp[i-1][j-n];
+                else
+                    dp[i][j] = dp[i-1][j];
+            }
+        }
+        return dp[sz-1][target];
+    }
+};
