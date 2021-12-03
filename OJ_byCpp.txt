@@ -15378,3 +15378,58 @@ public:
         return dp[sz-1][target];
     }
 };
+
+【1005. 】【K 次取反后最大化的数组和】：https://leetcode-cn.com/problems/maximize-sum-of-array-after-k-negations/
+class Solution {
+public:
+    int largestSumAfterKNegations(vector<int>& nums, int k) {
+        unordered_map<int,int> mp;
+        for(auto& n: nums)
+            ++mp[n];
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        for(int i = -100; i < 0 && k; ++i){
+            if(mp[i]){
+                int cnt = min(k,mp[i]);
+                sum += 2*(-i)*cnt;
+                mp[i] -= cnt;
+                mp[-i] += cnt;
+                k -= cnt;
+                if(!k)
+                    break;
+            }
+        }
+        if(k && k&1 && !mp[0]){
+            for(int i = 1; i <= 100; ++i){
+                if(mp[i]){
+                    sum -= 2*i;
+                    break;
+                }
+            }
+        }
+        return sum;
+    }
+};
+
+【313.】【 超级丑数】：https://leetcode-cn.com/problems/super-ugly-number/
+class Solution {
+public:
+    int nthSuperUglyNumber(int n, vector<int>& primes) {
+        int sz = primes.size();
+        vector<int> pt(sz,1);
+        vector<long> num(sz);
+        vector<int> dp(n+1,1);
+        for(int i = 2; i <= n; ++i){
+            int minn = INT_MAX;
+            for(int j = 0; j < sz; ++j){
+                num[j] = dp[pt[j]]*primes[j];
+                minn = minn>num[j]?num[j]:minn;
+            }
+            dp[i] = minn;
+            for(int j = 0; j < sz; ++j){
+                if(minn == num[j])
+                    ++pt[j];
+            }
+        }
+        return dp[n];
+    }
+};
