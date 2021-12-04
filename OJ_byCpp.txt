@@ -15433,3 +15433,31 @@ public:
         return dp[n];
     }
 };
+
+【剑指 Offer II 116】【. 省份数量】：https://leetcode-cn.com/problems/bLyHh0/
+class Solution {
+public:
+    int findCircleNum(vector<vector<int>>& isConnected) {
+        n = isConnected.size();
+        vector<bool> vis(n,false); 
+        int res = 0;
+        for(int i = 0; i < n; ++i){
+            if(!vis[i]){
+                DFS(isConnected, vis, i);
+                ++res;
+            }
+        }
+        return res;
+    }
+private:
+    void DFS(const vector<vector<int>>& isConnected, vector<bool>& vis, int idx){
+        for(int i = 0; i < n; ++i){
+            if(isConnected[idx][i] && !vis[i]){
+                vis[i] = true;
+                DFS(isConnected, vis, i);
+            }
+        }
+    }
+private:
+    int n;
+};
