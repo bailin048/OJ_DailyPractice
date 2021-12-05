@@ -15461,3 +15461,59 @@ private:
 private:
     int n;
 };
+
+【372.】【 超级次方】：https://leetcode-cn.com/problems/super-pow/
+class Solution {
+public:
+    int superPow(int a, vector<int>& b) {
+        return DFS(a, b, b.size()-1);
+    }
+private:
+    int DFS(int a,  const vector<int>& b, int l){
+        if(l == -1)
+            return 1;
+        return Qpow(DFS(a, b, l-1), 10)*Qpow(a, b[l]) % MOD;
+    }
+    int Qpow(int a, int b){
+        int ans = 1;
+        a %= MOD;
+        while(b != 0){
+            if((b&1) != 0)
+                ans = ans*a%MOD;
+            a = a*a%MOD;
+            b >>= 1;
+        }
+        return ans;
+    }
+private:
+    int MOD = 1337;
+};
+
+【2012. 】【数组美丽值求和】：https://leetcode-cn.com/problems/sum-of-beauty-in-the-array/
+class Solution {
+public:
+    int sumOfBeauties(vector<int>& nums) {
+        int sz = nums.size();
+        vector<int> maxn(nums);
+        vector<int> minn(nums);
+        int Max = nums[0], Min = nums[sz-1];
+        for(int i = 1; i < sz; ++i){
+            if(Max<nums[i])
+                Max = nums[i];
+            maxn[i] = Max;
+        }
+        for(int i = sz-2; i >=0; --i){
+            if(Min>nums[i])
+                Min = nums[i];
+            minn[i] = Min;
+        }
+        int res = 0;
+        for(int i = 1; i < sz-1; ++i){
+            if(nums[i]>maxn[i-1] && nums[i]<minn[i+1])
+                res += 2;
+            else if(nums[i]>nums[i-1] && nums[i]<nums[i+1])
+                ++res;
+        }
+        return res;
+    }
+};
