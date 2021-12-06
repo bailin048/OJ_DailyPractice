@@ -15559,3 +15559,42 @@ private:
         return sz;
     }
 };
+
+【1816.】【 截断句子】：https://leetcode-cn.com/problems/truncate-sentence/
+class Solution {
+public:
+    string truncateSentence(string s, int k) {
+        auto it = s.begin();
+        int cnt = 0;
+        while(cnt!=k){
+            it = find(it, s.end(),' ');
+            ++cnt;
+            ++it;
+        }
+        s.erase(it-1,s.end());
+        return s;
+    }
+};
+
+【442. 】【数组中重复的数据】：https://leetcode-cn.com/problems/find-all-duplicates-in-an-array/
+class Solution {
+public:
+    vector<int> findDuplicates(vector<int>& nums) {
+        int sz = nums.size();
+        vector<int> res;
+        for(int i = 0; i < sz; ++i){
+            while(nums[i]!=nums[nums[i]-1])
+                swap(nums[i],nums[nums[i]-1]);
+        }
+        for(int i = 0; i < sz; ++i)
+            if(nums[i]!=i+1)
+                res.push_back(nums[i]);
+        return res;
+    }
+private:
+    void swap(int& a, int& b){
+        a^=b;
+        b^=a;
+        a^=b;
+    }  
+};
