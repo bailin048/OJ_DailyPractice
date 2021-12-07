@@ -15598,3 +15598,44 @@ private:
         a^=b;
     }  
 };
+
+【1034.】【 边界着色】：https://leetcode-cn.com/problems/coloring-a-border/
+class Solution {
+    typedef pair<int,int> Par;
+public:
+    vector<vector<int>> colorBorder(vector<vector<int>>& grid, int row, int col, int color) {
+        m = grid.size();
+        n = grid[0].size();
+        src = grid[row][col];
+        des = color;
+        vector<vector<bool>> vis(m, vector<bool>(n,false));
+        vis[row][col] = true;
+        DFS(grid, vis, row, col);
+        for(auto& [x,y]: res)
+            grid[x][y] = des;
+        return grid;
+    }
+private:
+    void DFS(vector<vector<int>>& grid, vector<vector<bool>>& vis, int x, int y){
+        bool IsBorder = false;
+        for(int i = 0; i < 4; ++i){
+            int nx = x + dir[i][0];
+            int ny = y + dir[i][1];
+            if(!(nx>=0 && nx<m && ny>=0 && ny<n && grid[nx][ny]==src))
+                IsBorder = true;
+            else if(!vis[nx][ny]){
+                vis[nx][ny] = true;
+                DFS(grid, vis, nx, ny);
+            }
+        }
+        if(IsBorder)
+            res.push_back({x,y});
+    }
+private:
+    int m;
+    int n;
+    int src;
+    int des;
+    vector<Par> res;
+    int dir[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
+};
