@@ -15639,3 +15639,40 @@ private:
     vector<Par> res;
     int dir[4][2] = {{1,0},{-1,0},{0,1},{0,-1}};
 };
+
+【689. 】【三个无重叠子数组的最大和】：https://leetcode-cn.com/problems/maximum-sum-of-3-non-overlapping-subarrays/
+class Solution {
+    typedef pair<int,int> pii;
+public:
+    vector<int> maxSumOfThreeSubarrays(vector<int>& nums, int k) {
+        int sz = nums.size();
+        int sum1 = 0, maxsum1 = 0, maxidx1 = 0;
+        int sum2 = 0, maxsum12 = 0, maxsum12idx1 = 0, maxsum12idx2 = 0;
+        int sum3 = 0, allsum = 0;
+        vector<int> res(3);
+        for(int i = 2*k; i < sz; ++i){
+            sum1 += nums[i-2*k];
+            sum2 += nums[i-k];
+            sum3 += nums[i];
+            if(i>=3*k-1){
+                if(sum1>maxsum1){
+                    maxsum1 = sum1;
+                    maxidx1 = i-3*k+1;
+                }
+                if(sum2 + maxsum1 > maxsum12){
+                    maxsum12 = sum2 + maxsum1;
+                    maxsum12idx1 = maxidx1;
+                    maxsum12idx2 = i-2*k+1;
+                }
+                if(sum3 + maxsum12 > allsum){
+                    allsum = sum3 + maxsum12;
+                    res = {maxsum12idx1, maxsum12idx2, i-k+1};
+                }
+                sum1 -= nums[i-3*k+1];
+                sum2 -= nums[i-2*k+1];
+                sum3 -= nums[i-k+1];
+            }
+        }
+        return res;
+    }
+};
