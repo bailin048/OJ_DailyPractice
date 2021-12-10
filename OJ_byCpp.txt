@@ -15714,3 +15714,33 @@ private:
         return false;
     }
 };
+
+【748. 】【最短补全词】：https://leetcode-cn.com/problems/shortest-completing-word/
+class Solution {
+public:
+    string shortestCompletingWord(string licensePlate, vector<string>& words) {
+        vector<int> ump1(26,0);
+        for(auto c: licensePlate){
+            if(isalpha(c))
+                ++ump1[tolower(c)-'a'];
+        }
+        int sz = words.size();
+        int idx = -1;
+        for(int i = 0; i < sz; ++i){
+            vector<int> ump2(26,0);
+            for(char& c:words[i])
+                ++ump2[c-'a'];
+            bool flag = true;
+            for(int j = 0; j < 26; ++j){
+                if(ump1[j]>ump2[j]){
+                    flag = false;
+                    break;
+                }
+            }
+            if(flag && (idx<0 || words[i].size() < words[idx].size())){
+                idx = i;
+            }
+        }
+        return words[idx];
+    }
+};
