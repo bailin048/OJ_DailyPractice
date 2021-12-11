@@ -15744,3 +15744,28 @@ public:
         return words[idx];
     }
 };
+
+【911. 】【在线选举】：https://leetcode-cn.com/problems/online-election/
+class TopVotedCandidate {
+public:
+    TopVotedCandidate(vector<int>& persons, vector<int>& times) {
+        unordered_map<int,int> votes;
+        votes[-1] = -1;
+        int top = -1;
+        for(auto& p : persons){
+            ++votes[p];
+            if(votes[p] >= votes[top])
+                top = p;
+            tops.emplace_back(top);
+        }
+        time = times;
+    }
+    
+    int q(int t) {
+        int pos = upper_bound(time.begin(), time.end(), t) - time.begin() - 1;
+        return tops[pos];
+    }
+private:
+    vector<int> tops;
+    vector<int> time;
+};
