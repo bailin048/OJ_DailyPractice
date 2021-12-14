@@ -15789,3 +15789,27 @@ public:
         return res;
     }
 };
+
+【630. 】【课程表 III】：https://leetcode-cn.com/problems/course-schedule-iii/
+class Solution {
+public:
+    int scheduleCourse(vector<vector<int>>& courses) {
+        sort(courses.begin(), courses.end(), [](const vector<int>& v1, const vector<int>& v2){
+            return v1[1]<v2[1];
+        });
+        int total = 0;
+        priority_queue<int> q;
+        for(auto& v: courses){
+            int ti = v[0], di = v[1];
+            if(total + ti <= di){
+                total += ti;
+                q.push(ti);
+            }else if(!q.empty() && q.top()>ti){
+                total -= q.top()-ti;
+                q.pop();
+                q.push(ti);
+            }
+        }
+        return q.size();
+    }
+};
