@@ -15884,3 +15884,28 @@ public:
         return res;
     }
 };
+
+【997. 】【找到小镇的法官】：https://leetcode-cn.com/problems/find-the-town-judge/
+class Solution {
+public:
+    int findJudge(int n, vector<vector<int>>& trust) {
+        vector<int> in(n,0);
+        vector<int> out(n,0);
+        int sz = trust.size();
+        for(int i = 0; i < sz; ++i){
+            ++in[trust[i][1]-1];
+            ++++out[trust[i][0]-1];
+        }
+        int res = 0;
+        int cnt = 0;
+        for(int i = 0; i < n; ++i){
+            if(in[i]==n-1 && 0==out[i]){
+                res = i;
+                ++cnt;
+            }
+        }
+        if(1==cnt)
+            return res+1;
+        return -1;
+    }
+};
