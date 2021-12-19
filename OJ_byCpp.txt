@@ -15909,3 +15909,69 @@ public:
         return -1;
     }
 };
+
+【5956.】【 找出数组中的第一个回文字符串】：https://leetcode-cn.com/contest/weekly-contest-272/problems/find-first-palindromic-string-in-the-array/
+class Solution {
+public:
+    string firstPalindrome(vector<string>& words) {
+        int sz = words.size();
+        for(int i = 0; i < sz; ++i){
+            if(helper(words[i]))
+                return words[i];
+        }
+        return "";
+    }
+private:
+    bool helper(const string& word){
+        int sz = word.size();
+        for(int i = 0; i < sz/2; ++i)
+            if(word[i]!=word[sz-i-1])
+                return false;
+        return true;
+    }
+};
+
+【5957. 】【向字符串添加空格】：https://leetcode-cn.com/contest/weekly-contest-272/problems/adding-spaces-to-a-string/
+class Solution {
+public:
+    string addSpaces(string s, vector<int>& spaces) {
+        string res;
+        int sz = s.size();
+        int idx = 0;
+        for(int i = 0; i < sz; ++i){
+            if(idx < spaces.size() && spaces[idx] == i)
+                res += ' ', ++idx;
+            res += s[i];
+        }
+        return res;
+    }
+};
+
+【5958. 】【股票平滑下跌阶段的数目】：https://leetcode-cn.com/contest/weekly-contest-272/problems/number-of-smooth-descent-periods-of-a-stock/
+class Solution {
+    typedef pair<int,int> pii;
+public:
+    long long getDescentPeriods(vector<int>& prices) {
+        int sz = prices.size();
+        long long res = 0;
+        stack<pii> st;
+        st.push({0,0});
+        for(int i = 1; i < sz; ++i){
+            pii tmp = st.top();
+            if(prices[tmp.second]-1==prices[i]){
+                ++tmp.second;
+                st.pop();
+                st.push(tmp);
+            }
+            else
+                st.push({i,i});
+        }
+        while(!st.empty()){
+            pii tmp = st.top();
+            st.pop();
+            long long len = tmp.second-tmp.first+1;
+            res += (long long)(1+len)*len/2;
+        }
+        return res;
+    }
+};
