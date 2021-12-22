@@ -16023,3 +16023,20 @@ private:
 private:
     int days[13]={29,31,28,31,30,31,30,31,31,30,31,30,31};
 };
+
+【686. 】【重复叠加字符串匹配】：https://leetcode-cn.com/problems/repeated-string-match/
+class Solution {
+public:
+    int repeatedStringMatch(string a, string b) {
+        int sza = a.size();
+        int szb = b.size();
+        int x = szb/sza;
+        string t;
+        for(int i = 1; i <= x+2; ++i){
+            t += a;
+            if(-1 != t.find(b))
+                return i;
+        }
+        return -1;
+    }
+};
