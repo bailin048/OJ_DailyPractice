@@ -16040,3 +16040,47 @@ public:
         return -1;
     }
 };
+
+【1044. 】【最长重复子串】：https://leetcode-cn.com/problems/longest-duplicate-substring/
+class Solution {
+public:
+    int n;
+    unsigned long long prime = 31;
+    string longestDupSubstring(string s) {
+        n = s.size();
+        int l = 1;
+        int r = n-1;
+        int pos = -1;
+        int len = 0;
+        auto find = [&](int len){
+            unsigned long long hash = 0;
+            unsigned long long power = 1;
+            for (int i = 0; i < len; ++i) {
+                hash = hash*prime+(s[i] - 'a');
+                power *= prime;
+            }
+            unordered_set<unsigned long long> exist{hash};
+            for(int i = len; i < n; ++i){
+                hash = hash*prime - power*(s[i-len]-'a') + (s[i]-'a');
+                if(exist.count(hash))
+                    return i-len+1;
+                exist.insert(hash);
+            }
+            return -1;
+        };
+        while(l<=r){
+            int mid = (l+r)/2;
+            int st = find(mid);
+            if(-1 != st){
+                len = mid;
+                pos = st;
+                l = mid + 1;
+            }
+            else
+                r = mid - 1;
+        }
+        if(-1 == pos)
+            return "";
+        return s.substr(pos,len);        
+    }
+};
