@@ -16084,3 +16084,44 @@ public:
         return s.substr(pos,len);        
     }
 };
+
+【1705】【. 吃苹果的最大数目】：https://leetcode-cn.com/problems/maximum-number-of-eaten-apples/
+class Solution {
+    typedef pair<int,int> pii;
+public:
+    int eatenApples(vector<int>& apples, vector<int>& days) {
+        int sz = apples.size();
+        int res = 0;
+        priority_queue<pii,vector<pii>,greater<pii>> q;
+        int i = 0;
+        while(i<sz){
+            while(!q.empty() && q.top().first<=i)
+                q.pop();
+            int endday = i + days[i];
+            int cnt = apples[i];
+            if (cnt > 0) 
+                q.emplace(endday, cnt);
+            if(!q.empty()){
+                pii tmp = q.top();
+                q.pop();
+                ++res;
+                --tmp.second;
+                if(tmp.second)
+                    q.emplace(tmp.first,tmp.second);
+            }
+            ++i;
+        }
+        while(!q.empty()){
+            while (!q.empty() && q.top().first <= i) 
+                q.pop();
+            if(q.empty())
+                break;
+            pii curr = q.top();
+            q.pop();
+            int num = min(curr.first - i, curr.second);
+            res += num;
+            i += num;
+        }
+        return res;
+    }
+};
