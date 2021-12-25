@@ -16125,3 +16125,32 @@ public:
         return res;
     }
 };
+
+【1609】【. 奇偶树】：https://leetcode-cn.com/problems/even-odd-tree/
+class Solution {
+public:
+    bool isEvenOddTree(TreeNode* root) {
+        int layer = 0;
+        queue<TreeNode*> Q;
+        Q.push(root);
+        while(!Q.empty()){
+            int sz = Q.size();
+            int pre = (layer&1)?INT_MAX:INT_MIN;
+            for(int i = 0 ; i < sz; ++i){
+                TreeNode* tmp = Q.front();
+                Q.pop();
+                if((layer&1) == (tmp->val&1))
+                    return false;
+                if ((!(layer&1) && tmp->val<=pre) || (layer&1 && tmp->val>=pre)) 
+                    return false;
+                pre = tmp->val;   
+                if(tmp->left!=nullptr)
+                    Q.push(tmp->left);
+                if(tmp->right!=nullptr)
+                    Q.push(tmp->right);
+            }
+            ++layer;
+        }
+        return true;
+    }
+};
