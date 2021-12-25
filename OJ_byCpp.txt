@@ -16154,3 +16154,40 @@ public:
         return true;
     }
 };
+
+【990.】【 等式方程的可满足性】：https://leetcode-cn.com/problems/satisfiability-of-equality-equations/
+class UnionFindSet{
+public:
+    UnionFindSet(const int n){
+        _v.resize(n, -1);
+    }
+    int FindRoot(int idx){
+        while(_v[idx]>=0)
+            idx = _v[idx];
+        return idx;
+    }
+    void Union(int idx1, int idx2){
+        int root1 = FindRoot(idx1);
+        int root2 = FindRoot(idx2);
+        if(root1 != root2){
+            _v[root1] += _v[root2];
+            _v[root2] = root1;
+        }
+    }
+private:
+    vector<int> _v;
+};
+class Solution {
+public:
+    bool equationsPossible(vector<string>& equations) {
+        UnionFindSet ufs(26);
+        int sz = equations.size();
+        for(auto& s: equations)
+            if(s[1]=='=')
+                ufs.Union(s[0]-'a',s[3]-'a');
+        for(auto& s: equations)
+            if(s[1]=='!' && ufs.FindRoot(s[0]-'a')==ufs.FindRoot(s[3]-'a'))
+                return false;
+        return true;
+    }
+};
