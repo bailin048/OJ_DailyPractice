@@ -16191,3 +16191,99 @@ public:
         return true;
     }
 };
+
+【1078. 】【Bigram 分词】：https://leetcode-cn.com/problems/occurrences-after-bigram/
+class Solution {
+public:
+    vector<string> findOcurrences(string text, string first, string second) {
+        vector<string> res;
+        vector<string> dict;
+        int sz = text.size();
+        int l = 0, r = 0;
+        while(r < sz){
+            while(r<sz && text[r]!=' ')
+                ++r;
+            dict.push_back(text.substr(l,r-l));
+            l = r + 1;
+            ++r;
+        }
+        sz = dict.size();
+        for(int i = 2; i < sz; ++i){
+            if(dict[i-2]==first && dict[i-1]==second)
+                res.push_back(dict[i]);
+        }
+        return res;
+    }
+};
+
+【5963.】【 反转两次的数字】：https://leetcode-cn.com/problems/a-number-after-a-double-reversal/
+class Solution {
+public:
+    bool isSameAfterReversals(int num) {
+        int tmp = rever(num);
+        tmp = rever(tmp);
+        return num==tmp;
+    }
+private:
+    int rever(int num){
+        int res = 0;
+        while(num){
+            res = res*10 + num%10;
+            num/=10;
+        }
+        return res;
+    }
+};
+
+【5964. 】【执行所有后缀指令】：https://leetcode-cn.com/problems/execution-of-all-suffix-instructions-staying-in-a-grid/
+class Solution {
+    typedef pair<int,int> pii;
+public:
+    vector<int> executeInstructions(int n, vector<int>& startPos, string s) {
+        int sz = s.size();
+        vector<int> res(sz, 0);
+        for(int i = 0; i < sz; ++i){
+            int x = startPos[0], y = startPos[1];
+            for(int j = i; j < sz; ++j){
+                y += mp[s[j]].first;
+                x += mp[s[j]].second;
+                if(x<0 || x>=n || y<0 || y>=n)
+                    break;
+                ++res[i];
+            }
+            cout<<endl;
+        }
+        return res;
+    }
+    Solution(){
+        mp['L'] = {-1,0};
+        mp['R'] = {1,0};
+        mp['U'] = {0,-1};
+        mp['D'] = {0,1};
+    }
+private:
+    unordered_map<char,pii> mp;
+};
+
+【5965. 】【相同元素的间隔之和】：https://leetcode-cn.com/problems/intervals-between-identical-elements/
+class Solution {
+public:
+    vector<long long> getDistances(vector<int>& arr) {
+        int sz = arr.size();
+        unordered_map<int, vector<int>> mp;
+        for (int i = 0; i < sz; ++i) 
+            mp[arr[i]].push_back(i);
+        vector<long long> res(sz, 0);
+        for (auto& [_,v]: mp) {
+            for(auto& idx: v)
+                res[v[0]] += abs(idx-v[0]);
+            int n = v.size();
+            for (int j = 1; j < n; ++j){
+                int l = (j-1)*abs(v[j]-v[j-1]);
+                int r = (n-1-j)*(v[j]-v[j-1]);
+                res[v[j]] = res[v[j-1]] + l-r;
+            }
+        }
+        return res;
+    }
+};
