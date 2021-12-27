@@ -16287,3 +16287,23 @@ public:
         return res;
     }
 };
+
+【825. 】【适龄的朋友】：https://leetcode-cn.com/problems/friends-of-appropriate-ages/
+class Solution {
+public:
+    int numFriendRequests(vector<int>& ages) {
+        sort(ages.begin(), ages.end());
+        int sz = ages.size();
+        int l = 0, r = 0, res = 0;
+        for(int& age: ages){
+            if(age<15)
+                continue;
+            while(l<sz && ages[l] <= age*0.5+7)
+                ++l;
+            while(r+1<sz && ages[r+1]<=age)
+                ++r;
+            res += (r-l);
+        }
+        return res;
+    }
+};
