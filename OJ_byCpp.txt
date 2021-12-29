@@ -16366,3 +16366,23 @@ private:
         node->isEnd = true;
     }
 };
+
+【1995. 】【统计特殊四元组】：https://leetcode-cn.com/problems/count-special-quadruplets/
+class Solution {
+public:
+    int countQuadruplets(vector<int>& nums) {
+        int sz = nums.size();
+        unordered_map<int,int> ump;
+        int res = 0;
+        for(int b = sz-3; b>=0; --b){
+            for(int d = b+2; d < sz; ++d)
+                ++ump[nums[d]-nums[b+1]];
+            for(int a = 0; a < b; ++a){
+                int sum = nums[a] + nums[b];
+                if(ump.count(sum))
+                    res += ump[sum];
+            }
+        }
+        return res; 
+    }
+};
