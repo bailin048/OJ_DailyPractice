@@ -16386,3 +16386,30 @@ public:
         return res; 
     }
 };
+
+【846. 】【一手顺子】：https://leetcode-cn.com/problems/hand-of-straights/
+class Solution {
+public:
+    bool isNStraightHand(vector<int>& hand, int groupSize) {
+        int sz = hand.size();
+        if(sz%groupSize)
+            return false;
+        sort(hand.begin(), hand.end());
+        unordered_map<int,int> cnt;
+        for(auto& n:hand)
+            ++cnt[n];
+        for(auto& n: hand){
+            if(!cnt.count(n))
+                continue;
+            for(int j = 0; j < groupSize; ++j){
+                int tmp = n + j;
+                if(!cnt.count(tmp))
+                    return false;
+                --cnt[tmp];
+                if(!cnt[tmp])
+                    cnt.erase(tmp);
+            }
+        }
+        return true;
+    }
+};
