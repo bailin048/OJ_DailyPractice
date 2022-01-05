@@ -16434,3 +16434,22 @@ public:
         return week[(days + 3) % 7];
     }
 };
+
+【1576. 】【替换所有的问号】：https://leetcode-cn.com/problems/replace-all-s-to-avoid-consecutive-repeating-characters/
+class Solution {
+public:
+    string modifyString(string s) {
+        int sz = s.size();
+        for(int i = 0; i < sz; ++i){
+            if(s[i] == '?'){
+                for(char c = 'a'; c <='c'; ++c){
+                    if((i>0 && s[i-1]==c) || (i<sz-1 && s[i+1]==c))
+                        continue;
+                    s[i] = c;
+                    break;
+                }
+            }
+        }
+        return s;
+    }
+};
