@@ -16453,3 +16453,19 @@ public:
         return s;
     }
 };
+
+【1614. 】【括号的最大嵌套深度】：https://leetcode-cn.com/problems/maximum-nesting-depth-of-the-parentheses/
+class Solution {
+public:
+    int maxDepth(string s) {
+        int ans = 0, size = 0;
+        for (char ch : s) {
+            if (ch == '(') {
+                ++size;
+                ans = max(ans, size);
+            } else if (ch == ')') 
+                --size;
+        }
+        return ans;
+    }
+};
