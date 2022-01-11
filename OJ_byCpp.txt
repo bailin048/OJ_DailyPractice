@@ -16488,3 +16488,47 @@ public:
         return ans;
     }
 };
+
+【1036. 】【逃离大迷宫】：https://leetcode-cn.com/problems/escape-a-large-maze/
+class Solution {
+    typedef pair<int,int> pii;
+public:
+    bool isEscapePossible(vector<vector<int>>& blocked, vector<int>& source, vector<int>& target) {
+        for(auto& p: blocked)
+            set.insert(p[0]*BASE + p[1]);
+        int n = blocked.size();
+        MAX = n*(n-1)/2;
+        return check(source,target) && check(target,source); 
+    }
+private:
+    bool check(vector<int>& a, vector<int>& b){
+        unordered_set<long long> vis;
+        queue<pii> Q;
+        Q.push({a[0],a[1]});
+        vis.insert(a[0]*BASE+a[1]);
+        while(Q.size() && vis.size()<=MAX){
+            auto t = Q.front();
+            Q.pop();
+            int x = t.first, y = t.second;
+            if(x==b[0] && y==b[1])
+                return true;
+            for(int i = 0; i < 4; ++i){
+                int nx = x + dir[i][0];
+                int ny = y + dir[i][1];
+                if(nx<0 || nx>=EDGE || ny<0 || ny>=EDGE)
+                    continue;
+                long long tmp = nx*BASE+ny;
+                if(set.count(tmp))   continue;
+                if(vis.count(tmp)) continue;
+                Q.push({nx,ny});
+                vis.insert(tmp);
+            }
+        }
+        return vis.size()>MAX;
+    }
+private:
+    int EDGE = 1e6, MAX = 1e5;
+    long long BASE = 13331;
+    unordered_set<long long> set;
+    int dir[4][2] =  { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
+};
