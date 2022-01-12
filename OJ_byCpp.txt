@@ -16532,3 +16532,23 @@ private:
     unordered_set<long long> set;
     int dir[4][2] =  { {1, 0}, {-1, 0}, {0, 1}, {0, -1} };
 };
+
+【334. 】【递增的三元子序列】：https://leetcode-cn.com/problems/increasing-triplet-subsequence/
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        int sz = nums.size();
+        if(sz<3)
+            return false;
+        int first = nums[0], second = INT_MAX;
+        for(int i = 1; i < sz; ++i){
+            if(nums[i]>second)
+                return true;
+            else if(nums[i]>first)
+                second = nums[i];
+            else
+                first = nums[i];
+        }
+        return false;
+    }
+};
