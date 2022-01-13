@@ -16552,3 +16552,23 @@ public:
         return false;
     }
 };
+
+【747. 】【至少是其他数字两倍的最大数】：https://leetcode-cn.com/problems/largest-number-at-least-twice-of-others/
+class Solution {
+public:
+    int dominantIndex(vector<int>& nums) {
+        int sz = nums.size();
+        int idx = -1;
+        int max = -1,sec = -1;
+        for(int i = 0; i < sz; ++i){
+            if(nums[i]>max){
+                sec = max;
+                max = nums[i];
+                idx = i;
+            }
+            else if(nums[i]>sec)
+                sec = nums[i]; 
+        }
+        return max>=2*sec?idx:-1;
+    }
+};
