@@ -16572,3 +16572,33 @@ public:
         return max>=2*sec?idx:-1;
     }
 };
+
+【373. 】【查找和最小的 K 对数字】：https://leetcode-cn.com/problems/find-k-pairs-with-smallest-sums/
+class Solution {
+public:
+    static bool cmp(pair<int,int>& a, pair<int,int>& b){
+        return a.first+a.second<b.first+b.second;
+    }
+
+    vector<vector<int>> kSmallestPairs(vector<int>& nums1, vector<int>& nums2, int k) {
+        priority_queue<pair<int,int>, vector<pair<int,int>>, decltype(&cmp)> q(cmp);
+        int m = nums1.size();
+        int n = nums2.size();
+        for(int i=0;i<m&&i<k;i++){
+            for(int j=0;j<n&&j<k;j++){
+                if(q.size()==k){
+                    if(q.top().first+q.top().second>nums1[i]+nums2[j])
+                        q.pop();
+                    else continue;
+                }
+                q.push(make_pair(nums1[i],nums2[j]));
+            }
+        }
+        vector<vector<int>> ans;
+        while(!q.empty()){
+            ans.push_back({q.top().first,q.top().second});
+            q.pop();
+        }
+        return ans;
+    }
+};
