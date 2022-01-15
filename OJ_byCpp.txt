@@ -16602,3 +16602,19 @@ public:
         return ans;
     }
 };
+
+【1716. 】【计算力扣银行的钱】：https://leetcode-cn.com/problems/calculate-money-in-leetcode-bank/
+class Solution {
+public:
+    int totalMoney(int n) {
+        int week = n / 7;
+        int day = n % 7;
+        int firstMoney = 28;
+        int lastMoney = firstMoney + (week-1)*7;
+        int weekMoney = (firstMoney+lastMoney)*week/2;
+        int firstDay = 1 + week;
+        int lastDay = firstDay + day - 1;
+        int dayMoney = (firstDay+lastDay)*day/2;
+        return dayMoney+weekMoney;
+    }
+};
