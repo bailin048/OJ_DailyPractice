@@ -16618,3 +16618,57 @@ public:
         return dayMoney+weekMoney;
     }
 };
+
+【1704. 】【判断字符串的两半是否相似】：https://leetcode-cn.com/problems/determine-if-string-halves-are-alike/
+class Solution {
+public:
+    bool halvesAreAlike(string s) {
+        int sz = s.size();
+        int flag = 0;
+        for(int i = 0; i < sz; ++i){
+            char c = tolower(s[i]);
+            if(c =='a' || c=='e' || c== 'i' || c=='o' || c=='u'){
+                if(i<sz/2)
+                    ++flag;
+                else
+                    --flag;
+            }
+        }
+        return flag==0;
+    }
+};
+
+【2068.】【 检查两个字符串是否几乎相等】：https://leetcode-cn.com/problems/check-whether-two-strings-are-almost-equivalent/
+class Solution {
+public:
+    bool checkAlmostEquivalent(string word1, string word2) {
+        int sz = word1.size();
+        vector<int> cnt(26,0);
+        for(int i = 0; i <sz; ++i){
+            ++cnt[word1[i]-'a'];
+            --cnt[word2[i]-'a'];
+        } 
+        for(int i = 0; i < 26; ++i){
+            if(abs(cnt[i])>3)
+                return false;
+       }
+       return true;
+    }
+};
+
+【382. 】【链表随机节点】：https://leetcode-cn.com/problems/linked-list-random-node/
+class Solution {
+    vector<int> arr;
+
+public:
+    Solution(ListNode *head) {
+        while (head) {
+            arr.emplace_back(head->val);
+            head = head->next;
+        }
+    }
+
+    int getRandom() {
+        return arr[rand() % arr.size()];
+    }
+};
