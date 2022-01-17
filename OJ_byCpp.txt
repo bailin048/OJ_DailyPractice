@@ -16672,3 +16672,42 @@ public:
         return arr[rand() % arr.size()];
     }
 };
+
+【1220.】【 统计元音字母序列的数目】：https://leetcode-cn.com/problems/count-vowels-permutation/
+class Solution {
+public:
+    int countVowelPermutation(int n) {
+        long long mod = 1e9 + 7;
+        vector<long long> dp(5, 1);
+        vector<long long> ndp(5);
+        for(int i = 2; i <= n; ++i){
+            ndp[0] = (dp[1] + dp[2] + dp[4]) % mod;
+            ndp[1] = (dp[0] + dp[2]) % mod;
+            ndp[2] = (dp[1] + dp[3]) % mod;
+            ndp[3] = dp[2];
+            ndp[4] = (dp[2] + dp[3]) % mod;
+            dp = ndp;
+        }
+        return accumulate(dp.begin(), dp.end(), 0LL) % mod;
+    }
+};
+
+【NC156 】【数组中只出现一次的数（其它数出现k次）】：https://www.nowcoder.com/practice/5d3d74c3bf7f4e368e03096bb8857871?tpId=188&&tqId=38592&rp=1&ru=/activity/oj&qru=/ta/job-code-high-week/question-ranking
+class Solution {
+public:
+    int foundOnceNumber(vector<int>& arr, int k) {
+        vector<int> cnt(32,0);
+        for(int i = 0; i <32; ++i){
+            for(auto& n: arr){
+                  if((n>>i)&1)
+                      ++cnt[i];
+            }
+        }
+        int res = 0;
+        for(int i = 0; i < 32; ++i){
+            if((cnt[i]%k))
+                res += (1<<i);
+        }
+        return res;
+    }
+};
