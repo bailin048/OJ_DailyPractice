@@ -16711,3 +16711,46 @@ public:
         return res;
     }
 };
+
+【539.】【 最小时间差】：https://leetcode-cn.com/problems/minimum-time-difference/
+class Solution {
+public:
+    int findMinDifference(vector<string>& timePoints) {
+        sort(timePoints.begin(),timePoints.end());
+        int sz = timePoints.size();
+        int res = INT_MAX;
+        for(int i = 1; i < sz; ++i){
+            int distance = helper(timePoints[i-1],timePoints[i]);
+            res = distance<res?distance:res;
+        }
+        int head = 1440-helper(timePoints[0],timePoints[sz-1]);
+        return min(res,head);
+    }
+private:
+    int helper(const string& t1, const string& t2){
+        int h = stoi(t2.substr(0,2))-stoi(t1.substr(0,2));
+        int m = stoi(t2.substr(3,2))-stoi(t1.substr(3,2));
+        int ms = h*60+m;
+        return ms;
+    }
+};
+
+【1441. 】【用栈操作构建数组】：https://leetcode-cn.com/problems/build-an-array-with-stack-operations/
+class Solution {
+public:
+    vector<string> buildArray(vector<int>& target, int n) {
+        vector<string> res;
+        int idx = 0;
+        for(int i = 1; i <= n; ++i){
+            res.push_back("Push");
+            if(i!=target[idx])
+                res.push_back("Pop");
+            else{
+                ++idx;
+                if(idx>=target.size())
+                    break;
+            }
+        }
+        return res;
+    }
+};
