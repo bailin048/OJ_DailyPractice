@@ -16754,3 +16754,176 @@ public:
         return res;
     }
 };
+
+【1002. 】【查找共用字符】：https://leetcode-cn.com/problems/find-common-characters/
+class Solution {
+public:
+    vector<string> commonChars(vector<string>& words) {
+        vector<int> cnt(26,INT_MAX);
+        vector<int> tmp(26,0);
+        for(const auto& s: words){
+            fill(tmp.begin(), tmp.end(), 0);
+            for(const char& c: s)
+                ++tmp[c -'a'];
+            for(int i = 0; i < 26; ++i)
+                cnt[i] = min(cnt[i],tmp[i]);
+        }
+        vector<string> res;
+        for(int i = 0; i < 26; ++i)
+            for(int j = 0; j < cnt[i]; ++j)
+                res.emplace_back(1,'a'+i);
+        return res;
+    }
+};
+
+【2053. 】【数组中第 K 个独一无二的字符串】：https://leetcode-cn.com/problems/kth-distinct-string-in-an-array/
+class Solution {
+public:
+    string kthDistinct(vector<string>& arr, int k) {
+        unordered_map<string,int> ump;
+        for(const string& s: arr)
+            ++ump[s];
+        int idx = 0;
+        for(const string& s: arr){
+            if(ump[s]==1)
+                ++idx;
+            if(idx==k)
+                return s;
+        }
+        return "";
+    }
+};
+
+【1337.】【 矩阵中战斗力最弱的 K 行】：https://leetcode-cn.com/problems/the-k-weakest-rows-in-a-matrix/
+class Solution {
+    typedef pair<int,int> pii;
+public:
+    vector<int> kWeakestRows(vector<vector<int>>& mat, int k) {
+        int m = mat.size();
+        int n = mat[0].size();
+        vector<pii> res;
+        for(int i = 0; i < m; ++i){
+            int l = 0, r = n-1, pos = -1;
+            while(l<=r){
+                int mid = l + ((r-l)>>1);
+                if(mat[i][mid]==0)
+                    r = mid - 1;
+                else
+                    pos = mid, l = mid + 1;
+            }
+            res.push_back({pos+1,i});
+        }
+        priority_queue q(greater<pii>(), move(res));
+        vector<int> ans;
+        for (int i = 0; i < k; ++i) {
+            ans.push_back(q.top().second);
+            q.pop();
+        }
+        return ans; 
+    }
+};
+
+【1221.】【 分割平衡字符串】：https://leetcode-cn.com/problems/split-a-string-in-balanced-strings/
+class Solution {
+public:
+    int balancedStringSplit(string s) {
+        int res = 0;
+        int l = 0;
+        int sz = s.size();
+        for(int i = 0; i < sz; ++i){
+            if(s[i]=='L')
+                ++l;
+            else
+                --l;
+            if(l==0)
+                ++res;
+        }
+        return res;
+    }
+};
+
+【621. 】【任务调度器】：https://leetcode-cn.com/problems/task-scheduler/
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        unordered_map<char,int> ump;
+        for(const char& c: tasks)
+            ++ump[c];
+        int sz = ump.size();
+        vector<int> nextValid, rest;
+        for (auto [_, v]: ump) {
+            nextValid.push_back(1);
+            rest.push_back(v);
+        }
+        int time = 0;
+        for (int i = 0; i < tasks.size(); ++i) {
+            ++time;
+            int minNextValid = INT_MAX;
+            for (int j = 0; j < sz; ++j) {
+                if (rest[j]) {
+                    minNextValid = min(minNextValid, nextValid[j]);
+                }
+            }
+            time = max(time, minNextValid);
+            int best = -1;
+            for (int j = 0; j < sz; ++j) {
+                if (rest[j] && nextValid[j] <= time) {
+                    if (best == -1 || rest[j] > rest[best]) {
+                        best = j;
+                    }
+                }
+            }
+            nextValid[best] = time + n + 1;
+            --rest[best];
+        }
+
+        return time;
+    }
+};
+
+【1146. 】【快照数组】：https://leetcode-cn.com/problems/snapshot-array/
+class SnapshotArray {
+public:
+    SnapshotArray(int length) {
+        for(int i = 0; i < length; ++i){
+            map<int,int> cur = {{0,0}};
+            _vec.emplace_back(cur);
+        }
+    }
+    
+    void set(int index, int val) {
+        _vec[index][_id] = val;
+    }
+    
+    int snap() {
+        return _id++;
+    }
+    
+    int get(int index, int snap_id) {
+        auto iter = _vec[index].upper_bound(snap_id);
+        --iter;
+        return iter->second;
+    }
+private:
+    int _id=0;
+    vector<map<int,int>> _vec;
+};
+
+【2029. 】【石子游戏 IX】：https://leetcode-cn.com/problems/stone-game-ix/
+class Solution {
+public:
+    bool stoneGameIX(vector<int>& stones) {
+        int cnt0 = 0, cnt1 = 0, cnt2 = 0;
+        for (int val: stones) {
+            if (int type = val % 3; type == 0) 
+                ++cnt0;
+            else if (type == 1)
+                ++cnt1;
+            else 
+                ++cnt2;
+        }
+        if (cnt0 % 2 == 0) 
+            return cnt1 >= 1 && cnt2 >= 1;
+        return cnt1 - cnt2 > 2 || cnt2 - cnt1 > 2;
+    }
+};
