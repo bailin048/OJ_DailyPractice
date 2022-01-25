@@ -16982,3 +16982,19 @@ public:
         return -1;
     }
 };
+
+【1688.】【 比赛中的配对次数】：https://leetcode-cn.com/problems/count-of-matches-in-tournament/
+class Solution {
+public:
+    int numberOfMatches(int n) {
+        int res = 0;
+        while(n!=1){
+            res += n/2;
+            if(n&1)
+                n = (n-1)/2+1;
+            else
+                n /= 2;
+        }
+        return res;
+    }
+};
