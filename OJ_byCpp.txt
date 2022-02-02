@@ -17177,3 +17177,19 @@ public:
         return s.substr(maxPos, maxLen);
     }
 };
+
+【2000.】【 反转单词前缀】：https://leetcode-cn.com/problems/reverse-prefix-of-word/
+class Solution {
+public:
+    string reversePrefix(string word, char ch) {
+        int idx = 0;
+        int sz = word.size();
+        for(; idx < sz; ++idx){
+            if(word[idx]==ch)
+                break;
+        }
+        if(idx<sz && word[idx]==ch)
+            reverse(word.begin(),word.begin()+idx+1);
+        return word;
+    }
+};
