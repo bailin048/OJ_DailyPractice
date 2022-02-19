@@ -17419,3 +17419,62 @@ public:
         return nums[low];
     }
 };
+
+【969.】【 煎饼排序】：https://leetcode-cn.com/problems/pancake-sorting/
+class Solution {
+public:
+    vector<int> pancakeSort(vector<int>& arr) {
+        vector<int> ret;
+        for(int n = arr.size(); n>1; --n){
+            int idx = max_element(arr.begin(), arr.begin()+n)-arr.begin();
+            if(idx == n-1)
+                continue;
+            reverse(arr.begin(), arr.begin()+idx+1);
+            reverse(arr.begin(), arr.begin()+n);
+            ret.push_back(idx+1);
+            ret.push_back(n);
+        }
+        return ret;
+    }
+};
+
+【1791. 】【找出星型图的中心节点】：https://leetcode-cn.com/problems/find-center-of-star-graph/
+class Solution {
+public:
+    int findCenter(vector<vector<int>>& edges) {
+        int n = edges.size() + 1;
+        vector<int> degree(n+1);
+        for(auto& edge: edges){
+            ++degree[edge[0]];
+            ++degree[edge[1]];
+        }
+        for(int i = 1; ; ++i){
+            if(degree[i]==n-1)
+                return i;
+        }
+    }
+};
+
+【1380. 】【矩阵中的幸运数】：https://leetcode-cn.com/problems/lucky-numbers-in-a-matrix/
+class Solution {
+public:
+    vector<int> luckyNumbers (vector<vector<int>>& matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        vector<int> minRow(m, INT_MAX), maxCol(n);
+        for(int i = 0; i < m; ++i){
+            for(int j = 0; j < n; ++j){
+                minRow[i] = min(minRow[i], matrix[i][j]);
+                maxCol[j] = max(maxCol[j], matrix[i][j]);
+            }
+        }
+        vector<int> ret;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (minRow[i] == maxCol[j]) 
+                    ret.push_back(matrix[i][j]);
+            }
+        }
+        return ret;
+    }
+};
